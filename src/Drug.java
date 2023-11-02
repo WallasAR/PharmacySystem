@@ -1,20 +1,41 @@
 public class Drug {
-    public String name;
-    public String drugLabel;
-    public String description;
-    public String leaflet;
-    public int validity; // date type!
+    // Atribures
+    private int ID;
+    private String name;
+    // public String drugLabel;
+    private String description;
     private float price;
     private int stock;
 
-    public Drug(String name,String drugLabel, String description, String leaflet, int validity, float price, int stock) {
+    // Methods for atributes(getters and setters)
+    public int getID(){
+        return ID;
+    }
+    public void setID(int id){
+        this.ID = id;
+    }
+    public String getName(){
+        return name;
+    }
+    public void setName(String name){
         this.name = name;
-        this.drugLabel = drugLabel;
+    }
+    public String setDescription(){
+        return description;
+    }
+    public void getDescription(String description){
         this.description = description;
-        this.leaflet = leaflet;
-        this.validity = validity;
+    }
+    public float getPrice(){
+        return price;
+    }
+    public void setPrice(float price){
         this.price = price;
+    }
+    public int getStock() {
+        return stock;
+    }
+    public void setStock(int stock){
         this.stock = stock;
     }
-
 }
