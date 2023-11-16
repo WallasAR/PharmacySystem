@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.guitest.HomeController">
+   <children>
+      <Pane prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <Pane prefHeight="1081.0" prefWidth="512.0" styleClass="SideHome" stylesheets="@design/HomeDesign.css">
+               <children>
+                  <Pane fx:id="btHome" layoutY="302.0" onMouseClicked="#HomeAction" prefHeight="70.0" prefWidth="512.0" styleClass="btHome" stylesheets="@design/HomeDesign.css">
+                     <children>
+                        <Label fx:id="labelButtonHome" layoutX="-1.0" layoutY="-1.0" prefHeight="70.0" prefWidth="512.0" styleClass="labelButtonHome" stylesheets="@design/HomeDesign.css" text="           Home" textAlignment="CENTER" textFill="WHITE">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="40.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="14.0" layoutY="5.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@images/Home_icon.png" />
+                           </image>
+                        </ImageView>
+                     </children></Pane>
+                  <Pane fx:id="btClient" layoutY="416.0" onMouseClicked="#ClientAction" prefHeight="70.0" prefWidth="512.0" styleClass="btHome" stylesheets="@design/HomeDesign.css">
+                     <children>
+                        <Label layoutY="1.0" prefHeight="70.0" prefWidth="511.0" styleClass="labelButtonHome" stylesheets="@design/HomeDesign.css" text="           Clientes" textAlignment="CENTER" textFill="WHITE">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="40.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="14.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/Home_client_icon.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Pane>
+                  <Pane fx:id="btFunc" layoutY="532.0" onMouseClicked="#FuncAction" prefHeight="70.0" prefWidth="512.0" styleClass="btHome" stylesheets="@design/HomeDesign.css">
+                     <children>
+                        <Label layoutY="-1.0" prefHeight="70.0" prefWidth="512.0" styleClass="labelButtonHome" stylesheets="@design/HomeDesign.css" text="           Funcionários" textAlignment="CENTER" textFill="WHITE">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="40.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="14.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/Func_home_icon.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Pane>
+                  <Pane fx:id="btMed" layoutY="644.0" onMouseClicked="#MedAction" prefHeight="70.0" prefWidth="512.0" styleClass="btHome" stylesheets="@design/HomeDesign.css">
+                     <children>
+                        <Label layoutX="14.0" layoutY="-1.0" prefHeight="70.0" prefWidth="495.0" styleClass="labelButtonHome" stylesheets="@design/HomeDesign.css" text="         Medicamentos" textAlignment="CENTER" textFill="WHITE">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="40.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="14.0" layoutY="4.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@images/Home_med_icon.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Pane>
+                  <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="162.0" layoutY="38.0" pickOnBounds="true" smooth="false">
+                     <image>
+                        <Image url="@images/home_user_icon.png" />
+                     </image>
+                  </ImageView>
+                  <Text fill="WHITE" layoutX="87.0" layoutY="242.0" strokeType="OUTSIDE" strokeWidth="0.0" text="olá," wrappingWidth="60.000000000000114">
+                     <font>
+                        <Font name="Arial Bold" size="30.0" />
+                     </font>
+                  </Text>
+                  <Text fill="WHITE" layoutX="148.0" layoutY="243.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Admin">
+                     <font>
+                        <Font name="Arial Black" size="56.0" />
+                     </font>
+                  </Text>
+                  <Line endX="227.66665649414062" layoutX="238.0" layoutY="268.0" startX="-192.3333282470703" stroke="WHITE" />
+                  <Pane layoutY="970.0" onMouseClicked="#MainAction" prefHeight="70.0" prefWidth="512.0" styleClass="btHome" stylesheets="@design/HomeDesign.css">
+                     <children>
+                        <Label layoutY="-2.0" prefHeight="72.0" prefWidth="513.0" styleClass="labelButtonHome" stylesheets="@design/HomeDesign.css" text="            Logout" textAlignment="CENTER" textFill="WHITE">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="40.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="60.0" fitWidth="50.0" layoutX="36.0" layoutY="5.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@images/Home_logout_icon.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Pane>
+               </children></Pane>
+            <Rectangle arcHeight="15.0" arcWidth="15.0" fill="#ffffff5c" height="460.0" layoutX="695.0" layoutY="26.0" stroke="#00000032" strokeType="INSIDE" width="1010.0" />
+            <Label layoutX="915.0" layoutY="500.0" text="Medicamentos Agendados">
+               <font>
+                  <Font name="Arial Black" size="36.0" />
+               </font>
+            </Label>
+            <Label layoutX="1132.0" layoutY="55.0" text="Status">
+               <font>
+                  <Font name="Arial Black" size="36.0" />
+               </font>
+            </Label>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0000005d" height="300.0" layoutX="722.0" layoutY="132.0" stroke="TRANSPARENT" strokeType="INSIDE" width="300.0" />
+            <Text fill="WHITE" layoutX="760.0" layoutY="373.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Funcionários">
+               <font>
+                  <Font name="Arial Black" size="30.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" layoutX="793.0" layoutY="405.0" strokeType="OUTSIDE" strokeWidth="0.0" text="cadastrados">
+               <font>
+                  <Font name="Arial" size="28.0" />
+               </font>
+            </Text>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0000005d" height="300.0" layoutX="1377.0" layoutY="132.0" stroke="TRANSPARENT" strokeType="INSIDE" width="300.0" />
+            <Text fill="WHITE" layoutX="1458.0" layoutY="373.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Clientes">
+               <font>
+                  <Font name="Arial Black" size="30.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" layoutX="1454.0" layoutY="405.0" strokeType="OUTSIDE" strokeWidth="0.0" text="cadastrados">
+               <font>
+                  <Font name="Arial" size="28.0" />
+               </font>
+            </Text>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0000005d" height="300.0" layoutX="1048.0" layoutY="132.0" stroke="TRANSPARENT" strokeType="INSIDE" width="300.0" />
+            <Text fill="WHITE" layoutX="1075.0" layoutY="373.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Medicamentos">
+               <font>
+                  <Font name="Arial Black" size="30.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" layoutX="1121.0" layoutY="405.0" strokeType="OUTSIDE" strokeWidth="0.0" text="cadastrados">
+               <font>
+                  <Font name="Arial" size="28.0" />
+               </font>
+            </Text>
+            <TableView layoutX="687.0" layoutY="572.0" prefHeight="470.0" prefWidth="1010.0">
+               <columns>
+                  <TableColumn prefWidth="101.0" resizable="false" text="ID" />
+                  <TableColumn prefWidth="405.0" resizable="false" text="Nome" />
+                  <TableColumn minWidth="0.0" prefWidth="158.0" resizable="false" text="Quantidade" />
+                  <TableColumn prefWidth="169.0" resizable="false" text="Preço" />
+                  <TableColumn prefWidth="175.0" resizable="false" text="Descrição" />
+               </columns>
+            </TableView>
+         </children>
+      </Pane>
+   </children>
+</StackPane>

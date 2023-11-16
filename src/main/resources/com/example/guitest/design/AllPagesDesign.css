@@ -1,0 +1,20 @@
+.Button{
+    -fx-background-color: #d6d6d6;
+    -fx-background-radius:5px;
+}
+.Button:hover{
+    -fx-border-color: #f53827;
+    -fx-border-radius: 5px;
+    -fx-text-fill: #f53827;
+}
+.Textfield{
+    -fx-background-color:linear-gradient(to bottom, #efefef, #eee);
+    -fx-background-radius:4px;
+    -fx-border-color: #ccc;
+    -fx-border-width: 2px 2px 2px;
+    -fx-border-style: dotted;
+    -fx-font-size:16px;
+    -fx-font-family:"Arial";
+}
+.Table{
+}

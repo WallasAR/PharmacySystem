@@ -1,0 +1,15 @@
+.SideHome {
+    -fx-background-color: #f53827;
+    -fx-border-color:#000;
+    -fx-border-width:.4px 0px .4px .4px;
+ }
+.labelButtonHome{
+    -fx-translate-x: 0px;
+}
+.labelButtonHome:hover{
+    -fx-translate-x: 15px;
+}
+.btHome:hover {
+    -fx-background-color: linear-gradient(to right, #ff6666, #f53827 );
+    -fx-cursor: HAND;
+}

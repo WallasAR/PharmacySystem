@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.guitest.LoginController">
+   <left>
+      <AnchorPane prefHeight="500.0" prefWidth="350.0" style="-fx-background-color: #f53827;" BorderPane.alignment="CENTER">
+         <children>
+            <Text fill="WHITE" layoutX="42.0" layoutY="259.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Umbrella Corporation System" textAlignment="CENTER" wrappingWidth="266.51953125">
+               <font>
+                  <Font name="Ebrima Bold" size="20.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" layoutX="35.0" layoutY="481.0" opacity="0.85" strokeType="OUTSIDE" strokeWidth="0.0" text="&quot;Preservando a saúde das pessoas&quot;" textAlignment="CENTER" wrappingWidth="280.49609375">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Text>
+            <ImageView fitHeight="110.0" fitWidth="110.0" layoutX="120.0" layoutY="107.0" pickOnBounds="true">
+               <image>
+                  <Image url="@images/logo_login.png" />
+               </image>
+            </ImageView>
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </AnchorPane>
+   </left>
+   <right>
+      <AnchorPane prefHeight="500.0" prefWidth="521.0" BorderPane.alignment="CENTER">
+         <children>
+            <TextField layoutX="111.0" layoutY="202.0" promptText="Usuário" style="-fx-background-color: transparent; -fx-border-color: #ed2939; -fx-border-width: 0px 0px 2px;">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font>
+            </TextField>
+            <PasswordField layoutX="111.0" layoutY="259.0" promptText="Senha" style="-fx-background-color: transparent; -fx-border-color: #ed2939; -fx-border-width: 0px 0px 2px;">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font>
+            </PasswordField>
+            <Button id="login-btn" layoutX="131.0" layoutY="358.0" mnemonicParsing="false" onMouseClicked="#LoginAction" prefHeight="30.0" prefWidth="77.0" styleClass="login-btn" stylesheets="@design/LoginDesign.css" text="Entrar" textFill="WHITE">
+               <font>
+                  <Font name="Consolas" size="14.0" />
+               </font>
+            </Button>
+            <Text fill="#f53827" layoutX="110.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fazer Login">
+               <font>
+                  <Font name="Ebrima Bold" size="22.0" />
+               </font>
+            </Text>
+            <Hyperlink layoutX="203.0" layoutY="461.0" text="Esqueceu sua senha?" textFill="#f53827">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Hyperlink>
+            <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="79.0" layoutY="207.0" pickOnBounds="true">
+               <image>
+                  <Image url="@images/user_icon.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="79.0" layoutY="264.0" pickOnBounds="true">
+               <image>
+                  <Image url="@images/pass_icon.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+   </right>
+</BorderPane>
