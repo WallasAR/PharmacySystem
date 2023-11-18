@@ -153,10 +153,25 @@
                   <TableColumn prefWidth="101.0" resizable="false" text="ID" />
                   <TableColumn prefWidth="405.0" resizable="false" text="Nome" />
                   <TableColumn minWidth="0.0" prefWidth="158.0" resizable="false" text="Quantidade" />
-                  <TableColumn prefWidth="169.0" resizable="false" text="Preço" />
-                  <TableColumn prefWidth="175.0" resizable="false" text="Descrição" />
+                  <TableColumn prefWidth="169.0" resizable="false" text="Tipo" />
+                  <TableColumn prefWidth="175.0" resizable="false" text="Preço" />
                </columns>
             </TableView>
+            <Label fx:id="labelFuncCount" alignment="CENTER" layoutX="782.0" layoutY="149.0" onMouseMoved="#showInf" prefHeight="183.0" prefWidth="180.0" text="--" textFill="WHITE">
+               <font>
+                  <Font name="Arial Black" size="144.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelMedCount" alignment="CENTER" layoutX="1106.0" layoutY="149.0" onMouseMoved="#showInf" prefHeight="180.0" prefWidth="180.0" text="--" textFill="WHITE">
+               <font>
+                  <Font name="Arial Black" size="144.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelClientCount" alignment="CENTER" layoutX="1435.0" layoutY="149.0" onMouseMoved="#showInf" prefHeight="180.0" prefWidth="180.0" text="--" textFill="WHITE">
+               <font>
+                  <Font name="Arial Black" size="144.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
    </children>

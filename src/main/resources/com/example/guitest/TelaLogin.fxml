@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -40,17 +41,17 @@
    <right>
       <AnchorPane prefHeight="500.0" prefWidth="521.0" BorderPane.alignment="CENTER">
          <children>
-            <TextField layoutX="111.0" layoutY="202.0" promptText="Usuário" style="-fx-background-color: transparent; -fx-border-color: #ed2939; -fx-border-width: 0px 0px 2px;">
+            <TextField fx:id="tfUser" layoutX="111.0" layoutY="202.0" promptText="Usuário" style="-fx-background-color: transparent; -fx-border-color: #ed2939; -fx-border-width: 0px 0px 2px;">
                <font>
                   <Font name="Arial" size="12.0" />
                </font>
             </TextField>
-            <PasswordField layoutX="111.0" layoutY="259.0" promptText="Senha" style="-fx-background-color: transparent; -fx-border-color: #ed2939; -fx-border-width: 0px 0px 2px;">
+            <PasswordField fx:id="pfPass" layoutX="111.0" layoutY="259.0" promptText="Senha" style="-fx-background-color: transparent; -fx-border-color: #ed2939; -fx-border-width: 0px 0px 2px;">
                <font>
                   <Font name="Arial" size="12.0" />
                </font>
             </PasswordField>
-            <Button id="login-btn" layoutX="131.0" layoutY="358.0" mnemonicParsing="false" onMouseClicked="#LoginAction" prefHeight="30.0" prefWidth="77.0" styleClass="login-btn" stylesheets="@design/LoginDesign.css" text="Entrar" textFill="WHITE">
+            <Button id="login_btn" fx:id="btnLogin" layoutX="131.0" layoutY="369.0" mnemonicParsing="false" onAction="#LoginButtonAction" prefHeight="30.0" prefWidth="77.0" styleClass="login-btn" stylesheets="@design/LoginDesign.css" text="Entrar" textFill="WHITE">
                <font>
                   <Font name="Consolas" size="14.0" />
                </font>
@@ -75,6 +76,11 @@
                   <Image url="@images/pass_icon.png" />
                </image>
             </ImageView>
+            <Label fx:id="labelLoginMsg" alignment="TOP_CENTER" layoutX="74.0" layoutY="306.0" prefHeight="17.0" prefWidth="191.0" textFill="#f53827">
+               <font>
+                  <Font name="Helvetica‭ ‬עבה" size="16.0" />
+               </font></Label>
+            <Button fx:id="btnCloseWindow" layoutX="292.0" layoutY="8.0" mnemonicParsing="false" onAction="#CloseButtonAction" styleClass="Button" stylesheets="@design/AllPagesDesign.css" text="Fechar" />
          </children>
       </AnchorPane>
    </right>

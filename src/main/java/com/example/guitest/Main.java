@@ -6,7 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-
+import javafx.stage.StageStyle;
 
 
 public class Main extends Application {
@@ -21,6 +21,7 @@ public class Main extends Application {
 
         primaryStage.setTitle("UmbrellaCorp. System");
         stage.getIcons().add(new Image("icon.png"));
+        //primaryStage.initStyle(StageStyle.UNDECORATED);
 
         Parent fxmlLogin = FXMLLoader.load(getClass().getResource("TelaLogin.fxml"));
         mainScene = new Scene(fxmlLogin, 700, 500); // Cache tela 1
