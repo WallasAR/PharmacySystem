@@ -21,7 +21,7 @@ public class Main extends Application {
 
         primaryStage.setTitle("UmbrellaCorp. System");
         stage.getIcons().add(new Image("icon.png"));
-        //primaryStage.initStyle(StageStyle.UNDECORATED);
+        primaryStage.initStyle(StageStyle.UNDECORATED);
 
         Parent fxmlLogin = FXMLLoader.load(getClass().getResource("TelaLogin.fxml"));
         mainScene = new Scene(fxmlLogin, 700, 500); // Cache tela 1
@@ -46,18 +46,23 @@ public class Main extends Application {
         switch (scr){
             case "main":
                 stage.setScene(mainScene);
+                stage.centerOnScreen();
                 break;
             case "home":
                 stage.setScene(homeScene);
+                stage.centerOnScreen();
                 break;
             case "func":
                 stage.setScene(funcScene);
+                stage.centerOnScreen();
                 break;
             case "med":
                 stage.setScene(medScene);
+                stage.centerOnScreen();
                 break;
             case "client":
                 stage.setScene(clientScene);
+                stage.centerOnScreen();
                 break;
         }
     }
