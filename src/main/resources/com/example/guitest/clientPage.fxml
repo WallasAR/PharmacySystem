@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.guitest.HomeController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.guitest.ClientController">
     <children>
         <Pane prefHeight="200.0" prefWidth="200.0">
             <children>
@@ -34,7 +34,7 @@
                         </ImageView>
                      </children>
                   </Pane>
-                  <Pane fx:id="btClient1" layoutY="416.0" onMouseClicked="#ClientAction" prefHeight="70.0" prefWidth="512.0" styleClass="btHome" stylesheets="@design/HomeDesign.css">
+                  <Pane fx:id="btClient1" layoutY="416.0" prefHeight="70.0" prefWidth="512.0" styleClass="btHome" stylesheets="@design/HomeDesign.css">
                      <children>
                         <Label layoutY="1.0" prefHeight="70.0" prefWidth="511.0" styleClass="labelButtonHome" stylesheets="@design/HomeDesign.css" text="           Clientes" textAlignment="CENTER" textFill="WHITE">
                            <font>
@@ -108,11 +108,11 @@
                   </Pane>
                </children>
             </Pane>
-            <TableView layoutX="700.0" layoutY="160.0" prefHeight="500.0" prefWidth="1010.0" styleClass="Table" stylesheets="@design/AllPagesDesign.css">
+            <TableView fx:id="tvTableClient" layoutX="700.0" layoutY="160.0" prefHeight="500.0" prefWidth="1010.0" styleClass="Table" stylesheets="@design/AllPagesDesign.css">
                <columns>
-                  <TableColumn prefWidth="110.0" text="ID" />
-                  <TableColumn prefWidth="647.0" text="Nome" />
-                  <TableColumn prefWidth="251.33331298828125" text="Senha" />
+                  <TableColumn fx:id="tcClientId" prefWidth="110.0" text="ID" />
+                  <TableColumn fx:id="tcClientName" prefWidth="647.0" text="Nome" />
+                  <TableColumn fx:id="tcClientPass" prefWidth="251.33331298828125" text="Senha" />
                </columns>
             </TableView>
             <Label layoutX="727.0" layoutY="96.0" text="Nome">

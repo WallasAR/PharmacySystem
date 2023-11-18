@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.guitest.HomeController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.guitest.MedController">
     <children>
         <Pane prefHeight="200.0" prefWidth="200.0">
             <children>
@@ -62,7 +62,7 @@
                         </ImageView>
                      </children>
                   </Pane>
-                  <Pane fx:id="btMed1" layoutY="644.0" onMouseClicked="#MedAction" prefHeight="70.0" prefWidth="512.0" styleClass="btHome" stylesheets="@design/HomeDesign.css">
+                  <Pane fx:id="btMed1" layoutY="644.0" prefHeight="70.0" prefWidth="512.0" styleClass="btHome" stylesheets="@design/HomeDesign.css">
                      <children>
                         <Label layoutX="14.0" layoutY="-1.0" prefHeight="70.0" prefWidth="495.0" styleClass="labelButtonHome" stylesheets="@design/HomeDesign.css" text="         Medicamentos" textAlignment="CENTER" textFill="WHITE">
                            <font>

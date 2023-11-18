@@ -81,6 +81,7 @@
                   <Font name="Helvetica‭ ‬עבה" size="16.0" />
                </font></Label>
             <Button fx:id="btnCloseWindow" layoutX="292.0" layoutY="8.0" mnemonicParsing="false" onAction="#CloseButtonAction" styleClass="Button" stylesheets="@design/AllPagesDesign.css" text="Fechar" />
+            <Button fx:id="btMinimize" layoutX="208.0" layoutY="8.0" mnemonicParsing="false" onMouseClicked="#MinimizeClicked" styleClass="Button" stylesheets="@design/AllPagesDesign.css" text="Minimizar" />
          </children>
       </AnchorPane>
    </right>
