@@ -5,15 +5,12 @@ import com.example.guitest.Main;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 public class HomeController{
 
     @FXML
     protected void MainAction(MouseEvent e){ Main.changedScene("main");}
-    @FXML
-    protected void HomeAction(MouseEvent e) {
-        Main.changedScene("home");
-    }
     @FXML
     protected void FuncAction(MouseEvent e) {
         Main.changedScene("func");
@@ -33,6 +30,8 @@ public class HomeController{
     private Label labelMedCount;
     @FXML
     private Label labelClientCount;
+    //@FXML
+    //private Button btMinimize;
 
     int resultFunc;
     int resultMed;
@@ -46,5 +45,8 @@ public class HomeController{
         labelMedCount.setText(String.valueOf(resultMed));
         labelClientCount.setText(String.valueOf(resultClient));
     }
-
+    /*public void MinimizeClicked(MouseEvent event){
+        Stage stage = (Stage) btMinimize.getScene().getWindow(); // Atribui a variavel a capacidade de minimar a tela
+        stage.setIconified(true);
+    }*/
 }
