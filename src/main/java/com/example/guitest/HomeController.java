@@ -2,6 +2,7 @@ package com.example.guitest;
 
 import com.db.bank.Banco;
 import com.example.guitest.Main;
+import com.warning.alert.AlertMsg;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -10,7 +11,11 @@ import javafx.stage.Stage;
 public class HomeController{
 
     @FXML
-    protected void MainAction(MouseEvent e){ Main.changedScene("main");}
+    protected void MainAction(MouseEvent e) {
+        if (AlertMsg.msgConfirmLogout("Deseja sair para a página de login?")) {
+            Main.changedScene("main");
+        }
+    }
     @FXML
     protected void FuncAction(MouseEvent e) {
         Main.changedScene("func");

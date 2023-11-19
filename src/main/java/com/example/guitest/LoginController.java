@@ -7,8 +7,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import org.controlsfx.control.ListSelectionView;
 
 import java.awt.event.ActionEvent;
 
@@ -20,9 +20,9 @@ public class LoginController {
     @FXML
     private PasswordField pfPass;
     @FXML
-    private Button btnCloseWindow;
+    private Pane btnCloseWindow;
     @FXML
-    private Button btMinimize;
+    private Pane btnMinimizeWindow;
 
     public void LoginButtonAction(javafx.event.ActionEvent event) {
         if(!tfUser.getText().isBlank() && !pfPass.getText().isBlank()){
@@ -37,12 +37,12 @@ public class LoginController {
             labelLoginMsg.setText("Preencha os campos");
         }
     }
-    public void CloseButtonAction(javafx.event.ActionEvent event){
+    public void CloseButtonAction(MouseEvent event){
         Stage stage = (Stage) btnCloseWindow.getScene().getWindow();
         stage.close();
     }
     public void MinimizeClicked(MouseEvent event){
-        Stage stage = (Stage) btMinimize.getScene().getWindow(); // Atribui a variavel a capacidade de minimar a tela
+        Stage stage = (Stage) btnMinimizeWindow.getScene().getWindow(); // Atribui a variavel a capacidade de minimar a tela
         stage.setIconified(true);
     }
 

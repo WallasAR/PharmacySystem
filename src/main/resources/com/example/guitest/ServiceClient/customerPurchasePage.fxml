@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Pane prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <Pane prefHeight="1081.0" prefWidth="512.0" styleClass="SideHome" stylesheets="@../design/HomeDesign.css">
+               <children>
+                  <Pane fx:id="btHome1" layoutY="302.0" prefHeight="70.0" prefWidth="512.0" styleClass="btHome" stylesheets="@../design/HomeDesign.css">
+                     <children>
+                        <Label layoutX="-1.0" layoutY="-1.0" prefHeight="70.0" prefWidth="512.0" styleClass="labelButtonHome" stylesheets="@../design/HomeDesign.css" text="           Compras" textAlignment="CENTER" textFill="WHITE">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="40.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="14.0" layoutY="5.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@../images/Client_shopping_icon.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Pane>
+                  <Pane layoutY="416.0" prefHeight="70.0" prefWidth="512.0" styleClass="btHome" stylesheets="@../design/HomeDesign.css">
+                     <children>
+                        <Label layoutY="1.0" prefHeight="70.0" prefWidth="511.0" styleClass="labelButtonHome" stylesheets="@../design/HomeDesign.css" text="           Encomendas" textAlignment="CENTER" textFill="WHITE">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="40.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="14.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/Client_order_icon.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Pane>
+                  <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="162.0" layoutY="38.0" pickOnBounds="true" smooth="false">
+                     <image>
+                        <Image url="@../images/home_user_icon.png" />
+                     </image>
+                  </ImageView>
+                  <Text fill="WHITE" layoutX="87.0" layoutY="242.0" strokeType="OUTSIDE" strokeWidth="0.0" text="olá," wrappingWidth="60.000000000000114">
+                     <font>
+                        <Font name="Arial Bold" size="30.0" />
+                     </font>
+                  </Text>
+                  <Label layoutX="140.0" layoutY="181.0" text="Cliente" textFill="WHITE">
+                     <font>
+                        <Font name="Arial Black" size="56.0" />
+                     </font>
+                  </Label>
+                  <Line endX="227.66665649414062" layoutX="238.0" layoutY="268.0" startX="-192.3333282470703" stroke="WHITE" />
+                  <Pane layoutY="970.0" prefHeight="70.0" prefWidth="512.0" styleClass="btHome" stylesheets="@../design/HomeDesign.css">
+                     <children>
+                        <Label layoutY="-2.0" prefHeight="72.0" prefWidth="513.0" styleClass="labelButtonHome" stylesheets="@../design/HomeDesign.css" text="            Logout" textAlignment="CENTER" textFill="WHITE">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="40.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="60.0" fitWidth="50.0" layoutX="36.0" layoutY="5.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@../images/Home_logout_icon.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Pane>
+               </children>
+            </Pane>
+            <Label layoutX="955.0" layoutY="15.0" text="Medicamentos Disponíveis">
+               <font>
+                  <Font name="Arial Black" size="36.0" />
+               </font>
+            </Label>
+            <TableView layoutX="700.0" layoutY="160.0" prefHeight="445.0" prefWidth="1010.0">
+               <columns>
+                  <TableColumn prefWidth="119.3333740234375" text="ID" />
+                  <TableColumn prefWidth="720.6666259765625" text="Nome" />
+                  <TableColumn prefWidth="169.0" text="Salário" />
+               </columns>
+            </TableView>
+            <Rectangle arcHeight="10.0" arcWidth="10.0" fill="#ffffff5c" height="360.0" layoutX="700.0" layoutY="686.0" stroke="#00000032" strokeType="INSIDE" width="1010.0" />
+            <Label layoutX="727.0" layoutY="96.0" text="Nome">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <TextField layoutX="843.0" layoutY="95.0" prefHeight="50.0" prefWidth="590.0" styleClass="Textfield" stylesheets="@../design/AllPagesDesign.css" />
+            <Button layoutX="1463.0" layoutY="93.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="230.0" styleClass="Button" stylesheets="@../design/AllPagesDesign.css" text="Pesquisar">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Button>
+            <Button layoutX="1338.0" layoutY="707.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="340.0" styleClass="Button" stylesheets="@../design/AllPagesDesign.css" text="Adicionar">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Button>
+            <Button layoutX="1338.0" layoutY="821.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="340.0" styleClass="Button" stylesheets="@../design/AllPagesDesign.css" text="Remover" textFill="RED">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Button>
+            <Label layoutX="979.0" layoutY="618.0" text="Carrinho de compras">
+               <font>
+                  <Font name="Arial Black" size="36.0" />
+               </font>
+            </Label>
+            <ListView layoutX="722.0" layoutY="692.0" prefHeight="348.0" prefWidth="462.0" />
+         </children>
+      </Pane>
+   </children>
+</StackPane>

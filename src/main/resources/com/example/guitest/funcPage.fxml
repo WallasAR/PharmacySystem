@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Text?>
 
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.guitest.FuncController">
-    <children>
+   <children>
       <Pane prefHeight="200.0" prefWidth="200.0">
          <children>
             <Pane prefHeight="1081.0" prefWidth="512.0" styleClass="SideHome" stylesheets="@design/HomeDesign.css">
@@ -164,5 +164,5 @@
             </Button>
          </children>
       </Pane>
-    </children>
+   </children>
 </StackPane>

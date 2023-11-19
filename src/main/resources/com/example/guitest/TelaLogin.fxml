@@ -10,6 +10,8 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -80,8 +82,20 @@
                <font>
                   <Font name="Helvetica‭ ‬עבה" size="16.0" />
                </font></Label>
-            <Button fx:id="btnCloseWindow" layoutX="292.0" layoutY="8.0" mnemonicParsing="false" onAction="#CloseButtonAction" styleClass="Button" stylesheets="@design/AllPagesDesign.css" text="Fechar" />
-            <Button fx:id="btMinimize" layoutX="208.0" layoutY="8.0" mnemonicParsing="false" onMouseClicked="#MinimizeClicked" styleClass="Button" stylesheets="@design/AllPagesDesign.css" text="Minimizar" />
+            <Pane fx:id="btnCloseWindow" layoutX="299.0" layoutY="14.0" prefHeight="28.0" prefWidth="38.0" styleClass="btnCloseWindow" stylesheets="@design/LoginDesign.css">
+               <children>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="9.0" layoutY="4.0" onMouseClicked="#CloseButtonAction" pickOnBounds="true" smooth="false">
+                     <image>
+                        <Image url="@images/close_icon.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane fx:id="btnMinimizeWindow" layoutX="261.0" layoutY="14.0" onMouseClicked="#MinimizeClicked" prefHeight="28.0" prefWidth="38.0" styleClass="btnMinimizeWindow" stylesheets="@design/LoginDesign.css">
+               <children>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" height="4.0" layoutX="9.0" layoutY="12.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="20.0" />
+               </children>
+            </Pane>
          </children>
       </AnchorPane>
    </right>
