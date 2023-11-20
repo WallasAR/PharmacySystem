@@ -10,5 +10,6 @@ module com.example.guitest {
     requires java.sql;
 
     opens com.example.guitest to javafx.fxml;
+    opens com.table.view to javafx.base;
     exports com.example.guitest;
 }

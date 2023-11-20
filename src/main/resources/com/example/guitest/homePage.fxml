@@ -148,7 +148,7 @@
                   <Font name="Arial" size="28.0" />
                </font>
             </Text>
-            <TableView layoutX="687.0" layoutY="572.0" prefHeight="470.0" prefWidth="1010.0">
+            <TableView layoutX="687.0" layoutY="572.0" prefHeight="470.0" prefWidth="1010.0" stylesheets="@design/AllPagesDesign.css">
                <columns>
                   <TableColumn prefWidth="101.0" resizable="false" text="ID" />
                   <TableColumn prefWidth="405.0" resizable="false" text="Nome" />
@@ -157,17 +157,17 @@
                   <TableColumn prefWidth="175.0" resizable="false" text="Preço" />
                </columns>
             </TableView>
-            <Label fx:id="labelFuncCount" alignment="CENTER" layoutX="782.0" layoutY="149.0" onMouseMoved="#showInf" prefHeight="183.0" prefWidth="180.0" text="--" textFill="WHITE">
+            <Label fx:id="labelFuncCount" alignment="CENTER" layoutX="782.0" layoutY="149.0" prefHeight="183.0" prefWidth="180.0" text="--" textFill="WHITE">
                <font>
                   <Font name="Arial Black" size="144.0" />
                </font>
             </Label>
-            <Label fx:id="labelMedCount" alignment="CENTER" layoutX="1106.0" layoutY="149.0" onMouseMoved="#showInf" prefHeight="180.0" prefWidth="180.0" text="--" textFill="WHITE">
+            <Label fx:id="labelMedCount" alignment="CENTER" layoutX="1106.0" layoutY="149.0" prefHeight="180.0" prefWidth="180.0" text="--" textFill="WHITE">
                <font>
                   <Font name="Arial Black" size="144.0" />
                </font>
             </Label>
-            <Label fx:id="labelClientCount" alignment="CENTER" layoutX="1435.0" layoutY="149.0" onMouseMoved="#showInf" prefHeight="180.0" prefWidth="180.0" text="--" textFill="WHITE">
+            <Label fx:id="labelClientCount" alignment="CENTER" layoutX="1435.0" layoutY="149.0" prefHeight="180.0" prefWidth="180.0" text="--" textFill="WHITE">
                <font>
                   <Font name="Arial Black" size="144.0" />
                </font>

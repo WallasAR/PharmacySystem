@@ -67,4 +67,28 @@ public class SistemaLogin {
         }
         return false;
     }
+    public static boolean loginFunc(String user, String pass){
+        if (credenciaisValidas(user, pass)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public static Boolean credenciaisValidasFunc(String user, String pass) {
+        try {
+            String pesquisa = "SELECT COUNT(*) FROM funcionarios WHERE usuario = ? AND senha = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(pesquisa);
+            preparedStatement.setString(1, user);
+            preparedStatement.setString(2, pass);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    int rowCount = resultSet.getInt(1);
+                    return rowCount > 0;
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return false;
+    }
 }

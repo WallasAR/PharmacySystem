@@ -4,15 +4,19 @@ import com.db.bank.Banco;
 import com.example.guitest.Main;
 import com.warning.alert.AlertMsg;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-public class HomeController{
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class HomeController implements Initializable {
 
     @FXML
     protected void MainAction(MouseEvent e) {
-        if (AlertMsg.msgConfirmLogout("Deseja sair para a página de login?")) {
+    if (AlertMsg.msgConfirmLogout("Confimar Logout", "Deseja sair para a página de login?")) {
             Main.changedScene("main");
         }
     }
@@ -35,8 +39,7 @@ public class HomeController{
     private Label labelMedCount;
     @FXML
     private Label labelClientCount;
-    //@FXML
-    //private Button btMinimize;
+
 
     int resultFunc;
     int resultMed;
@@ -50,8 +53,9 @@ public class HomeController{
         labelMedCount.setText(String.valueOf(resultMed));
         labelClientCount.setText(String.valueOf(resultClient));
     }
-    /*public void MinimizeClicked(MouseEvent event){
-        Stage stage = (Stage) btMinimize.getScene().getWindow(); // Atribui a variavel a capacidade de minimar a tela
-        stage.setIconified(true);
-    }*/
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        showInf();
+    }
 }

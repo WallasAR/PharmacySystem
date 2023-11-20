@@ -1,5 +1,8 @@
 package com.db.bank;
 
+import com.warning.alert.AlertMsg;
+import javafx.scene.control.Alert;
+
 import javax.swing.*;
 import java.sql.*;
 import java.util.Scanner;
@@ -7,7 +10,7 @@ import java.util.Scanner;
 //Takushi aqui
 public class Banco {
     Scanner scanner1 = new Scanner(System.in);
-    static Connection connection  = conexao();
+    public static Connection connection  = conexao();
     Statement executar;
     {
         try {
@@ -57,12 +60,11 @@ public class Banco {
 
         preparedStatement.executeUpdate();
     }
-    public static void deletarcli(int num) throws SQLException{
+    public static void deletarcliente(String idcli) throws SQLException{
         Connection connection  = conexao();
         String deletecli = ("DELETE FROM cliente WHERE id = ?");
         PreparedStatement preparedStatement = connection.prepareStatement(deletecli);
-        preparedStatement.setInt(1, num);
-
+        preparedStatement.setString(1, idcli);
         preparedStatement.executeUpdate();
     }
     private boolean tabelaExiste(String nomeTabela) throws SQLException {
@@ -99,7 +101,7 @@ public class Banco {
     public void tablecliete(){
         try{
             if(!tabelaExiste("cliente")){
-                executar.execute("CREATE TABLE cliente(id INT NOT NULL AUTO_INCREMENT, nome VARCHAR(25), password VARCHAR(25), PRIMARY KEY(id))");
+                executar.execute("CREATE TABLE cliente(id INT NOT NULL AUTO_INCREMENT, nome VARCHAR(25), sobrenome VARCHAR(25), usuario VARCHAR(25), password VARCHAR(25), PRIMARY KEY(id))");
             }else{
                 System.out.println();
             }
@@ -107,14 +109,37 @@ public class Banco {
             System.out.println(e);
         }
     }
-    public void inserircliente(String user, String pass){
+    public static boolean verificarusuario(String user){
+        boolean existe = false;
+        Connection connection  = conexao();
         try{
-            String cliente = ("INSERT INTO cliente (nome, password) VALUES(?,?)");
-            PreparedStatement preparedStatement = connection.prepareStatement(cliente);
-            preparedStatement.setString(1, user);
-            preparedStatement.setString(2, pass);
+            String verificar = "SELECT * FROM funcionarios WHERE usuario = ?";
+            try(PreparedStatement verificarexis = connection.prepareStatement(verificar)){
+                verificarexis.setString(1, user);
+                try(ResultSet verificarresultado = verificarexis.executeQuery()){
+                    existe = verificarresultado.next();
+                }
+            }
+        }catch(SQLException e){
+            System.out.println(e);
+        }
+        return existe;
+    }
+    public void inserircliente(String nomecli, String sobrenomecli, String user, String pass){
+        try{
+            if(verificarusuario(user)) {
+                AlertMsg alert = new AlertMsg();
+                alert.msgInformation("Nome de usuário ja está sendo utilizado, tente novamente.");
+            }else{
+                String cliente = ("INSERT INTO cliente (nome, sobrenome, usuario, password) VALUES(?,?,?,?)");
+                PreparedStatement preparedStatement = connection.prepareStatement(cliente);
+                preparedStatement.setString(1, nomecli);
+                preparedStatement.setString(2, sobrenomecli);
+                preparedStatement.setString(3, user);
+                preparedStatement.setString(4, pass);
 
-            preparedStatement.executeUpdate();
+                preparedStatement.executeUpdate();
+            }
 
         }catch(SQLException e){
             System.out.println(e);
@@ -134,13 +159,13 @@ public class Banco {
         }
         System.out.println("Digite o nome do medicamento que deseja realizar a alteração: ");
         String op = scanner1.next();
-        System.out.println("com.pharmacy.drug.Medicamento selecionado: " + op);
+        System.out.println("Medicamento selecionado: " + op);
         System.out.println("Digite a coluna que deseja alterar: ");
         System.out.println(" - Quantidade");
         System.out.println(" - Valor");
         String op1 = scanner1.next();
         if (op1.equalsIgnoreCase("quantidade")) {
-            System.out.println("com.pharmacy.drug.Medicamento selecionado: " + op);
+            System.out.println("Medicamento selecionado: " + op);
             System.out.println("Digite a nova quantidade: ");
             int qntNovo = scanner1.nextInt();
             String updateQuery1 = "UPDATE medicamentos SET quantidade = ? WHERE nome = ?";
@@ -149,7 +174,7 @@ public class Banco {
             preparedStatement.setString(2, op);
             preparedStatement.executeUpdate();
         }else if(op1.equalsIgnoreCase("valor")){
-            System.out.println("com.pharmacy.drug.Medicamento selecionado: " + op);
+            System.out.println("Medicamento selecionado: " + op);
             System.out.println("Digite o novo valor");
             float valorNovo = scanner1.nextFloat();
             String updateQuery2 = "UPDATE medicamentos SET valor = ? WHERE nome = ?";
@@ -159,43 +184,15 @@ public class Banco {
             preparedStatement.executeUpdate();
         }
     }
-    public void updatecli() throws SQLException {
-        Statement declaracao1 = connection.createStatement();
-        String consulta1 = "SELECT * FROM cliente";
-        ResultSet resultado1 = declaracao1.executeQuery(consulta1);
-        while(resultado1.next()){
-            int idCli = resultado1.getInt("id");
-            String nomeCli = resultado1.getString("nome");
-            String passCli = resultado1.getString("password");
-
-            System.out.println("ID: " + idCli + ", Nome: " + nomeCli + ", Password: " + passCli);
-        }
-        System.out.println("Digite o id do cliente que deseja realizar as alterações: ");
-        int opcli = scanner1.nextInt();
-        System.out.println("Cliente selecionado");
-        System.out.println("Digite a coluna que deseja alterar: ");
-        System.out.println(" - Nome");
-        System.out.println(" - Password");
-        String opCli1 = scanner1.next();
-        if(opCli1.equalsIgnoreCase("nome")){
-            System.out.println("Cliente selecionado: " + opcli);
-            System.out.println("Digite o novo nome");
-            String nomNovo = scanner1.next();
-            String updateQuaryCli = "UPDATE cliente SET nome = ? WHERE id = ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(updateQuaryCli);
-            preparedStatement.setString(1, nomNovo);
-            preparedStatement.setInt(2, opcli);
-            preparedStatement.executeUpdate();
-        }else if(opCli1.equalsIgnoreCase("password")){
-            System.out.println("Cliente selecionado: " + opcli);
-            System.out.println("Digite a nova senha: ");
-            String passNovo = scanner1.next();
-            String updateQuaryCli2 = "UPDATE cliente SET password = ? WHERE id = ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(updateQuaryCli2);
-            preparedStatement.setString(1, passNovo);
-            preparedStatement.setInt(2, opcli);
-            preparedStatement.executeUpdate();
-        }
+    public void updateClient(String nome, String sobrenome, String usuario, String senha, String idcli) throws SQLException {
+        String updateQuaryCli = "UPDATE cliente SET nome = ?, sobrenome = ?, usuario = ?, password = ? WHERE id = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(updateQuaryCli);
+        preparedStatement.setString(1, nome);
+        preparedStatement.setString(2, sobrenome);
+        preparedStatement.setString(3, usuario);
+        preparedStatement.setString(4, senha);
+        preparedStatement.setString(5, idcli);
+        preparedStatement.executeUpdate();
     }
     public void consultamedicamentos()throws SQLException{
         Statement declaracao = connection.createStatement();
@@ -237,10 +234,10 @@ public class Banco {
             System.out.println(e);
         }
     }
-    public void tabelastatus(){
+    public void tabelaPedidosMed(){
         try {
-            if(!tabelaExiste("status")) {
-                executar.execute("CREATE TABLE status(id INT NOT NULL AUTO_INCREMENT ,nomecliente VARCHAR(25), nomemedicamento VARCHAR(25), quantidade INT, tipo VARCHAR(25), valor FLOAT, PRIMARY KEY(id))");
+            if(!tabelaExiste("pedidos")) {
+                executar.execute("CREATE TABLE pedidos(id INT NOT NULL AUTO_INCREMENT ,nomecliente VARCHAR(25), nomemedicamento VARCHAR(25), quantidade INT, tipo VARCHAR(25), valor FLOAT, PRIMARY KEY(id))");
             }else{
                 System.out.println();
             }
@@ -267,7 +264,7 @@ public class Banco {
     }
     public static int somarentidadesefuncionarios() {
         try {
-            String consultaSQLCliente = "SELECT COUNT(id) AS soma_total FROM autenticar";
+            String consultaSQLCliente = "SELECT COUNT(id) AS soma_total FROM funcionarios";
 
             try (PreparedStatement statement = connection.prepareStatement(consultaSQLCliente);
                  ResultSet consultaSomafu = statement.executeQuery()) {
@@ -336,8 +333,78 @@ public class Banco {
         preparedStatement.executeUpdate();
         System.out.println("Agendamento cancelado com sucesso");
     }
-
     //Adicionar metodo de deletar carrinho de cliente
+
+    public void tabelafuncionario(){
+        try {
+            if(!tabelaExiste("funcionarios")) {
+                executar.execute("CREATE TABLE funcionarios(id INT NOT NULL AUTO_INCREMENT, nome VARCHAR(25), sobrenome VARCHAR(25), usuario VARCHAR(25), cargo VARCHAR(25), cpf VARCHAR(25), salario FLOAT, senha VARCHAR(25), PRIMARY KEY(id))");
+            }else{
+                System.out.println();
+            }
+        }catch (SQLException e){
+            System.out.println(e);
+        }
+    }
+    public void inserirfuncinario(String nome, String sobrenome, String user, String cargo, String Cpf, float salario, String senha){
+        try{
+            if(verificarusuario(user)) {
+                System.out.println("O nome de usuario não pode ser utilizado, tente outro.");
+            }else{
+                String cliente = ("INSERT INTO funcionarios (nome, sobrenome, usuario, cargo, cpf, salario, senha) VALUES(?,?,?,?,?,?,?)");
+                PreparedStatement preparedStatement = connection.prepareStatement(cliente);
+                preparedStatement.setString(1, nome);
+                preparedStatement.setString(2, sobrenome);
+                preparedStatement.setString(3, user);
+                preparedStatement.setString(4, cargo);
+                preparedStatement.setString(5, Cpf);
+                preparedStatement.setFloat(6, salario);
+                preparedStatement.setString(7, senha);
+
+                preparedStatement.executeUpdate();
+            }
+
+        }catch(SQLException e){
+            System.out.println(e);
+        }
+    }
+    public void updateFuncionario(String nome, String sobrenome, String user, String cargo, String cpf, float salario, String senha, int idfunc) throws SQLException {
+        String updateQuaryCli = "UPDATE funcionarios SET nome = ?, sobrenome = ?, usuario = ?, cargo = ?, cpf = ?, salario = ?, senha = ? WHERE id = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(updateQuaryCli);
+        preparedStatement.setString(1, nome);
+        preparedStatement.setString(2, sobrenome);
+        preparedStatement.setString(3, user);
+        preparedStatement.setString(4, cargo);
+        preparedStatement.setString(5, cpf);
+        preparedStatement.setFloat(6, salario);
+        preparedStatement.setString(7, senha);
+        preparedStatement.setInt(8,idfunc);
+        preparedStatement.executeUpdate();
+    }
+    public static void deletarfuncionario(int num) throws SQLException{
+        Connection connection  = conexao();
+        String delete = ("DELETE FROM funcionarios WHERE id = ?");
+        PreparedStatement preparedStatement = connection.prepareStatement(delete);
+        preparedStatement.setInt(1, num);
+
+        preparedStatement.executeUpdate();
+    }
+    public static void deletarmedicamento(int num) throws SQLException{
+        Connection connection  = conexao();
+        String delete = ("DELETE FROM medicamentos WHERE id = ?");
+        PreparedStatement preparedStatement = connection.prepareStatement(delete);
+        preparedStatement.setInt(1, num);
+
+        preparedStatement.executeUpdate();
+    }
+    public void updateMedicamento(String nome, int quantidade, String tipo, float valor, int idfunc) throws SQLException {
+        String updateQuaryCli = "UPDATE medicamentos SET nome = ?, quantidade = ?, tipo = ?, valor = ? WHERE id = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(updateQuaryCli);
+        preparedStatement.setString(1, nome);
+        preparedStatement.setInt(2, quantidade);
+        preparedStatement.setString(3, tipo);
+        preparedStatement.setFloat(4, valor);
+        preparedStatement.setInt(5,idfunc);
+        preparedStatement.executeUpdate();
+    }
 }
-
-

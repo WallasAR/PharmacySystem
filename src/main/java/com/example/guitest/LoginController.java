@@ -30,7 +30,9 @@ public class LoginController {
 
             if (login.credenciaisValidas(tfUser.getText(), pfPass.getText())){
                 Main.changedScene("home");
-            } else {
+            } else if(login.credenciaisValidasFunc(tfUser.getText(), pfPass.getText())){
+                Main.changedScene("funcService");
+            } else{
                 labelLoginMsg.setText("Credenciais inválidas");
             }
         } else {

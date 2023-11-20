@@ -1,5 +1,7 @@
 package com.example.guitest;
 
+import com.db.bank.Banco;
+import com.db.bank.CompraBanco;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,7 +15,7 @@ public class Main extends Application {
 
     private static Stage stage; // Variavel estaticas para fazer a mudança de tela
 
-    private static Scene mainScene, homeScene, funcScene, medScene, clientScene; // variavel do tipo Scene
+    private static Scene mainScene, homeScene, funcScene, medScene, clientScene, funcServiceScene; // variavel do tipo Scene
 
     @Override
     public void start(Stage primaryStage) throws Exception { // Metodo padrão do JavaFX
@@ -37,6 +39,9 @@ public class Main extends Application {
 
         Parent fxmlClient = FXMLLoader.load(getClass().getResource("clientPage.fxml"));
         clientScene = new Scene(fxmlClient, 1920, 1080); // Cache tela
+
+        Parent fxmlfuncService = FXMLLoader.load(getClass().getResource("EmployeeSession/PurchasePage.fxml"));
+        funcServiceScene = new Scene(fxmlfuncService, 1920, 1080); // Cache tela Funcionário
 
         primaryStage.setScene(mainScene); // Definindo tela principal/inicial
         primaryStage.show(); // mostrando a cena
@@ -64,6 +69,9 @@ public class Main extends Application {
                 stage.setScene(clientScene);
                 stage.centerOnScreen();
                 break;
+            case "funcService":
+                stage.setScene(funcServiceScene);
+                stage.centerOnScreen();
         }
     }
 

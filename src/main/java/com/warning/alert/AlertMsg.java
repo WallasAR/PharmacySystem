@@ -9,10 +9,10 @@ public class AlertMsg {
     static ButtonType btnCancel = new ButtonType("Cancelar");
     static boolean answer;
 
-    public static boolean msgConfirmLogout(String msg){
+    public static boolean msgConfirmLogout(String headermsg, String msg){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Alerta");
-        alert.setHeaderText("Confirmar saída");
+        alert.setHeaderText(headermsg);
         alert.setContentText(msg);
         alert.getButtonTypes().setAll(btnConfirm, btnCancel);
         alert.showAndWait().ifPresent(b -> {
@@ -23,5 +23,13 @@ public class AlertMsg {
             }
         });
         return answer;
+    }
+
+    public void msgInformation(String msg){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Aviso");
+        alert.setHeaderText("Ops! Algo nos campos não parece certo");
+        alert.setContentText(msg);
+        alert.showAndWait();
     }
 }

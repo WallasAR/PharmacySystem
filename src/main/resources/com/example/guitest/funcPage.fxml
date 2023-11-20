@@ -113,53 +113,93 @@
                   <Font name="Arial Black" size="36.0" />
                </font>
             </Label>
-            <TableView layoutX="700.0" layoutY="160.0" prefHeight="500.0" prefWidth="1010.0">
+            <TableView fx:id="tbFunc" layoutX="700.0" layoutY="160.0" onMouseClicked="#getItemsActionFunc" prefHeight="500.0" prefWidth="1010.0" stylesheets="@design/AllPagesDesign.css">
                <columns>
-                  <TableColumn prefWidth="119.3333740234375" text="ID" />
-                  <TableColumn prefWidth="720.6666259765625" text="Nome" />
-                  <TableColumn prefWidth="169.0" text="Salário" />
+                  <TableColumn fx:id="tcFuncId" prefWidth="65.0" text="ID" />
+                  <TableColumn fx:id="tcFuncNome" prefWidth="300.0" text="Nome" />
+                  <TableColumn fx:id="tcFuncSobrenome" prefWidth="300.0" text="Sobrenome" />
+                  <TableColumn fx:id="tcFuncCargo" prefWidth="200.0" text="Cargo" />
+                  <TableColumn fx:id="tcFuncCpf" prefWidth="200.0" text="Cpf" />
+                  <TableColumn fx:id="tcFuncSalario" prefWidth="150.0" text="Salário" />
+                  <TableColumn fx:id="tcUser" prefWidth="250.0" text="Usuário" />
+                  <TableColumn fx:id="tcPass" prefWidth="200.0" text="Senha" />
                </columns>
             </TableView>
-            <Rectangle arcHeight="10.0" arcWidth="10.0" fill="#ffffff5c" height="360.0" layoutX="700.0" layoutY="686.0" stroke="#00000032" strokeType="INSIDE" width="1010.0" />
-            <Label layoutX="727.0" layoutY="96.0" text="Nome">
+            <Label layoutX="704.0" layoutY="69.0" text="Campo de pesquisa">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tfSearch" layoutX="700.0" layoutY="101.0" prefHeight="50.0" prefWidth="352.0" promptText="Palavras-chave (nome, sobrenome, etc)" styleClass="Textfield" stylesheets="@design/AllPagesDesign.css" />
+            <Rectangle arcHeight="10.0" arcWidth="10.0" fill="#ffffff5c" height="360.0" layoutX="642.0" layoutY="686.0" stroke="#00000032" strokeType="INSIDE" width="1166.0" />
+            <Label layoutX="665.0" layoutY="730.0" text="Nome">
                <font>
                   <Font size="30.0" />
                </font>
             </Label>
-            <TextField layoutX="843.0" layoutY="95.0" prefHeight="50.0" prefWidth="590.0" styleClass="Textfield" stylesheets="@design/AllPagesDesign.css" />
-            <Button layoutX="1463.0" layoutY="93.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="230.0" styleClass="Button" stylesheets="@design/AllPagesDesign.css" text="Pesquisar">
-               <font>
-                  <Font size="24.0" />
-               </font></Button>
-            <Label layoutX="742.0" layoutY="727.0" text="Nome">
+            <TextField fx:id="tfNome" layoutX="762.0" layoutY="728.0" prefHeight="50.0" prefWidth="402.0" promptText="Ex.: Nicola" styleClass="Textfield" stylesheets="@design/AllPagesDesign.css" />
+            <Label layoutX="665.0" layoutY="803.0" text="Sobrenome">
                <font>
                   <Font size="30.0" />
                </font>
             </Label>
-            <TextField layoutX="839.0" layoutY="725.0" prefHeight="50.0" prefWidth="430.0" promptText="Ex.: Júlia" styleClass="Textfield" stylesheets="@design/AllPagesDesign.css" />
-            <Label layoutX="742.0" layoutY="805.0" text="Salário">
+            <TextField fx:id="tfSobrenome" layoutX="830.0" layoutY="801.0" prefHeight="50.0" prefWidth="333.0" promptText="Ex.: Tesla" styleClass="Textfield" stylesheets="@design/AllPagesDesign.css" />
+            <Label layoutX="665.0" layoutY="878.0" text="Cargo">
                <font>
                   <Font size="30.0" />
                </font>
             </Label>
-            <TextField layoutX="839.0" layoutY="803.0" prefHeight="50.0" prefWidth="190.0" promptText="R$" styleClass="Textfield" stylesheets="@design/AllPagesDesign.css" />
-            <Label layoutX="1068.0" layoutY="806.0" text="ID">
+            <TextField fx:id="tfCargo" layoutX="762.0" layoutY="876.0" prefHeight="50.0" prefWidth="230.0" promptText="Ex.: Farmaceutico" styleClass="Textfield" stylesheets="@design/AllPagesDesign.css" />
+            <Label layoutX="940.0" layoutY="953.0" text="CPF">
                <font>
                   <Font size="30.0" />
                </font>
             </Label>
-            <TextField layoutX="1119.0" layoutY="801.0" prefHeight="50.0" prefWidth="150.0" styleClass="Textfield" stylesheets="@design/AllPagesDesign.css" />
-            <Button layoutX="1338.0" layoutY="707.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="340.0" styleClass="Button" stylesheets="@design/AllPagesDesign.css" text="Adicionar">
+            <TextField fx:id="tfCpf" layoutX="1002.0" layoutY="951.0" prefHeight="50.0" prefWidth="168.0" promptText="Ex.: 999.999.999-99" styleClass="Textfield" stylesheets="@design/AllPagesDesign.css" />
+            <Label layoutX="665.0" layoutY="953.0" text="Salário">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tfSalario" layoutX="770.0" layoutY="951.0" prefHeight="50.0" prefWidth="160.0" promptText="R$" styleClass="Textfield" stylesheets="@design/AllPagesDesign.css" />
+            <Label layoutX="1026.0" layoutY="879.0" text="ID">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tfId" layoutX="1078.0" layoutY="876.0" prefHeight="50.0" prefWidth="60.0" styleClass="Textfield" stylesheets="@design/AllPagesDesign.css">
+               <font>
+                  <Font size="18.0" />
+               </font></TextField>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffe6e6" height="214.0" layoutX="1198.0" layoutY="710.0" stroke="#c9c9c9" strokeType="INSIDE" width="200.0" />
+            <Label layoutX="1248.0" layoutY="711.0" text="Usuário">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tfUser" layoutX="1218.0" layoutY="758.0" prefHeight="50.0" prefWidth="160.0" styleClass="Textfield" stylesheets="@design/AllPagesDesign.css" />
+            <Label layoutX="1258.0" layoutY="811.0" text="Senha">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tfPass" layoutX="1218.0" layoutY="856.0" prefHeight="50.0" prefWidth="160.0" styleClass="Textfield" stylesheets="@design/AllPagesDesign.css" />
+            <Button layoutX="1439.0" layoutY="710.0" mnemonicParsing="false" onAction="#AddFuncionarioInfoAction" prefHeight="90.0" prefWidth="340.0" styleClass="Button" stylesheets="@design/AllPagesDesign.css" text="Adicionar">
                <font>
                   <Font size="28.0" />
                </font></Button>
-            <Button layoutX="1338.0" layoutY="929.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="340.0" styleClass="Button" stylesheets="@design/AllPagesDesign.css" text="Remover" textFill="RED">
+            <Button layoutX="1439.0" layoutY="932.0" mnemonicParsing="false" onAction="#RemoveFuncionarioInfoAction" prefHeight="90.0" prefWidth="340.0" styleClass="Button" stylesheets="@design/AllPagesDesign.css" text="Remover" textFill="RED">
                <font>
                   <Font size="28.0" />
                </font></Button>
-            <Button layoutX="1338.0" layoutY="819.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="340.0" styleClass="Button" stylesheets="@design/AllPagesDesign.css" text="Alterar">
+            <Button layoutX="1439.0" layoutY="822.0" mnemonicParsing="false" onAction="#AlterFuncionarioInfoAction" prefHeight="90.0" prefWidth="340.0" styleClass="Button" stylesheets="@design/AllPagesDesign.css" text="Alterar">
                <font>
                   <Font size="28.0" />
+               </font>
+            </Button>
+            <Button layoutX="1222.0" layoutY="950.0" mnemonicParsing="false" onAction="#clearTextFields" prefHeight="54.0" prefWidth="153.0" styleClass="Button" stylesheets="@design/AllPagesDesign.css" text="Limpar">
+               <font>
+                  <Font size="20.0" />
                </font>
             </Button>
          </children>

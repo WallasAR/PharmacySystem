@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
@@ -108,56 +109,82 @@
                   </Pane>
                </children>
             </Pane>
-            <TableView fx:id="tvTableClient" layoutX="700.0" layoutY="160.0" prefHeight="500.0" prefWidth="1010.0" styleClass="Table" stylesheets="@design/AllPagesDesign.css">
+            <TableView fx:id="tbCliente" layoutX="700.0" layoutY="160.0" onMouseClicked="#getItemsAction" prefHeight="500.0" prefWidth="1010.0" stylesheets="@design/AllPagesDesign.css">
                <columns>
-                  <TableColumn fx:id="tcClientId" prefWidth="110.0" text="ID" />
-                  <TableColumn fx:id="tcClientName" prefWidth="647.0" text="Nome" />
-                  <TableColumn fx:id="tcClientPass" prefWidth="251.33331298828125" text="Senha" />
+                  <TableColumn fx:id="clIdcli" prefWidth="65.0" styleClass="TableColumn" text="ID" />
+                  <TableColumn fx:id="clNomecli" prefWidth="300.0" styleClass="TableColumn" text="Nome" />
+                   <TableColumn fx:id="clSobrenomeli" minWidth="0.0" prefWidth="300.0" styleClass="TableColumn" text="Sobrenome" />
+                  <TableColumn fx:id="clUsuario" minWidth="0.0" prefWidth="250.0" styleClass="TableColumn" text="Usuário" />
+                  <TableColumn fx:id="clPasscli" minWidth="0.0" prefWidth="250.0" styleClass="TableColumn" text="Senha" />
                </columns>
+               <styleClass>
+                  <String fx:value="TableView" />
+                  <String fx:value="table-view" />
+               </styleClass>
             </TableView>
-            <Label layoutX="727.0" layoutY="96.0" text="Nome">
+            <Label layoutX="704.0" layoutY="69.0" text="Campo de pesquisa">
                <font>
-                  <Font size="30.0" />
+                  <Font size="20.0" />
                </font>
             </Label>
-            <TextField layoutX="843.0" layoutY="95.0" prefHeight="50.0" prefWidth="590.0" styleClass="Textfield" stylesheets="@design/AllPagesDesign.css" />
-            <Button layoutX="1463.0" layoutY="93.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="230.0" styleClass="Button" stylesheets="@design/AllPagesDesign.css" text="Pesquisar">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Button>
+            <TextField fx:id="tfSearch" layoutX="700.0" layoutY="101.0" prefHeight="50.0" prefWidth="352.0" promptText="Palavras-chave (nome, sobrenome, etc)" styleClass="Textfield" stylesheets="@design/AllPagesDesign.css" />
             <Rectangle arcHeight="10.0" arcWidth="10.0" fill="#ffffff5c" height="360.0" layoutX="700.0" layoutY="686.0" stroke="#00000032" strokeType="INSIDE" width="1010.0" />
             <Label layoutX="742.0" layoutY="727.0" text="Nome">
                <font>
                   <Font size="30.0" />
                </font>
             </Label>
-            <TextField id="Textfield" layoutX="839.0" layoutY="725.0" prefHeight="50.0" prefWidth="430.0" promptText="Ex.: Júlia" styleClass="Textfield" stylesheets="@design/AllPagesDesign.css" />
-            <Label layoutX="742.0" layoutY="805.0" text="Senha">
+            <TextField id="Textfield" fx:id="tfNome" layoutX="839.0" layoutY="725.0" prefHeight="50.0" prefWidth="430.0" promptText="Ex.: Albert" styleClass="Textfield" stylesheets="@design/AllPagesDesign.css" />
+            <Label layoutX="742.0" layoutY="799.0" text="Sobrenome">
                <font>
                   <Font size="30.0" />
                </font>
             </Label>
-            <TextField layoutX="839.0" layoutY="803.0" prefHeight="50.0" prefWidth="190.0" styleClass="Textfield" stylesheets="@design/AllPagesDesign.css" />
-            <Label layoutX="1068.0" layoutY="806.0" text="ID">
+            <TextField id="Textfield" fx:id="tfSobrenome" layoutX="909.0" layoutY="797.0" prefHeight="50.0" prefWidth="360.0" promptText="Ex.: Eistein" styleClass="Textfield" stylesheets="@design/AllPagesDesign.css" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffe6e6" height="144.0" layoutX="728.0" layoutY="864.0" stroke="#c9c9c9" strokeType="INSIDE" width="360.0" />
+            <Label layoutX="742.0" layoutY="875.0" text="Usuário">
                <font>
                   <Font size="30.0" />
                </font>
             </Label>
-            <TextField layoutX="1119.0" layoutY="801.0" prefHeight="50.0" prefWidth="150.0" styleClass="Textfield" stylesheets="@design/AllPagesDesign.css" />
-            <Button id="Button" layoutX="1338.0" layoutY="707.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="340.0" styleClass="Button" stylesheets="@design/AllPagesDesign.css" text="Adicionar">
+            <TextField fx:id="tfUser" layoutX="860.0" layoutY="873.0" prefHeight="50.0" prefWidth="212.0" styleClass="Textfield" stylesheets="@design/AllPagesDesign.css" />
+            <Label layoutX="742.0" layoutY="951.0" text="Senha">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tfPass" layoutX="841.0" layoutY="949.0" prefHeight="50.0" prefWidth="230.0" styleClass="Textfield" stylesheets="@design/AllPagesDesign.css" />
+            <Label layoutX="1134.0" layoutY="875.0" text="ID">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tfId" layoutX="1196.0" layoutY="873.0" prefHeight="50.0" prefWidth="73.0" stylesheets="@design/AllPagesDesign.css">
+               <styleClass>
+                  <String fx:value="Textfield" />
+                  <String fx:value="tfId" />
+               </styleClass>
+               <font>
+                  <Font size="18.0" />
+               </font></TextField>
+            <Button id="Button" layoutX="1338.0" layoutY="707.0" mnemonicParsing="false" onAction="#AddClientInfoAction" prefHeight="90.0" prefWidth="340.0" styleClass="Button" stylesheets="@design/AllPagesDesign.css" text="Adicionar">
                <font>
                   <Font size="28.0" />
                </font>
             </Button>
-            <Button layoutX="1338.0" layoutY="929.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="340.0" styleClass="Button" stylesheets="@design/AllPagesDesign.css" text="Remover" textFill="RED">
+            <Button id="Button" layoutX="1338.0" layoutY="819.0" mnemonicParsing="false" onAction="#AlterClientInfoAction" prefHeight="90.0" prefWidth="340.0" styleClass="Button" stylesheets="@design/AllPagesDesign.css" text="Alterar">
                <font>
                   <Font size="28.0" />
                </font>
             </Button>
-            <Button id="Button" layoutX="1338.0" layoutY="819.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="340.0" styleClass="Button" stylesheets="@design/AllPagesDesign.css" text="Alterar">
+            <Button layoutX="1338.0" layoutY="929.0" mnemonicParsing="false" onAction="#RemoveClientInfoAction" prefHeight="90.0" prefWidth="340.0" styleClass="Button" stylesheets="@design/AllPagesDesign.css" text="Remover" textFill="RED">
                <font>
                   <Font size="28.0" />
+               </font>
+            </Button>
+            <Button layoutX="1120.0" layoutY="951.0" mnemonicParsing="false" onAction="#clearTextFields" prefHeight="54.0" prefWidth="153.0" styleClass="Button" stylesheets="@design/AllPagesDesign.css" text="Limpar">
+               <font>
+                  <Font size="20.0" />
                </font>
             </Button>
             <Label layoutX="955.0" layoutY="15.0" text="Clientes cadastrados">
