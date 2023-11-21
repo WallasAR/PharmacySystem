@@ -32,7 +32,7 @@ public class ClientController implements Initializable {
     // Ações para troca de cena
     @FXML
     protected void MainAction(MouseEvent e) {
-        if (AlertMsg.msgConfirmLogout("Confimar Logout","Deseja sair para a página de login?")) {
+        if (AlertMsg.msgConfirm("Confimar Logout","Deseja sair para a página de login?")) {
             Main.changedScene("main");
         }
     }
@@ -61,7 +61,7 @@ public class ClientController implements Initializable {
     @FXML
     private TableColumn clUsuario;
     @FXML
-    private TableColumn clPasscli;
+    private TableColumn clFoneCli;
     @FXML
     private TextField tfNome;
     @FXML
@@ -69,7 +69,7 @@ public class ClientController implements Initializable {
     @FXML
     private TextField tfUser;
     @FXML
-    private TextField tfPass;
+    private TextField tfFone;
     @FXML
     private TextField tfId;
     @FXML
@@ -88,7 +88,7 @@ public class ClientController implements Initializable {
             String valorDaColuna2 = resultado.getString("nome");
             String valorDaColuna3 = resultado.getString("sobrenome");
             String valorDaColina4 = resultado.getString("usuario");
-            String valorDaColuna5 = resultado.getString("password");
+            String valorDaColuna5 = resultado.getString("telefone");
 
             ClienteTable cliente = new ClienteTable(valorDaColuna1, valorDaColuna2, valorDaColuna3, valorDaColina4, valorDaColuna5);
             clientes.add(cliente);
@@ -99,7 +99,7 @@ public class ClientController implements Initializable {
         clNomecli.setCellValueFactory(new PropertyValueFactory<>("nomecli"));
         clSobrenomeli.setCellValueFactory(new PropertyValueFactory<>("sobrenome"));
         clUsuario.setCellValueFactory(new PropertyValueFactory<>("usuario"));
-        clPasscli.setCellValueFactory(new PropertyValueFactory<>("senha"));
+        clFoneCli.setCellValueFactory(new PropertyValueFactory<>("fone"));
 
         FilteredList<ClienteTable> filteredLis = new FilteredList<>(datacli, b -> true);
 
@@ -117,7 +117,7 @@ public class ClientController implements Initializable {
                     return true;
                 } else if(clienteTable.getUsuario().toLowerCase().indexOf(searchKeyowrds) > -1){
                     return true;
-                } else if(clienteTable.getSenha().toLowerCase().indexOf(searchKeyowrds) > -1){
+                } else if(clienteTable.getFone().toLowerCase().indexOf(searchKeyowrds) > -1){
                     return true;
                 } else {
                     return false;
@@ -149,40 +149,40 @@ public class ClientController implements Initializable {
         tfNome.setText((String) clNomecli.getCellData(index));
         tfSobrenome.setText((String) clSobrenomeli.getCellData(index));
         tfUser.setText((String) clUsuario.getCellData(index));
-        tfPass.setText((String) clPasscli.getCellData(index));
+        tfFone.setText((String) clFoneCli.getCellData(index));
     }
 
     public void clearTextFields(){
-        tfId.setText("");tfNome.setText(""); tfSobrenome.setText(""); tfUser.setText(""); tfPass.setText("");
+        tfId.setText("");tfNome.setText(""); tfSobrenome.setText(""); tfUser.setText(""); tfFone.setText("");
     }
 
     //Action Buttons
     public void AddClientInfoAction(javafx.event.ActionEvent event) throws SQLException{
-        if (tfNome.getText().isEmpty() && tfSobrenome.getText().isEmpty() && tfUser.getText().isEmpty() && tfPass.getText().isEmpty()){
+        if (tfNome.getText().isEmpty() && tfSobrenome.getText().isEmpty() && tfUser.getText().isEmpty() && tfFone.getText().isEmpty()){
             AlertMsg alertMsg = new AlertMsg();
             alertMsg.msgInformation("Certifique-se de preencher todos.");
         } else {
-            banco.inserircliente(tfNome.getText(), tfSobrenome.getText(), tfUser.getText(), tfPass.getText());
+            banco.inserircliente(tfNome.getText(), tfSobrenome.getText(), tfUser.getText(), tfFone.getText());
             clearTextFields();
             tabelacliente();
         }
     }
     public void AlterClientInfoAction(javafx.event.ActionEvent event) throws SQLException {
-        if (tfNome.getText().isEmpty() && tfSobrenome.getText().isEmpty() && tfUser.getText().isEmpty() && tfPass.getText().isEmpty()){
+        if (tfNome.getText().isEmpty() && tfSobrenome.getText().isEmpty() && tfUser.getText().isEmpty() && tfFone.getText().isEmpty()){
             AlertMsg alertMsg = new AlertMsg();
             alertMsg.msgInformation("Certifique-se de preencher todos.");
         } else {
-            banco.updateClient(tfNome.getText(), tfSobrenome.getText(), tfUser.getText(), tfPass.getText(), tfId.getText());
+            banco.updateClient(tfNome.getText(), tfSobrenome.getText(), tfUser.getText(), tfFone.getText(), tfId.getText());
             clearTextFields();
             tabelacliente();
         }
     }
     public void RemoveClientInfoAction(javafx.event.ActionEvent event) throws SQLException{
-        if (tfNome.getText().isEmpty() && tfSobrenome.getText().isEmpty() && tfUser.getText().isEmpty() && tfPass.getText().isEmpty()){
+        if (tfNome.getText().isEmpty() && tfSobrenome.getText().isEmpty() && tfUser.getText().isEmpty() && tfFone.getText().isEmpty()){
             AlertMsg alertMsg = new AlertMsg();
             alertMsg.msgInformation("Certifique-se de preencher todos.");
 
-        } else if (AlertMsg.msgConfirmLogout("Confirmação de exclusão", "Deseja remover o cliente " + tfNome.getText() + " do sistema?")){
+        } else if (AlertMsg.msgConfirm("Confirmação de exclusão", "Deseja remover o cliente " + tfNome.getText() + " do sistema?")){
             banco.deletarcliente(tfId.getText());
             clearTextFields();
             tabelacliente();

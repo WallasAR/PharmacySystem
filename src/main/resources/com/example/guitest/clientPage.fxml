@@ -115,7 +115,7 @@
                   <TableColumn fx:id="clNomecli" prefWidth="300.0" styleClass="TableColumn" text="Nome" />
                    <TableColumn fx:id="clSobrenomeli" minWidth="0.0" prefWidth="300.0" styleClass="TableColumn" text="Sobrenome" />
                   <TableColumn fx:id="clUsuario" minWidth="0.0" prefWidth="250.0" styleClass="TableColumn" text="Usuário" />
-                  <TableColumn fx:id="clPasscli" minWidth="0.0" prefWidth="250.0" styleClass="TableColumn" text="Senha" />
+                  <TableColumn fx:id="clFoneCli" minWidth="0.0" prefWidth="250.0" styleClass="TableColumn" text="Telefone" />
                </columns>
                <styleClass>
                   <String fx:value="TableView" />
@@ -141,20 +141,19 @@
                </font>
             </Label>
             <TextField id="Textfield" fx:id="tfSobrenome" layoutX="909.0" layoutY="797.0" prefHeight="50.0" prefWidth="360.0" promptText="Ex.: Eistein" styleClass="Textfield" stylesheets="@design/AllPagesDesign.css" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffe6e6" height="144.0" layoutX="728.0" layoutY="864.0" stroke="#c9c9c9" strokeType="INSIDE" width="360.0" />
-            <Label layoutX="742.0" layoutY="875.0" text="Usuário">
+            <Label layoutX="744.0" layoutY="955.0" text="Usuário">
                <font>
                   <Font size="30.0" />
                </font>
             </Label>
-            <TextField fx:id="tfUser" layoutX="860.0" layoutY="873.0" prefHeight="50.0" prefWidth="212.0" styleClass="Textfield" stylesheets="@design/AllPagesDesign.css" />
-            <Label layoutX="742.0" layoutY="951.0" text="Senha">
+            <TextField fx:id="tfUser" layoutX="862.0" layoutY="953.0" prefHeight="50.0" prefWidth="212.0" styleClass="Textfield" stylesheets="@design/AllPagesDesign.css" />
+            <Label layoutX="745.0" layoutY="875.0" text="Telefone">
                <font>
                   <Font size="30.0" />
                </font>
             </Label>
-            <TextField fx:id="tfPass" layoutX="841.0" layoutY="949.0" prefHeight="50.0" prefWidth="230.0" styleClass="Textfield" stylesheets="@design/AllPagesDesign.css" />
-            <Label layoutX="1134.0" layoutY="875.0" text="ID">
+            <TextField fx:id="tfFone" layoutX="873.0" layoutY="873.0" prefHeight="50.0" prefWidth="243.0" styleClass="Textfield" stylesheets="@design/AllPagesDesign.css" />
+            <Label layoutX="1149.0" layoutY="875.0" text="ID">
                <font>
                   <Font size="30.0" />
                </font>

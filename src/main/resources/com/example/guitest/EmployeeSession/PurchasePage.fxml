@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -15,13 +16,13 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.session.employee.PurchaseController">
    <children>
       <Pane prefHeight="200.0" prefWidth="200.0">
          <children>
             <Pane prefHeight="1081.0" prefWidth="512.0" styleClass="SideHome" stylesheets="@../design/HomeDesign.css">
                <children>
-                  <Pane fx:id="btHome1" layoutY="302.0" prefHeight="70.0" prefWidth="512.0" styleClass="btHome" stylesheets="@../design/HomeDesign.css">
+                  <Pane layoutY="302.0" prefHeight="70.0" prefWidth="512.0" styleClass="btHome" stylesheets="@../design/HomeDesign.css">
                      <children>
                         <Label layoutX="-1.0" layoutY="-1.0" prefHeight="70.0" prefWidth="512.0" styleClass="labelButtonHome" stylesheets="@../design/HomeDesign.css" text="           Compras" textAlignment="CENTER" textFill="WHITE">
                            <font>
@@ -35,7 +36,7 @@
                         </ImageView>
                      </children>
                   </Pane>
-                  <Pane layoutY="416.0" prefHeight="70.0" prefWidth="512.0" styleClass="btHome" stylesheets="@../design/HomeDesign.css">
+                  <Pane layoutY="416.0" onMouseClicked="#MedOrderAction" prefHeight="70.0" prefWidth="512.0" styleClass="btHome" stylesheets="@../design/HomeDesign.css">
                      <children>
                         <Label layoutY="1.0" prefHeight="70.0" prefWidth="511.0" styleClass="labelButtonHome" stylesheets="@../design/HomeDesign.css" text="           Encomendas" textAlignment="CENTER" textFill="WHITE">
                            <font>
@@ -59,13 +60,13 @@
                         <Font name="Arial Bold" size="30.0" />
                      </font>
                   </Text>
-                  <Label layoutX="140.0" layoutY="181.0" text="Cliente" textFill="WHITE">
+                  <Label fx:id="labelShowNameFunc" layoutX="140.0" layoutY="181.0" text="Colab." textFill="WHITE">
                      <font>
                         <Font name="Arial Black" size="56.0" />
                      </font>
                   </Label>
                   <Line endX="227.66665649414062" layoutX="238.0" layoutY="268.0" startX="-192.3333282470703" stroke="WHITE" />
-                  <Pane layoutY="970.0" prefHeight="70.0" prefWidth="512.0" styleClass="btHome" stylesheets="@../design/HomeDesign.css">
+                  <Pane layoutY="970.0" onMouseClicked="#MainAction" prefHeight="70.0" prefWidth="512.0" styleClass="btHome" stylesheets="@../design/HomeDesign.css">
                      <children>
                         <Label layoutY="-2.0" prefHeight="72.0" prefWidth="513.0" styleClass="labelButtonHome" stylesheets="@../design/HomeDesign.css" text="            Logout" textAlignment="CENTER" textFill="WHITE">
                            <font>
@@ -81,46 +82,127 @@
                   </Pane>
                </children>
             </Pane>
-            <Label layoutX="955.0" layoutY="15.0" text="Medicamentos Disponíveis">
+            <Label layoutX="570.0" layoutY="37.0" text="Medicamentos Disponíveis">
                <font>
                   <Font name="Arial Black" size="36.0" />
                </font>
             </Label>
-            <TableView layoutX="700.0" layoutY="160.0" prefHeight="445.0" prefWidth="1010.0">
+            <TableView fx:id="tvCompra" layoutX="570.0" layoutY="185.0" onMouseClicked="#getItemsActionCompra" prefHeight="500.0" prefWidth="526.0" stylesheets="@../design/AllPagesDesign.css">
                <columns>
-                  <TableColumn prefWidth="119.3333740234375" text="ID" />
-                  <TableColumn prefWidth="720.6666259765625" text="Nome" />
-                  <TableColumn prefWidth="169.0" text="Salário" />
+                  <TableColumn fx:id="tcIdmedi" prefWidth="50.0" text="ID" />
+                  <TableColumn fx:id="tcNomemedi" prefWidth="200.0" text="Nome" />
+                  <TableColumn fx:id="tcQuantimedi" prefWidth="150.0" text="Quantidade" />
+                  <TableColumn fx:id="tcPreçomedi" prefWidth="150.0" text="Preço" />
+                  <TableColumn fx:id="tcTipomedi" prefWidth="200.0" text="Tarja" />
                </columns>
             </TableView>
-            <Rectangle arcHeight="10.0" arcWidth="10.0" fill="#ffffff5c" height="360.0" layoutX="700.0" layoutY="686.0" stroke="#00000032" strokeType="INSIDE" width="1010.0" />
-            <Label layoutX="727.0" layoutY="96.0" text="Nome">
+            <Rectangle arcHeight="10.0" arcWidth="10.0" fill="#7c7c7c63" height="99.0" layoutX="1425.0" layoutY="962.0" stroke="#00000032" strokeType="INSIDE" width="452.0" />
+            <Label layoutX="1440.0" layoutY="983.0" text="Total: R$" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="50.0" />
+               </font>
+            </Label>
+            <Button layoutX="1621.0" layoutY="606.0" mnemonicParsing="false" onAction="#RemoverDoCarrinho" prefHeight="50.0" prefWidth="150.0" styleClass="ButtonRemove" stylesheets="@../design/PurchasePageDesign.css" text="Remover" textFill="RED">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+            <Label layoutX="1286.0" layoutY="38.0" text="Carrinho de compras">
+               <font>
+                  <Font name="Arial Black" size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelShowTotal" layoutX="1659.0" layoutY="983.0" prefHeight="58.0" prefWidth="203.0" text="--" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="50.0" />
+               </font>
+            </Label>
+            <Label layoutX="574.0" layoutY="109.0" text="Campo de pesquisa">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tfSearch" layoutX="570.0" layoutY="141.0" prefHeight="30.0" prefWidth="352.0" promptText="Palavras-chave (nome, sobrenome, etc)" styleClass="Textfield" stylesheets="@../design/AllPagesDesign.css" />
+            <Separator layoutX="1161.0" layoutY="92.0" orientation="VERTICAL" prefHeight="896.0" prefWidth="0.0" />
+            <Label layoutX="570.0" layoutY="733.0" text="Nome">
                <font>
                   <Font size="30.0" />
                </font>
             </Label>
-            <TextField layoutX="843.0" layoutY="95.0" prefHeight="50.0" prefWidth="590.0" styleClass="Textfield" stylesheets="@../design/AllPagesDesign.css" />
-            <Button layoutX="1463.0" layoutY="93.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="230.0" styleClass="Button" stylesheets="@../design/AllPagesDesign.css" text="Pesquisar">
+            <TextField fx:id="tfNome" layoutX="667.0" layoutY="731.0" prefHeight="50.0" prefWidth="430.0" promptText="Ex.: Azitromicina" styleClass="Textfield" stylesheets="@../design/AllPagesDesign.css" />
+            <Label layoutX="833.0" layoutY="811.0" text="Tipo">
                <font>
-                  <Font size="24.0" />
-               </font>
-            </Button>
-            <Button layoutX="1338.0" layoutY="707.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="340.0" styleClass="Button" stylesheets="@../design/AllPagesDesign.css" text="Adicionar">
-               <font>
-                  <Font size="28.0" />
-               </font>
-            </Button>
-            <Button layoutX="1338.0" layoutY="821.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="340.0" styleClass="Button" stylesheets="@../design/AllPagesDesign.css" text="Remover" textFill="RED">
-               <font>
-                  <Font size="28.0" />
-               </font>
-            </Button>
-            <Label layoutX="979.0" layoutY="618.0" text="Carrinho de compras">
-               <font>
-                  <Font name="Arial Black" size="36.0" />
+                  <Font size="30.0" />
                </font>
             </Label>
-            <ListView layoutX="722.0" layoutY="692.0" prefHeight="348.0" prefWidth="462.0" />
+            <TextField fx:id="tfTipo" layoutX="914.0" layoutY="809.0" prefHeight="50.0" prefWidth="182.0" promptText="Preta/Vermelha/S.T" styleClass="Textfield" stylesheets="@../design/AllPagesDesign.css" />
+            <Label layoutX="570.0" layoutY="811.0" text="Quantidade">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tfQuantidade" layoutX="741.0" layoutY="809.0" prefHeight="50.0" prefWidth="74.0" promptText="UN" styleClass="Textfield" stylesheets="@../design/AllPagesDesign.css" />
+            <Label layoutX="574.0" layoutY="978.0" text="ID">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tfId" layoutX="616.0" layoutY="975.0" prefHeight="50.0" prefWidth="60.0" styleClass="Textfield" stylesheets="@../design/AllPagesDesign.css">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </TextField>
+            <Button layoutX="944.0" layoutY="890.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="153.0" styleClass="Button" stylesheets="@../design/AllPagesDesign.css" text="Limpar">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+            <ComboBox fx:id="Box" layoutX="1257.0" layoutY="737.0" prefHeight="37.0" prefWidth="227.0" promptText="Selecione o cliente" styleClass="ComboBox" stylesheets="@../design/PurchasePageDesign.css" />
+            <Label layoutX="1242.0" layoutY="685.0" text="Clientes cadastrados">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <Button layoutX="1687.0" layoutY="892.0" mnemonicParsing="false" onAction="#ConfirmarCompra" prefHeight="50.0" prefWidth="190.0" styleClass="ButtonStyle" stylesheets="@../design/PurchasePageDesign.css" text="Confirmar Compra">
+               <font>
+                  <Font name="Arial" size="20.0" />
+               </font>
+            </Button>
+            <Label layoutX="570.0" layoutY="894.0" text="Preço">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tfValor" layoutX="661.0" layoutY="892.0" prefHeight="50.0" prefWidth="156.0" promptText="R$" styleClass="Textfield" stylesheets="@../design/AllPagesDesign.css" />
+            <TableView fx:id="tvCarrinho" layoutX="1242.0" layoutY="98.0" prefHeight="500.0" prefWidth="526.0" stylesheets="@../design/PurchasePageDesign.css">
+               <columns>
+                  <TableColumn fx:id="tfIdmedi" prefWidth="50.0" text="ID" />
+                  <TableColumn fx:id="tfUser" prefWidth="150.0" text="Usuário" />
+                  <TableColumn fx:id="tfNomemedi" prefWidth="200.0" text="Medicamentos" />
+                  <TableColumn fx:id="tfQuantimedi" prefWidth="150.0" text="Quantidade" />
+                  <TableColumn fx:id="tfPreçomedi" prefWidth="150.0" text="Preço" />
+               </columns>
+            </TableView>
+            <Button layoutX="1242.0" layoutY="606.0" mnemonicParsing="false" onAction="#colocarRegistro" prefHeight="50.0" prefWidth="150.0" styleClass="ButtonStyle" stylesheets="@../design/PurchasePageDesign.css" text="Adicionar">
+               <font>
+                  <Font name="Arial" size="20.0" />
+               </font>
+            </Button>
+            <Label layoutX="1608.0" layoutY="688.0" text="ID">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tfIdCarrinho" layoutX="1650.0" layoutY="685.0" prefHeight="50.0" prefWidth="60.0" styleClass="Textfield" stylesheets="@../design/AllPagesDesign.css">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </TextField>
+            <Button layoutX="1430.0" layoutY="606.0" mnemonicParsing="false" onAction="#AtualizarCarrinho" prefHeight="50.0" prefWidth="150.0" styleClass="ButtonRemove" stylesheets="@../design/PurchasePageDesign.css" text="Atualizar" textFill="RED">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
          </children>
       </Pane>
    </children>

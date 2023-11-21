@@ -9,7 +9,9 @@ module com.example.guitest {
     requires java.desktop;
     requires java.sql;
 
+    opens com.session.employee to javafx.fxml;
     opens com.example.guitest to javafx.fxml;
     opens com.table.view to javafx.base;
     exports com.example.guitest;
+
 }

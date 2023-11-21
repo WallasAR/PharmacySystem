@@ -32,7 +32,7 @@ public class FuncController implements Initializable {
     Banco banco = new Banco();
     @FXML
     protected void MainAction(MouseEvent e) {
-        if (AlertMsg.msgConfirmLogout( "Confimar Logout", "Deseja sair para a página de login?")) {
+        if (AlertMsg.msgConfirm( "Confimar Logout", "Deseja sair para a página de login?")) {
             Main.changedScene("main");
         }
     }
@@ -204,7 +204,7 @@ public class FuncController implements Initializable {
             AlertMsg alertMsg = new AlertMsg();
             alertMsg.msgInformation("Certifique-se de preencher todos.");
 
-        } else if (AlertMsg.msgConfirmLogout("Confirmação de exclusão", "Deseja remover o funcionário " + tfNome.getText() + " do sistema?")) {
+        } else if (AlertMsg.msgConfirm("Confirmação de exclusão", "Deseja remover o funcionário " + tfNome.getText() + " do sistema?")) {
             banco.deletarfuncionario(Integer.parseInt(tfId.getText()));
             clearTextFields();
             tabelafuncionarios();

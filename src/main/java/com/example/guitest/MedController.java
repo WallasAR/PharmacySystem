@@ -32,7 +32,7 @@ public class MedController implements Initializable {
     Banco banco = new Banco();
     @FXML
     protected void MainAction(MouseEvent e) {
-        if (AlertMsg.msgConfirmLogout("Confimar Logout", "Deseja sair para a página de login?")) {
+        if (AlertMsg.msgConfirm("Confimar Logout", "Deseja sair para a página de login?")) {
             Main.changedScene("main");
         }
     }
@@ -176,7 +176,7 @@ public class MedController implements Initializable {
         if (tfId.getText().isEmpty() && tfNome.getText().isEmpty() && tfQuantidade.getText().isEmpty() && tfTipo.getText().isEmpty() && tfValor.getText().isEmpty()) {
             AlertMsg alertMsg = new AlertMsg();
             alertMsg.msgInformation("Certifique-se de preencher todos.");
-        } else if (AlertMsg.msgConfirmLogout("Confirmação de exclusão", "Deseja remover o medicamento " + tfNome.getText() + " do sistema?")) {
+        } else if (AlertMsg.msgConfirm("Confirmação de exclusão", "Deseja remover o medicamento " + tfNome.getText() + " do sistema?")) {
             banco.deletarmedicamento(Integer.parseInt(tfId.getText()));
             clearTextFields();
             tabelamedi();

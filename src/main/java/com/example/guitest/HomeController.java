@@ -16,7 +16,7 @@ public class HomeController implements Initializable {
 
     @FXML
     protected void MainAction(MouseEvent e) {
-    if (AlertMsg.msgConfirmLogout("Confimar Logout", "Deseja sair para a página de login?")) {
+    if (AlertMsg.msgConfirm("Confimar Logout", "Deseja sair para a página de login?")) {
             Main.changedScene("main");
         }
     }

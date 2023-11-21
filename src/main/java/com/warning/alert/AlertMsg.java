@@ -9,7 +9,7 @@ public class AlertMsg {
     static ButtonType btnCancel = new ButtonType("Cancelar");
     static boolean answer;
 
-    public static boolean msgConfirmLogout(String headermsg, String msg){
+    public static boolean msgConfirm(String headermsg, String msg){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Alerta");
         alert.setHeaderText(headermsg);

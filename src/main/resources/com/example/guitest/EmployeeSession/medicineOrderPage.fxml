@@ -15,13 +15,13 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.session.employee.medOrderController">
     <children>
         <Pane prefHeight="200.0" prefWidth="200.0">
             <children>
                 <Pane prefHeight="1081.0" prefWidth="512.0" styleClass="SideHome" stylesheets="@../design/HomeDesign.css">
                     <children>
-                        <Pane fx:id="btHome1" layoutY="302.0" prefHeight="70.0" prefWidth="512.0" styleClass="btHome" stylesheets="@../design/HomeDesign.css">
+                        <Pane layoutY="302.0" onMouseClicked="#SaleAction" prefHeight="70.0" prefWidth="512.0" styleClass="btHome" stylesheets="@../design/HomeDesign.css">
                             <children>
                                 <Label layoutX="-1.0" layoutY="-1.0" prefHeight="70.0" prefWidth="512.0" styleClass="labelButtonHome" stylesheets="@../design/HomeDesign.css" text="           Compras" textAlignment="CENTER" textFill="WHITE">
                                     <font>
@@ -30,7 +30,7 @@
                                 </Label>
                                 <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="14.0" layoutY="5.0" pickOnBounds="true">
                                     <image>
-                                        <Image url="@../images/Home_icon.png" />
+                                        <Image url="@../images/Client_shopping_icon.png" />
                                     </image>
                                 </ImageView>
                             </children>
@@ -44,7 +44,7 @@
                                 </Label>
                                 <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="14.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@../images/Home_client_icon.png" />
+                                        <Image url="@../images/Client_order_icon.png" />
                                     </image>
                                 </ImageView>
                             </children>
@@ -65,7 +65,7 @@
                             </font>
                         </Label>
                         <Line endX="227.66665649414062" layoutX="238.0" layoutY="268.0" startX="-192.3333282470703" stroke="WHITE" />
-                        <Pane layoutY="970.0" prefHeight="70.0" prefWidth="512.0" styleClass="btHome" stylesheets="@../design/HomeDesign.css">
+                        <Pane layoutY="970.0" onMouseClicked="#MainAction" prefHeight="70.0" prefWidth="512.0" styleClass="btHome" stylesheets="@../design/HomeDesign.css">
                             <children>
                                 <Label layoutY="-2.0" prefHeight="72.0" prefWidth="513.0" styleClass="labelButtonHome" stylesheets="@../design/HomeDesign.css" text="            Logout" textAlignment="CENTER" textFill="WHITE">
                                     <font>
@@ -86,11 +86,13 @@
                         <Font name="Arial Black" size="36.0" />
                     </font>
                 </Label>
-                <TableView layoutX="700.0" layoutY="160.0" prefHeight="445.0" prefWidth="1010.0">
+                <TableView fx:id="tbCompra" layoutX="700.0" layoutY="160.0" prefHeight="445.0" prefWidth="1010.0">
                     <columns>
-                        <TableColumn prefWidth="119.3333740234375" text="ID" />
-                        <TableColumn prefWidth="720.6666259765625" text="Nome" />
-                        <TableColumn prefWidth="169.0" text="Salário" />
+                        <TableColumn fx:id="tcIdmedi" prefWidth="119.3333740234375" text="ID" />
+                        <TableColumn fx:id="tcNomemedi" prefWidth="250.6666259765625" text="Nome" />
+                        <TableColumn fx:id="tcQuantimedi" prefWidth="150.6666259765625" text="Quantidade" />
+                        <TableColumn fx:id="tcTipomedi" prefWidth="200.6666259765625" text="Tipo" />
+                        <TableColumn fx:id="tcPreçomedi" prefWidth="180.0" text="Preço" />
                     </columns>
                 </TableView>
                 <Rectangle arcHeight="10.0" arcWidth="10.0" fill="#ffffff5c" height="360.0" layoutX="700.0" layoutY="686.0" stroke="#00000032" strokeType="INSIDE" width="1010.0" />

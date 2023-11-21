@@ -2,6 +2,8 @@ package com.db.bank;
 
 import com.warning.alert.AlertMsg;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 
 import javax.swing.*;
 import java.sql.*;
@@ -101,7 +103,7 @@ public class Banco {
     public void tablecliete(){
         try{
             if(!tabelaExiste("cliente")){
-                executar.execute("CREATE TABLE cliente(id INT NOT NULL AUTO_INCREMENT, nome VARCHAR(25), sobrenome VARCHAR(25), usuario VARCHAR(25), password VARCHAR(25), PRIMARY KEY(id))");
+                executar.execute("CREATE TABLE cliente(id INT NOT NULL AUTO_INCREMENT, nome VARCHAR(25), sobrenome VARCHAR(25), usuario VARCHAR(25), telefone VARCHAR(30), PRIMARY KEY(id))");
             }else{
                 System.out.println();
             }
@@ -113,7 +115,7 @@ public class Banco {
         boolean existe = false;
         Connection connection  = conexao();
         try{
-            String verificar = "SELECT * FROM funcionarios WHERE usuario = ?";
+            String verificar = "SELECT * FROM cliente WHERE usuario = ?";
             try(PreparedStatement verificarexis = connection.prepareStatement(verificar)){
                 verificarexis.setString(1, user);
                 try(ResultSet verificarresultado = verificarexis.executeQuery()){
@@ -125,18 +127,18 @@ public class Banco {
         }
         return existe;
     }
-    public void inserircliente(String nomecli, String sobrenomecli, String user, String pass){
+    public void inserircliente(String nomecli, String sobrenomecli, String user, String fone){
         try{
             if(verificarusuario(user)) {
                 AlertMsg alert = new AlertMsg();
                 alert.msgInformation("Nome de usuário ja está sendo utilizado, tente novamente.");
             }else{
-                String cliente = ("INSERT INTO cliente (nome, sobrenome, usuario, password) VALUES(?,?,?,?)");
+                String cliente = ("INSERT INTO cliente (nome, sobrenome, usuario, telefone) VALUES(?,?,?,?)");
                 PreparedStatement preparedStatement = connection.prepareStatement(cliente);
                 preparedStatement.setString(1, nomecli);
                 preparedStatement.setString(2, sobrenomecli);
                 preparedStatement.setString(3, user);
-                preparedStatement.setString(4, pass);
+                preparedStatement.setString(4, fone);
 
                 preparedStatement.executeUpdate();
             }
@@ -405,6 +407,72 @@ public class Banco {
         preparedStatement.setString(3, tipo);
         preparedStatement.setFloat(4, valor);
         preparedStatement.setInt(5,idfunc);
+        preparedStatement.executeUpdate();
+    }
+    public void registro(){
+        try {
+            if(!tabelaExiste("registros")) {
+                executar.execute("CREATE TABLE registros(id INT NOT NULL AUTO_INCREMENT, usuario VARCHAR(25), medicamento VARCHAR(25), quantidade INT, valor FLOAT, data VARCHAR(50), PRIMARY KEY(id))");
+            }else{
+                System.out.println();
+            }
+        }catch (SQLException e){
+            System.out.println(e);
+        }
+    }
+
+    public void inseriregistro(String user, String medicamento, int quantidade, float valor, String date) throws SQLException {
+        String dados = ("INSERT INTO registros (usuario, medicamento, quantidade, valor, data) VALUES (?, ?, ?,?, ?)");
+        PreparedStatement preparedStatement = connection.prepareStatement(dados);
+        preparedStatement.setString(1, user);
+        preparedStatement.setString(2, medicamento);
+        preparedStatement.setInt(3, quantidade);
+        preparedStatement.setFloat(4, valor);
+        preparedStatement.setString(5, date);
+
+        preparedStatement.executeUpdate();
+    }
+    public void carrinho(){
+        try {
+            if(!tabelaExiste("carrinho")) {
+                executar.execute("CREATE TABLE carrinho(id INT NOT NULL AUTO_INCREMENT, usuario VARCHAR(25), medicamento VARCHAR(25), quantidade INT, valor FLOAT, PRIMARY KEY(id))");
+            }else{
+                System.out.println();
+            }
+        }catch (SQLException e){
+            System.out.println(e);
+        }
+    }
+    public void inserircarrinho(String user, String medicamento, int quantidade, float valor) throws SQLException {
+        String dados = ("INSERT INTO carrinho (usuario, medicamento, quantidade, valor) VALUES (?, ?, ?,?)");
+        PreparedStatement preparedStatement = connection.prepareStatement(dados);
+        preparedStatement.setString(1, user);
+        preparedStatement.setString(2, medicamento);
+        preparedStatement.setInt(3, quantidade);
+        preparedStatement.setFloat(4, valor);
+
+        preparedStatement.executeUpdate();
+    }
+    public void encomendas(){
+        try {
+            if(!tabelaExiste("encomendas")) {
+                executar.execute("CREATE TABLE encomendas(id INT NOT NULL AUTO_INCREMENT, usuario VARCHAR(25), medicamento VARCHAR(25), quantidade INT, data VARCHAR(50), status VARCHAR(50), PRIMARY KEY(id))");
+            }else{
+                System.out.println();
+            }
+        }catch (SQLException e){
+            System.out.println(e);
+        }
+    }
+    public void inserirencomendas(String user, String medicamento, int quantidade, String data, String status) throws SQLException {
+        String dados = ("INSERT INTO encomendas (usuario, medicamento, quantidade, data, status) VALUES (?, ?, ?, ?, ?)");
+        PreparedStatement preparedStatement = connection.prepareStatement(dados);
+        preparedStatement.setString(1, user);
+        preparedStatement.setString(2, medicamento);
+        preparedStatement.setInt(3, quantidade);
+        preparedStatement.setString(4, data);
+        preparedStatement.setString(5, status);
+
         preparedStatement.executeUpdate();
     }
 }

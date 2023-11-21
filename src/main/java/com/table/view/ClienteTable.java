@@ -5,14 +5,14 @@ public class ClienteTable {
     public String nomecli;
     public String sobrenome;
     public String usuario;
-    public String senha;
+    public String fone;
 
-    public ClienteTable(int idcli, String nomecli, String sobrenome, String usuario, String senha) {
+    public ClienteTable(int idcli, String nomecli, String sobrenome, String usuario, String fone) {
         this.idcli = idcli;
         this.nomecli = nomecli;
         this.sobrenome = sobrenome;
         this.usuario = usuario;
-        this.senha = senha;
+        this.fone = fone;
     }
 
     public int getIdcli() {
@@ -47,11 +47,11 @@ public class ClienteTable {
         this.usuario = usuario;
     }
 
-    public String getSenha() {
-        return senha;
+    public String getFone() {
+        return fone;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setFone(String Fone) {
+        this.fone = fone;
     }
 }
