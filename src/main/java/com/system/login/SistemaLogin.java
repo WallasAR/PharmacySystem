@@ -1,5 +1,7 @@
 package com.system.login;
 
+import com.session.employee.PurchaseController;
+
 import javax.swing.*;
 import java.sql.*;
 

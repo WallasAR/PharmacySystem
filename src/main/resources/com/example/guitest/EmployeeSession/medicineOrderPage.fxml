@@ -2,7 +2,6 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -49,6 +48,20 @@
                                 </ImageView>
                             </children>
                         </Pane>
+                  <Pane fx:id="btClient1" layoutY="541.0" onMouseClicked="#ClientAction" prefHeight="70.0" prefWidth="512.0" styleClass="btHome" stylesheets="@../design/HomeDesign.css">
+                     <children>
+                        <Label layoutY="1.0" onMouseClicked="#ClientAction" prefHeight="70.0" prefWidth="511.0" styleClass="labelButtonHome" stylesheets="@../design/HomeDesign.css" text="           Clientes" textAlignment="CENTER" textFill="WHITE">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="40.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="14.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/Home_client_icon.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Pane>
                         <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="162.0" layoutY="38.0" pickOnBounds="true" smooth="false">
                             <image>
                                 <Image url="@../images/home_user_icon.png" />
@@ -59,7 +72,7 @@
                                 <Font name="Arial Bold" size="30.0" />
                             </font>
                         </Text>
-                        <Label layoutX="140.0" layoutY="181.0" text="Cliente" textFill="WHITE">
+                        <Label layoutX="140.0" layoutY="181.0" text="Colab." textFill="WHITE">
                             <font>
                                 <Font name="Arial Black" size="56.0" />
                             </font>
@@ -81,48 +94,62 @@
                         </Pane>
                     </children>
                 </Pane>
-                <Label layoutX="909.0" layoutY="14.0" text="Encomenda de medicamentos">
+                <Label layoutX="1039.0" layoutY="14.0" text="Pedidos realizados">
                     <font>
                         <Font name="Arial Black" size="36.0" />
                     </font>
                 </Label>
-                <TableView fx:id="tbCompra" layoutX="700.0" layoutY="160.0" prefHeight="445.0" prefWidth="1010.0">
+                <TableView fx:id="tvOrder" layoutX="594.0" layoutY="132.0" prefHeight="829.0" prefWidth="1260.0" stylesheets="@../design/AllPagesDesign.css">
                     <columns>
-                        <TableColumn fx:id="tcIdmedi" prefWidth="119.3333740234375" text="ID" />
-                        <TableColumn fx:id="tcNomemedi" prefWidth="250.6666259765625" text="Nome" />
-                        <TableColumn fx:id="tcQuantimedi" prefWidth="150.6666259765625" text="Quantidade" />
-                        <TableColumn fx:id="tcTipomedi" prefWidth="200.6666259765625" text="Tipo" />
-                        <TableColumn fx:id="tcPreçomedi" prefWidth="180.0" text="Preço" />
+                        <TableColumn fx:id="tcIdOrder" prefWidth="60.0" text="ID" />
+                        <TableColumn fx:id="tcUserOrder" prefWidth="200.0" text="Usuário" />
+                  <TableColumn fx:id="tcMedOrder" prefWidth="200.0" text="Medicamento" />
+                        <TableColumn fx:id="tcQuantOrder" prefWidth="100.0" text="Quantidade" />
+                        <TableColumn fx:id="tcPriceOrder" prefWidth="150.0" text="Preço" />
+                        <TableColumn fx:id="tcDateOrder" prefWidth="250.0" text="Data e horário" />
+                  <TableColumn fx:id="tcPhoneOrder" prefWidth="180.0" text="Telefone" />
+                  <TableColumn fx:id="tcStatusOrder" prefWidth="120.0" text="Situação" />
                     </columns>
                 </TableView>
-                <Rectangle arcHeight="10.0" arcWidth="10.0" fill="#ffffff5c" height="360.0" layoutX="700.0" layoutY="686.0" stroke="#00000032" strokeType="INSIDE" width="1010.0" />
-                <Label layoutX="727.0" layoutY="96.0" text="Nome">
-                    <font>
-                        <Font size="30.0" />
-                    </font>
-                </Label>
-                <TextField layoutX="843.0" layoutY="95.0" prefHeight="50.0" prefWidth="590.0" styleClass="Textfield" stylesheets="@../design/AllPagesDesign.css" />
-                <Button layoutX="1463.0" layoutY="93.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="230.0" styleClass="Button" stylesheets="@../design/AllPagesDesign.css" text="Pesquisar">
-                    <font>
-                        <Font size="24.0" />
-                    </font>
-                </Button>
-                <Button layoutX="1338.0" layoutY="707.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="340.0" styleClass="Button" stylesheets="@../design/AllPagesDesign.css" text="Adicionar">
-                    <font>
-                        <Font size="28.0" />
-                    </font>
-                </Button>
-                <Button layoutX="1338.0" layoutY="821.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="340.0" styleClass="Button" stylesheets="@../design/AllPagesDesign.css" text="Remover" textFill="RED">
-                    <font>
-                        <Font size="28.0" />
-                    </font>
-                </Button>
-                <Label layoutX="979.0" layoutY="618.0" text="Carrinho de compras">
-                    <font>
-                        <Font name="Arial Black" size="36.0" />
-                    </font>
-                </Label>
-                <ListView layoutX="722.0" layoutY="692.0" prefHeight="348.0" prefWidth="462.0" />
+            <Label layoutX="598.0" layoutY="56.0" text="Campo de pesquisa">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tfSearch" layoutX="594.0" layoutY="88.0" prefHeight="30.0" prefWidth="352.0" promptText="Palavras-chave (nome, sobrenome, etc)" styleClass="Textfield" stylesheets="@../design/AllPagesDesign.css" />
+            <Button layoutX="1673.0" layoutY="79.0" mnemonicParsing="false" onAction="#updateTableAction" prefHeight="46.0" prefWidth="174.0" styleClass="Button" stylesheets="@../design/AllPagesDesign.css" text="Atualizar">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+            <Rectangle arcHeight="10.0" arcWidth="10.0" fill="#ffffff5c" height="98.0" layoutX="963.0" layoutY="968.0" stroke="#00000032" strokeType="INSIDE" width="891.0" />
+            <Label layoutX="1186.0" layoutY="976.0" text="Definir situação" textFill="RED">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tfUpdateStatus" layoutX="1186.0" layoutY="1013.0" prefHeight="37.0" prefWidth="396.0" promptText="Pedido em processamento / chegou ao estabelecimento" styleClass="Textfield" stylesheets="@../design/AllPagesDesign.css" />
+            <Label layoutX="988.0" layoutY="980.0" text="OBSERVAÇÃO: " textFill="RED">
+               <font>
+                  <Font name="Arial Bold" size="20.0" />
+               </font>
+            </Label>
+            <Text layoutX="990.0" layoutY="1020.0" strokeType="OUTSIDE" strokeWidth="0.0" text="O cliente deve ser avisado assim que o medicamento chegar ao estabelecimento." wrappingWidth="160.345703125" />
+            <Button layoutX="1710.0" layoutY="992.0" mnemonicParsing="false" onAction="#AlterarSituaçãoPedido" prefHeight="51.0" prefWidth="121.0" styleClass="ButtonRemove" stylesheets="@../design/PurchasePageDesign.css" text="Atualizar">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+            <Label layoutX="1592.0" layoutY="977.0" text="ID" textFill="RED">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tfIdStatus" layoutX="1592.0" layoutY="1013.0" prefHeight="37.0" prefWidth="60.0" styleClass="Textfield" stylesheets="@../design/AllPagesDesign.css">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </TextField>
             </children>
         </Pane>
     </children>

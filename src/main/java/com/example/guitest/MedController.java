@@ -48,6 +48,10 @@ public class MedController implements Initializable {
     protected void ClientAction(MouseEvent e) {
         Main.changedScene("client");
     }
+    @FXML
+    protected void RecordAction(MouseEvent e) {
+        Main.changedScene("record");
+    }
 
 
     @FXML
@@ -155,7 +159,7 @@ public class MedController implements Initializable {
     public void AddMedInfoAction(javafx.event.ActionEvent event) throws SQLException {
         if (tfId.getText().isEmpty() && tfNome.getText().isEmpty() && tfQuantidade.getText().isEmpty() && tfTipo.getText().isEmpty() && tfValor.getText().isEmpty()) {
             AlertMsg alertMsg = new AlertMsg();
-            alertMsg.msgInformation("Certifique-se de preencher todos.");
+            alertMsg.msgInformation("Ops! Algo nos campos não parece certo","Certifique-se de preencher todos.");
         } else {
             banco.inserirmedicamento(tfNome.getText(), Integer.parseInt(tfQuantidade.getText()), tfTipo.getText(), Float.parseFloat(tfValor.getText()));
             clearTextFields();
@@ -165,7 +169,7 @@ public class MedController implements Initializable {
     public void AlterMedInfoAction(javafx.event.ActionEvent event) throws SQLException {
         if (tfId.getText().isEmpty() && tfNome.getText().isEmpty() && tfQuantidade.getText().isEmpty() && tfTipo.getText().isEmpty() && tfValor.getText().isEmpty()) {
             AlertMsg alertMsg = new AlertMsg();
-            alertMsg.msgInformation("Certifique-se de preencher todos.");
+            alertMsg.msgInformation("Ops! Algo nos campos não parece certo","Certifique-se de preencher todos.");
         } else {
             banco.updateMedicamento(tfNome.getText(), Integer.parseInt(tfQuantidade.getText()), tfTipo.getText(), Float.parseFloat(tfValor.getText()), Integer.parseInt(tfId.getText()));
             clearTextFields();
@@ -175,7 +179,7 @@ public class MedController implements Initializable {
     public void RemoveMedInfoAction(javafx.event.ActionEvent event) throws SQLException{
         if (tfId.getText().isEmpty() && tfNome.getText().isEmpty() && tfQuantidade.getText().isEmpty() && tfTipo.getText().isEmpty() && tfValor.getText().isEmpty()) {
             AlertMsg alertMsg = new AlertMsg();
-            alertMsg.msgInformation("Certifique-se de preencher todos.");
+            alertMsg.msgInformation("Ops! Algo nos campos não parece certo","Certifique-se de preencher todos.");
         } else if (AlertMsg.msgConfirm("Confirmação de exclusão", "Deseja remover o medicamento " + tfNome.getText() + " do sistema?")) {
             banco.deletarmedicamento(Integer.parseInt(tfId.getText()));
             clearTextFields();

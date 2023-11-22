@@ -15,7 +15,7 @@ public class Main extends Application {
 
     private static Stage stage; // Variavel estaticas para fazer a mudança de tela
 
-    private static Scene mainScene, homeScene, funcScene, medScene, clientScene, funcServiceScene, medOrderScene; // variavel do tipo Scene
+    private static Scene mainScene, homeScene, funcScene, medScene, clientScene, recordScene, funcServiceScene, medOrderScene, funcClientScene; // variavel do tipo Scene
 
     @Override
     public void start(Stage primaryStage) throws Exception { // Metodo padrão do JavaFX
@@ -40,11 +40,17 @@ public class Main extends Application {
         Parent fxmlClient = FXMLLoader.load(getClass().getResource("clientPage.fxml"));
         clientScene = new Scene(fxmlClient, 1920, 1080); // Cache tela
 
+        Parent fxmlRecord = FXMLLoader.load(getClass().getResource("RecordPage.fxml"));
+        recordScene = new Scene(fxmlRecord, 1920, 1080); // Cache tela
+
         Parent fxmlfuncService = FXMLLoader.load(getClass().getResource("EmployeeSession/PurchasePage.fxml"));
         funcServiceScene = new Scene(fxmlfuncService, 1920, 1080); // Cache tela Funcionário
 
         Parent fxmlfuncMedOrderService = FXMLLoader.load(getClass().getResource("EmployeeSession/medicineOrderPage.fxml"));
         medOrderScene = new Scene(fxmlfuncMedOrderService, 1920, 1080); // Cache tela Funcionário
+
+        Parent fxmlfuncClientService = FXMLLoader.load(getClass().getResource("EmployeeSession/employeeClientPage.fxml"));
+        funcClientScene = new Scene(fxmlfuncClientService, 1920, 1080);
 
         primaryStage.setScene(mainScene); // Definindo tela principal/inicial
         primaryStage.show(); // mostrando a cena
@@ -83,6 +89,14 @@ public class Main extends Application {
                 break;
             case "medOrder":
                 stage.setScene(medOrderScene);
+                stage.centerOnScreen();
+                break;
+            case "ClientAdmFunc":
+                stage.setScene(funcClientScene);
+                stage.centerOnScreen();
+                break;
+            case "record":
+                stage.setScene(recordScene);
                 stage.centerOnScreen();
                 break;
         }

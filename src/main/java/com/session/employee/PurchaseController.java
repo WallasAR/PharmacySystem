@@ -87,12 +87,12 @@ public class PurchaseController implements Initializable {
         }
     }
     @FXML
-    protected void SaleAction(MouseEvent e) {
-        Main.changedScene("sale");
-    }
-    @FXML
     protected void MedOrderAction(MouseEvent e) {
         Main.changedScene("medOrder");
+    }
+    @FXML
+    protected void ClientAction(MouseEvent e) {
+        Main.changedScene("ClientAdmFunc");
     }
 
     public void tabelamedi() throws SQLException {
@@ -189,6 +189,7 @@ public class PurchaseController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         tfId.setDisable(true);
         tfNome.setDisable(true);
         tfTipo.setDisable(true);
@@ -227,12 +228,17 @@ public class PurchaseController implements Initializable {
         PreparedStatement preparedStatement = connection.prepareStatement(consultatipo);
         preparedStatement.setString(1, nome);
         ResultSet resultado = preparedStatement.executeQuery();
+        String consultafone = "SELECT telefone FROM cliente WHERE usuario = ?";
+        preparedStatement = connection.prepareStatement(consultafone);
+        preparedStatement.setString(1, user);
+        ResultSet resultadofone = preparedStatement.executeQuery();
         String nomemedicamento = null;
-        while(resultado.next()) {
+        while(resultado.next() && resultadofone.next()) {
             String tipomedi = resultado.getString("tipo");
             nomemedicamento = resultado.getString("nome");
             int quantidadebanco = resultado.getInt("quantidade");
-            if (tipomedi.equalsIgnoreCase("TarjaPreta")) {
+            String fone = resultadofone.getString("telefone");
+            if (tipomedi.equalsIgnoreCase("TarjaPreta") && quantidadebanco > 0) {
                 AlertMsg alert = new AlertMsg();
                 if (alert.msgConfirm("Alerta de tarja preta! O medicamento " + nomemedicamento + " necessita de receita", "Solicite-a ao cliente.")) {
                     float novoValor = valor * quantidade;
@@ -252,7 +258,7 @@ public class PurchaseController implements Initializable {
                     break;
                 } else {
                 }
-            } else if (tipomedi.equalsIgnoreCase("TarjaVermelha")) {
+            } else if (tipomedi.equalsIgnoreCase("TarjaVermelha") && quantidadebanco > 0) {
                 AlertMsg alert = new AlertMsg();
                 if (alert.msgConfirm("Alerta de tarja vermelha! O medicamento " + nomemedicamento + " necessita de receita dupla", "Solicite-a ao cliente.")) {
                     float novoValor = valor * quantidade;
@@ -272,7 +278,7 @@ public class PurchaseController implements Initializable {
                     break;
                 } else {
                 }
-            } else if (tipo.equalsIgnoreCase("SemTarja")) {
+            } else if (tipo.equalsIgnoreCase("SemTarja") && quantidadebanco > 0) {
                 float novoValor = valor * quantidade;
                 // Date system to table registro
                 int novaquanti = quantidadebanco - quantidade;
@@ -287,6 +293,17 @@ public class PurchaseController implements Initializable {
                     Carrinho();
                 }
                 break;
+            }else if(quantidadebanco == 0){
+                AlertMsg alert = new AlertMsg();
+                if(alert.msgConfirm("A quantidade do medicamento selecionado é: " + quantidadebanco, "Faça um agendamento.")){
+                    float novoValor = valor * quantidade;
+                    Date dataHoraAtual = new Date();
+                    String date = new SimpleDateFormat("dd/MM/yyyy | HH:mm:ss").format(dataHoraAtual);
+                    String status = "Pedido Efetuado";
+                    banco.inserirencomendas(user, nome, quantidade, novoValor, date, fone, status);
+
+
+                }
             }
         }
     }
@@ -334,7 +351,8 @@ public class PurchaseController implements Initializable {
 
                     if (consultaSoma.next()) {
                         float soma = consultaSoma.getFloat("soma_total");
-                        labelShowTotal.setText(String.valueOf(soma));
+                        String result = String.format("%.2f", soma);
+                        labelShowTotal.setText(String.valueOf(result));
                     }
                 }
             } catch (SQLException e) {
@@ -352,7 +370,7 @@ public class PurchaseController implements Initializable {
         Date dataHoraAtual = new Date();
         String date = new SimpleDateFormat("dd/MM/yyyy | HH:mm:ss").format(dataHoraAtual);
 
-        String consultatipo = "SELECT nome, quantidade, tipo FROM medicamentos WHERE tipo = ?";
+        String consultatipo = "SELECT nome, quantidade, tipo, valor FROM medicamentos WHERE tipo = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(consultatipo);
         preparedStatement.setString(1, tipo);
         ResultSet resultado = preparedStatement.executeQuery();
@@ -360,9 +378,13 @@ public class PurchaseController implements Initializable {
             String tipomedi = resultado.getString("tipo");
             String nomemedicamento = resultado.getString("nome");
             int quantidadebanco = resultado.getInt("quantidade");
+            float valormedi = resultado.getFloat("valor");
+            float novovalor = valor * quantidade;
+            banco.inseriregistro(user, nome, quantidade,  novovalor, date);
 
-            float novaquanti = quantidadebanco - quantidade;
-            banco.inseriregistro(user, nome, quantidade, novaquanti, date);
+            AlertMsg info = new AlertMsg();
+            info.msgInformation("Confirmação de venda", "Venda realizada com sucesso!");
+
             String deletecli = ("DELETE FROM carrinho WHERE usuario = ?");
             preparedStatement = connection.prepareStatement(deletecli);
             preparedStatement.setString(1, user);
@@ -372,15 +394,52 @@ public class PurchaseController implements Initializable {
         }
     }
     public void RemoverDoCarrinho(javafx.event.ActionEvent event)throws SQLException{
-
+        String nome = tfNome.getText();
         int iduser = Integer.parseInt(tfIdCarrinho.getText());
-        String user = Box.getSelectionModel().getSelectedItem().toString();
-        String deletecli = ("DELETE FROM carrinho WHERE id = ? AND usuario = ?");
-        PreparedStatement preparedStatement = connection.prepareStatement(deletecli);
-        preparedStatement.setInt(1, iduser);
-        preparedStatement.setString(2, user);
-        preparedStatement.executeUpdate();
-        Carrinho();
+        AlertMsg alert = new AlertMsg();
+        if (alert.msgConfirm("Remoção de Pedido", "Tem certeza?")) {
+
+            String consultacarrinho = "SELECT medicamento, quantidade FROM carrinho WHERE id = ?";
+            PreparedStatement consultacarrinnho = connection.prepareStatement(consultacarrinho);
+            consultacarrinnho.setInt(1, iduser);
+            ResultSet resultadocarrinho = consultacarrinnho.executeQuery();
+            while(resultadocarrinho.next()){
+                String medicamento = resultadocarrinho.getString("medicamento");
+                int quantidadecarrinho = resultadocarrinho.getInt("quantidade");
+                System.out.println(quantidadecarrinho);
+                System.out.println(medicamento);
+
+                String consultamedicamentos = "SELECT nome, quantidade FROM medicamentos WHERE nome = ?";
+                PreparedStatement consultamedicamento = connection.prepareStatement(consultamedicamentos);
+                consultamedicamento.setString(1, medicamento);
+                ResultSet resultadomedicamento = consultamedicamento.executeQuery();
+                while(resultadomedicamento.next()){
+                    String medicamentomedicamento = resultadomedicamento.getString("nome");
+                    int quantidadebanco = resultadomedicamento.getInt("quantidade");
+                    System.out.println(medicamentomedicamento);
+                    System.out.println(quantidadebanco);
+                    int quantidadenova = quantidadebanco + quantidadecarrinho;
+                    System.out.println(quantidadenova);
+
+                    String updatemedicamento = "UPDATE medicamentos SET quantidade = ? WHERE nome = ?";
+                    PreparedStatement updatemedi = connection.prepareStatement(updatemedicamento);
+                    updatemedi.setInt(1, quantidadenova);
+                    updatemedi.setString(2, medicamentomedicamento);
+                    updatemedi.executeUpdate();
+                    tabelamedi();
+                }
+
+
+
+
+                String deletecli = ("DELETE FROM carrinho WHERE id = ?");
+                PreparedStatement preparedStatement = connection.prepareStatement(deletecli);
+                preparedStatement.setInt(1, iduser);
+                preparedStatement.executeUpdate();
+
+                Carrinho();
+            }
+        }
     }
     public void AtualizarCarrinho(javafx.event.ActionEvent event)throws SQLException {
         int index = tvCarrinho.getSelectionModel().getSelectedIndex();

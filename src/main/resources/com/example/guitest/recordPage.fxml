@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.guitest.RecordController">
+    <children>
+        <Pane layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0">
+            <children>
+                <Pane prefHeight="1081.0" prefWidth="512.0" styleClass="SideHome" stylesheets="@design/HomeDesign.css">
+                    <children>
+                        <Pane fx:id="btHome11" layoutY="302.0" onMouseClicked="#HomeAction" prefHeight="70.0" prefWidth="512.0" styleClass="btHome" stylesheets="@design/HomeDesign.css">
+                            <children>
+                                <Label fx:id="labelButtonHome11" layoutX="-1.0" layoutY="-1.0" prefHeight="70.0" prefWidth="512.0" styleClass="labelButtonHome" stylesheets="@design/HomeDesign.css" text="           Home" textAlignment="CENTER" textFill="WHITE">
+                                    <font>
+                                        <Font name="Arial Rounded MT Bold" size="40.0" />
+                                    </font>
+                                </Label>
+                                <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="14.0" layoutY="5.0" pickOnBounds="true">
+                                    <image>
+                                        <Image url="@images/Home_icon.png" />
+                                    </image>
+                                </ImageView>
+                            </children>
+                        </Pane>
+                        <Pane fx:id="btClient11" layoutY="416.0" onMouseClicked="#ClientAction" prefHeight="70.0" prefWidth="512.0" styleClass="btHome" stylesheets="@design/HomeDesign.css">
+                            <children>
+                                <Label layoutY="1.0" prefHeight="70.0" prefWidth="511.0" styleClass="labelButtonHome" stylesheets="@design/HomeDesign.css" text="           Clientes" textAlignment="CENTER" textFill="WHITE">
+                                    <font>
+                                        <Font name="Arial Rounded MT Bold" size="40.0" />
+                                    </font>
+                                </Label>
+                                <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="14.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@images/Home_client_icon.png" />
+                                    </image>
+                                </ImageView>
+                            </children>
+                        </Pane>
+                        <Pane fx:id="btFunc11" layoutY="532.0" onMouseClicked="#FuncAction" prefHeight="70.0" prefWidth="512.0" styleClass="btHome" stylesheets="@design/HomeDesign.css">
+                            <children>
+                                <Label layoutY="-1.0" prefHeight="70.0" prefWidth="512.0" styleClass="labelButtonHome" stylesheets="@design/HomeDesign.css" text="           Funcionários" textAlignment="CENTER" textFill="WHITE">
+                                    <font>
+                                        <Font name="Arial Rounded MT Bold" size="40.0" />
+                                    </font>
+                                </Label>
+                                <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="14.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@images/Func_home_icon.png" />
+                                    </image>
+                                </ImageView>
+                            </children>
+                        </Pane>
+                        <Pane fx:id="btMed11" layoutY="644.0" onMouseClicked="#MedAction" prefHeight="70.0" prefWidth="512.0" styleClass="btHome" stylesheets="@design/HomeDesign.css">
+                            <children>
+                                <Label layoutX="14.0" layoutY="-1.0" prefHeight="70.0" prefWidth="495.0" styleClass="labelButtonHome" stylesheets="@design/HomeDesign.css" text="         Medicamentos" textAlignment="CENTER" textFill="WHITE">
+                                    <font>
+                                        <Font name="Arial Rounded MT Bold" size="40.0" />
+                                    </font>
+                                </Label>
+                                <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="14.0" layoutY="4.0" pickOnBounds="true">
+                                    <image>
+                                        <Image url="@images/Home_med_icon.png" />
+                                    </image>
+                                </ImageView>
+                            </children>
+                        </Pane>
+                  <Pane fx:id="btMed111" layoutY="763.0" onMouseClicked="#MedAction" prefHeight="70.0" prefWidth="512.0" styleClass="btHome" stylesheets="@design/HomeDesign.css">
+                     <children>
+                        <Label layoutX="14.0" layoutY="-1.0" prefHeight="70.0" prefWidth="495.0" styleClass="labelButtonHome" stylesheets="@design/HomeDesign.css" text="         Registros" textAlignment="CENTER" textFill="WHITE">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="40.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="14.0" layoutY="4.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@images/Home_record_icon.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Pane>
+                        <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="162.0" layoutY="38.0" pickOnBounds="true" smooth="false">
+                            <image>
+                                <Image url="@images/home_user_icon.png" />
+                            </image>
+                        </ImageView>
+                        <Text fill="WHITE" layoutX="87.0" layoutY="242.0" strokeType="OUTSIDE" strokeWidth="0.0" text="olá," wrappingWidth="60.000000000000114">
+                            <font>
+                                <Font name="Arial Bold" size="30.0" />
+                            </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="148.0" layoutY="243.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Admin">
+                            <font>
+                                <Font name="Arial Black" size="56.0" />
+                            </font>
+                        </Text>
+                        <Line endX="227.66665649414062" layoutX="238.0" layoutY="268.0" startX="-192.3333282470703" stroke="WHITE" />
+                        <Pane layoutY="970.0" onMouseClicked="#MainAction" prefHeight="70.0" prefWidth="512.0" styleClass="btHome" stylesheets="@design/HomeDesign.css">
+                            <children>
+                                <Label layoutY="-2.0" prefHeight="72.0" prefWidth="513.0" styleClass="labelButtonHome" stylesheets="@design/HomeDesign.css" text="            Logout" textAlignment="CENTER" textFill="WHITE">
+                                    <font>
+                                        <Font name="Arial Rounded MT Bold" size="40.0" />
+                                    </font>
+                                </Label>
+                                <ImageView fitHeight="60.0" fitWidth="50.0" layoutX="36.0" layoutY="5.0" pickOnBounds="true">
+                                    <image>
+                                        <Image url="@images/Home_logout_icon.png" />
+                                    </image>
+                                </ImageView>
+                            </children>
+                        </Pane>
+                    </children>
+                </Pane>
+                <Label layoutX="594.0" layoutY="14.0" text="Registro de vendas">
+                    <font>
+                        <Font name="Arial Black" size="36.0" />
+                    </font>
+                </Label>
+                <TableView fx:id="tvRecord" layoutX="594.0" layoutY="132.0" prefHeight="882.0" prefWidth="1260.0" stylesheets="@design/PurchasePageDesign.css">
+                    <columns>
+                        <TableColumn fx:id="tcIdRecord" prefWidth="60.0" text="ID" />
+                        <TableColumn fx:id="tcUserRecord" prefWidth="300.0" text="Usuário" />
+                        <TableColumn fx:id="tcMedRecord" prefWidth="300.0" text="Medicamento" />
+                        <TableColumn fx:id="tcQuantRecord" prefWidth="200.0" text="Quantidade" />
+                        <TableColumn fx:id="tcPriceRecord" prefWidth="200.0" text="Preço" />
+                  <TableColumn fx:id="tcDateRecord" prefWidth="200.0" text="Data e Hora" />
+                    </columns>
+                </TableView>
+            <Button layoutX="1670.0" layoutY="57.0" mnemonicParsing="false" onAction="#updateTable" prefHeight="54.0" prefWidth="184.0" styleClass="Button" stylesheets="@design/AllPagesDesign.css" text="Atualizar">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+            </children>
+        </Pane>
+    </children>
+</StackPane>

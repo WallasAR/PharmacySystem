@@ -1,6 +1,7 @@
-package com.example.guitest;
+package com.session.employee;
 
 import com.db.bank.Banco;
+import com.example.guitest.Main;
 import com.table.view.ClienteTable;
 import com.warning.alert.AlertMsg;
 import javafx.collections.FXCollections;
@@ -8,11 +9,10 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
-
-import static com.db.bank.Banco.connection;
-
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
@@ -24,10 +24,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import static com.db.bank.Banco.connection;
 
-public class ClientController implements Initializable {
-    // Predefinição da instância banco
-    Banco banco = new Banco();
+public class employeeClientController implements Initializable {
 
     // Ações para troca de cena
     @FXML
@@ -37,21 +36,20 @@ public class ClientController implements Initializable {
         }
     }
     @FXML
-    protected void HomeAction(MouseEvent e) {
-        Main.changedScene("home");
+    protected void MedOrderAction(MouseEvent e) {
+        Main.changedScene("medOrder");
     }
     @FXML
-    protected void FuncAction(MouseEvent e) {
-        Main.changedScene("func");
+    protected void SaleAction(MouseEvent e) {
+        Main.changedScene("sale");
     }
     @FXML
-    protected void MedAction(MouseEvent e) {
-        Main.changedScene("med");
+    protected void ClientAction(MouseEvent e) {
+        Main.changedScene("ClientAdmFunc");
     }
-    @FXML
-    protected void RecordAction(MouseEvent e) {
-        Main.changedScene("record");
-    }
+
+    // Predefinição da instância banco
+    Banco banco = new Banco();
 
     // GUI IDs
     @FXML
@@ -80,7 +78,7 @@ public class ClientController implements Initializable {
     private TextField tfSearch;
 
     // Show The Client Table
-    public void tabelacliente()throws SQLException{
+    public void tabelacliente()throws SQLException {
         List<ClienteTable> clientes = new ArrayList<>();
 
         String consultaSQLcliente = "SELECT * FROM cliente";
@@ -164,7 +162,7 @@ public class ClientController implements Initializable {
     public void AddClientInfoAction(javafx.event.ActionEvent event) throws SQLException{
         if (tfNome.getText().isEmpty() && tfSobrenome.getText().isEmpty() && tfUser.getText().isEmpty() && tfFone.getText().isEmpty()){
             AlertMsg alertMsg = new AlertMsg();
-            alertMsg.msgInformation( "Ops! Algo nos campos não parece certo","Certifique-se de preencher todos.");
+            alertMsg.msgInformation("Ops! Algo nos campos não parece certo","Certifique-se de preencher todos.");
         } else {
             banco.inserircliente(tfNome.getText(), tfSobrenome.getText(), tfUser.getText(), tfFone.getText());
             clearTextFields();
@@ -207,3 +205,4 @@ public class ClientController implements Initializable {
         }
     }
 }
+

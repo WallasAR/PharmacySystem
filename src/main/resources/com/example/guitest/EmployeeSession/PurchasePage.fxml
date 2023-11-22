@@ -50,6 +50,20 @@
                         </ImageView>
                      </children>
                   </Pane>
+                  <Pane fx:id="btClient1" layoutY="541.0" onMouseClicked="#ClientAction" prefHeight="70.0" prefWidth="512.0" styleClass="btHome" stylesheets="@../design/HomeDesign.css">
+                     <children>
+                        <Label layoutY="1.0" onMouseClicked="#ClientAction" prefHeight="70.0" prefWidth="511.0" styleClass="labelButtonHome" stylesheets="@../design/HomeDesign.css" text="           Clientes" textAlignment="CENTER" textFill="WHITE">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="40.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="14.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/Home_client_icon.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Pane>
                   <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="162.0" layoutY="38.0" pickOnBounds="true" smooth="false">
                      <image>
                         <Image url="@../images/home_user_icon.png" />
@@ -102,7 +116,7 @@
                   <Font name="Arial" size="50.0" />
                </font>
             </Label>
-            <Button layoutX="1621.0" layoutY="606.0" mnemonicParsing="false" onAction="#RemoverDoCarrinho" prefHeight="50.0" prefWidth="150.0" styleClass="ButtonRemove" stylesheets="@../design/PurchasePageDesign.css" text="Remover" textFill="RED">
+            <Button layoutX="1601.0" layoutY="607.0" mnemonicParsing="false" onAction="#RemoverDoCarrinho" prefHeight="50.0" prefWidth="150.0" styleClass="ButtonRemove" stylesheets="@../design/PurchasePageDesign.css" text="Remover" textFill="RED">
                <font>
                   <Font size="20.0" />
                </font>
@@ -142,23 +156,18 @@
                </font>
             </Label>
             <TextField fx:id="tfQuantidade" layoutX="741.0" layoutY="809.0" prefHeight="50.0" prefWidth="74.0" promptText="UN" styleClass="Textfield" stylesheets="@../design/AllPagesDesign.css" />
-            <Label layoutX="574.0" layoutY="978.0" text="ID">
+            <Label layoutX="851.0" layoutY="895.0" text="ID">
                <font>
                   <Font size="30.0" />
                </font>
             </Label>
-            <TextField fx:id="tfId" layoutX="616.0" layoutY="975.0" prefHeight="50.0" prefWidth="60.0" styleClass="Textfield" stylesheets="@../design/AllPagesDesign.css">
+            <TextField fx:id="tfId" layoutX="914.0" layoutY="892.0" prefHeight="50.0" prefWidth="60.0" styleClass="Textfield" stylesheets="@../design/AllPagesDesign.css">
                <font>
                   <Font size="18.0" />
                </font>
             </TextField>
-            <Button layoutX="944.0" layoutY="890.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="153.0" styleClass="Button" stylesheets="@../design/AllPagesDesign.css" text="Limpar">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Button>
-            <ComboBox fx:id="Box" layoutX="1257.0" layoutY="737.0" prefHeight="37.0" prefWidth="227.0" promptText="Selecione o cliente" styleClass="ComboBox" stylesheets="@../design/PurchasePageDesign.css" />
-            <Label layoutX="1242.0" layoutY="685.0" text="Clientes cadastrados">
+            <ComboBox fx:id="Box" layoutX="1257.0" layoutY="739.0" prefHeight="37.0" prefWidth="227.0" promptText="Selecione o cliente" styleClass="ComboBox" stylesheets="@../design/PurchasePageDesign.css" />
+            <Label layoutX="1242.0" layoutY="687.0" text="Clientes cadastrados">
                <font>
                   <Font size="30.0" />
                </font>
@@ -183,7 +192,7 @@
                   <TableColumn fx:id="tfPreçomedi" prefWidth="150.0" text="Preço" />
                </columns>
             </TableView>
-            <Button layoutX="1242.0" layoutY="606.0" mnemonicParsing="false" onAction="#colocarRegistro" prefHeight="50.0" prefWidth="150.0" styleClass="ButtonStyle" stylesheets="@../design/PurchasePageDesign.css" text="Adicionar">
+            <Button layoutX="1418.0" layoutY="607.0" mnemonicParsing="false" onAction="#colocarRegistro" prefHeight="50.0" prefWidth="150.0" styleClass="ButtonStyle" stylesheets="@../design/PurchasePageDesign.css" text="Adicionar">
                <font>
                   <Font name="Arial" size="20.0" />
                </font>
@@ -198,11 +207,6 @@
                   <Font size="18.0" />
                </font>
             </TextField>
-            <Button layoutX="1430.0" layoutY="606.0" mnemonicParsing="false" onAction="#AtualizarCarrinho" prefHeight="50.0" prefWidth="150.0" styleClass="ButtonRemove" stylesheets="@../design/PurchasePageDesign.css" text="Atualizar" textFill="RED">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Button>
          </children>
       </Pane>
    </children>

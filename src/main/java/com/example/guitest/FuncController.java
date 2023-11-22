@@ -1,7 +1,6 @@
 package com.example.guitest;
 
 import com.db.bank.Banco;
-import com.table.view.ClienteTable;
 import com.table.view.FuncionarioTable;
 import com.warning.alert.AlertMsg;
 import javafx.collections.FXCollections;
@@ -27,8 +26,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class FuncController implements Initializable {
-    //@FXML
-    //private Button btMinimize;
     Banco banco = new Banco();
     @FXML
     protected void MainAction(MouseEvent e) {
@@ -47,6 +44,10 @@ public class FuncController implements Initializable {
     @FXML
     protected void ClientAction(MouseEvent e) {
         Main.changedScene("client");
+    }
+    @FXML
+    protected void RecordAction(MouseEvent e) {
+        Main.changedScene("record");
     }
 
     @FXML
@@ -182,7 +183,7 @@ public class FuncController implements Initializable {
     public void AddFuncionarioInfoAction(javafx.event.ActionEvent event) throws SQLException {
         if (tfNome.getText().isEmpty() && tfSobrenome.getText().isEmpty() && tfCargo.getText().isEmpty() && tfSalario.getText().isEmpty() && tfCpf.getText().isEmpty() && tfUser.getText().isEmpty() && tfPass.getText().isEmpty()) {
             AlertMsg alertMsg = new AlertMsg();
-            alertMsg.msgInformation("Certifique-se de preencher todos.");
+            alertMsg.msgInformation("Ops! Algo nos campos não parece certo","Certifique-se de preencher todos.");
         } else {
             banco.inserirfuncinario(tfNome.getText(), tfSobrenome.getText(), tfUser.getText(), tfCargo.getText(), tfCpf.getText(), Float.parseFloat(tfSalario.getText()), tfPass.getText());
             clearTextFields();
@@ -192,7 +193,7 @@ public class FuncController implements Initializable {
     public void AlterFuncionarioInfoAction(javafx.event.ActionEvent event) throws SQLException {
         if (tfNome.getText().isEmpty() && tfSobrenome.getText().isEmpty() && tfCargo.getText().isEmpty() && tfSalario.getText().isEmpty() && tfCpf.getText().isEmpty() && tfUser.getText().isEmpty() && tfPass.getText().isEmpty()) {
             AlertMsg alertMsg = new AlertMsg();
-            alertMsg.msgInformation("Certifique-se de preencher todos.");
+            alertMsg.msgInformation("Ops! Algo nos campos não parece certo","Certifique-se de preencher todos.");
         } else {
             banco.updateFuncionario(tfNome.getText(), tfSobrenome.getText(), tfUser.getText(), tfCargo.getText(), tfCpf.getText(), Float.parseFloat(tfSalario.getText()), tfPass.getText(), Integer.parseInt(tfId.getText()));
             clearTextFields();
@@ -202,7 +203,7 @@ public class FuncController implements Initializable {
     public void RemoveFuncionarioInfoAction(javafx.event.ActionEvent event) throws SQLException {
         if (tfNome.getText().isEmpty() && tfSobrenome.getText().isEmpty() && tfCargo.getText().isEmpty() && tfSalario.getText().isEmpty() && tfCpf.getText().isEmpty() && tfUser.getText().isEmpty() && tfPass.getText().isEmpty()) {
             AlertMsg alertMsg = new AlertMsg();
-            alertMsg.msgInformation("Certifique-se de preencher todos.");
+            alertMsg.msgInformation("Ops! Algo nos campos não parece certo","Certifique-se de preencher todos.");
 
         } else if (AlertMsg.msgConfirm("Confirmação de exclusão", "Deseja remover o funcionário " + tfNome.getText() + " do sistema?")) {
             banco.deletarfuncionario(Integer.parseInt(tfId.getText()));

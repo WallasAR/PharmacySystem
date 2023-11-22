@@ -131,7 +131,7 @@ public class Banco {
         try{
             if(verificarusuario(user)) {
                 AlertMsg alert = new AlertMsg();
-                alert.msgInformation("Nome de usuário ja está sendo utilizado, tente novamente.");
+                alert.msgInformation("Erro ao registrar" , "Nome de usuário ja está sendo utilizado, tente novamente.");
             }else{
                 String cliente = ("INSERT INTO cliente (nome, sobrenome, usuario, telefone) VALUES(?,?,?,?)");
                 PreparedStatement preparedStatement = connection.prepareStatement(cliente);
@@ -186,13 +186,13 @@ public class Banco {
             preparedStatement.executeUpdate();
         }
     }
-    public void updateClient(String nome, String sobrenome, String usuario, String senha, String idcli) throws SQLException {
-        String updateQuaryCli = "UPDATE cliente SET nome = ?, sobrenome = ?, usuario = ?, password = ? WHERE id = ?";
+    public void updateClient(String nome, String sobrenome, String usuario, String fone, String idcli) throws SQLException {
+        String updateQuaryCli = "UPDATE cliente SET nome = ?, sobrenome = ?, usuario = ?, telefone = ? WHERE id = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(updateQuaryCli);
         preparedStatement.setString(1, nome);
         preparedStatement.setString(2, sobrenome);
         preparedStatement.setString(3, usuario);
-        preparedStatement.setString(4, senha);
+        preparedStatement.setString(4, fone);
         preparedStatement.setString(5, idcli);
         preparedStatement.executeUpdate();
     }
@@ -456,7 +456,7 @@ public class Banco {
     public void encomendas(){
         try {
             if(!tabelaExiste("encomendas")) {
-                executar.execute("CREATE TABLE encomendas(id INT NOT NULL AUTO_INCREMENT, usuario VARCHAR(25), medicamento VARCHAR(25), quantidade INT, data VARCHAR(50), status VARCHAR(50), PRIMARY KEY(id))");
+                executar.execute("CREATE TABLE encomendas(id INT NOT NULL AUTO_INCREMENT, usuario VARCHAR(25), medicamento VARCHAR(25), quantidade INT, valor INT, data VARCHAR(50), telefone VARCHAR(50), status VARCHAR(50), PRIMARY KEY(id))");
             }else{
                 System.out.println();
             }
@@ -464,14 +464,16 @@ public class Banco {
             System.out.println(e);
         }
     }
-    public void inserirencomendas(String user, String medicamento, int quantidade, String data, String status) throws SQLException {
-        String dados = ("INSERT INTO encomendas (usuario, medicamento, quantidade, data, status) VALUES (?, ?, ?, ?, ?)");
+    public void inserirencomendas(String user, String medicamento, int quantidade, float valor, String data,String fone, String status) throws SQLException {
+        String dados = ("INSERT INTO encomendas (usuario, medicamento, quantidade, valor, telefone, data, status) VALUES (?, ?, ?, ?, ?, ?, ?)");
         PreparedStatement preparedStatement = connection.prepareStatement(dados);
         preparedStatement.setString(1, user);
         preparedStatement.setString(2, medicamento);
         preparedStatement.setInt(3, quantidade);
-        preparedStatement.setString(4, data);
-        preparedStatement.setString(5, status);
+        preparedStatement.setFloat(4, valor);
+        preparedStatement.setString(5, fone);
+        preparedStatement.setString(6, data);
+        preparedStatement.setString(7, status);
 
         preparedStatement.executeUpdate();
     }

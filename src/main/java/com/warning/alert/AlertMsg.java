@@ -25,10 +25,10 @@ public class AlertMsg {
         return answer;
     }
 
-    public void msgInformation(String msg){
+    public void msgInformation(String header , String msg){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Aviso");
-        alert.setHeaderText("Ops! Algo nos campos não parece certo");
+        alert.setHeaderText(header);
         alert.setContentText(msg);
         alert.showAndWait();
     }
