@@ -493,4 +493,8 @@ public class PurchaseController implements Initializable {
             }
         }
     }
+
+    public void UpdateTableMed(javafx.event.ActionEvent event) throws SQLException{
+        tabelamedi();
+    }
 }

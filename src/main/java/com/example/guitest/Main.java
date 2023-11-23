@@ -1,7 +1,6 @@
 package com.example.guitest;
 
 import com.db.bank.Banco;
-import com.db.bank.CompraBanco;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

@@ -45,23 +45,6 @@ public class Banco {
             System.out.println(e);
         }
     }
-    public void inserir(String nome, int qnt, double preco) throws SQLException {
-        String dados = ("INSERT INTO medicamentos (nome, quantidade, valor) VALUES (?, ?, ?)");
-        PreparedStatement preparedStatement = connection.prepareStatement(dados);
-        preparedStatement.setString(1, nome);
-        preparedStatement.setInt(2, qnt);
-        preparedStatement.setDouble(3, preco);
-
-        preparedStatement.executeUpdate();
-    }
-    public static void deletar(int num) throws SQLException{
-        Connection connection  = conexao();
-        String delete = ("DELETE FROM medicamentos WHERE id = ?");
-        PreparedStatement preparedStatement = connection.prepareStatement(delete);
-        preparedStatement.setInt(1, num);
-
-        preparedStatement.executeUpdate();
-    }
     public static void deletarcliente(String idcli) throws SQLException{
         Connection connection  = conexao();
         String deletecli = ("DELETE FROM cliente WHERE id = ?");
@@ -147,45 +130,7 @@ public class Banco {
             System.out.println(e);
         }
     }
-    public void updatemedicamentos() throws SQLException {
-        Statement declaracao = connection.createStatement();
-        String consulta = "SELECT * FROM medicamentos";
-        ResultSet resultado = declaracao.executeQuery(consulta);
-        while(resultado.next()){
-            int id = resultado.getInt("id");
-            String nome = resultado.getString("nome");
-            int quantidade = resultado.getInt("quantidade");
-            float valor = resultado.getFloat("valor");
 
-            System.out.println("ID: " + id + ", Nome: " + nome + ", Quantidade: " + quantidade + ", Valor: " +valor);
-        }
-        System.out.println("Digite o nome do medicamento que deseja realizar a alteração: ");
-        String op = scanner1.next();
-        System.out.println("Medicamento selecionado: " + op);
-        System.out.println("Digite a coluna que deseja alterar: ");
-        System.out.println(" - Quantidade");
-        System.out.println(" - Valor");
-        String op1 = scanner1.next();
-        if (op1.equalsIgnoreCase("quantidade")) {
-            System.out.println("Medicamento selecionado: " + op);
-            System.out.println("Digite a nova quantidade: ");
-            int qntNovo = scanner1.nextInt();
-            String updateQuery1 = "UPDATE medicamentos SET quantidade = ? WHERE nome = ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(updateQuery1);
-            preparedStatement.setInt(1, qntNovo);
-            preparedStatement.setString(2, op);
-            preparedStatement.executeUpdate();
-        }else if(op1.equalsIgnoreCase("valor")){
-            System.out.println("Medicamento selecionado: " + op);
-            System.out.println("Digite o novo valor");
-            float valorNovo = scanner1.nextFloat();
-            String updateQuery2 = "UPDATE medicamentos SET valor = ? WHERE nome = ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(updateQuery2);
-            preparedStatement.setFloat(1, valorNovo);
-            preparedStatement.setString(2, op);
-            preparedStatement.executeUpdate();
-        }
-    }
     public void updateClient(String nome, String sobrenome, String usuario, String fone, String idcli) throws SQLException {
         String updateQuaryCli = "UPDATE cliente SET nome = ?, sobrenome = ?, usuario = ?, telefone = ? WHERE id = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(updateQuaryCli);
@@ -196,31 +141,7 @@ public class Banco {
         preparedStatement.setString(5, idcli);
         preparedStatement.executeUpdate();
     }
-    public void consultamedicamentos()throws SQLException{
-        Statement declaracao = connection.createStatement();
-        String consulta = "SELECT * FROM medicamentos";
-        ResultSet resultado = declaracao.executeQuery(consulta);
-        while(resultado.next()){
-            int id = resultado.getInt("id");
-            String nome = resultado.getString("nome");
-            int quantidade = resultado.getInt("quantidade");
-            float valor = resultado.getFloat("valor");
 
-            System.out.println("ID: " + id + ", Nome: " + nome + ", Quantidade: " + quantidade + ", Valor: " +valor);
-        }
-    }
-    public boolean conMediPorNome(String medi) throws SQLException {
-        String MediConsul = "SELECT nome FROM medicamentos WHERE nome = ?";
-
-        try (PreparedStatement preparedStatement = connection.prepareStatement(MediConsul)) {
-            preparedStatement.setString(1, medi);
-
-            try (ResultSet resultadoMedi = preparedStatement.executeQuery()) {
-                // Se houver um resultado, o medicamento foi encontrado
-                return resultadoMedi.next();
-            }
-        }
-    }
     public void inserirmedicamento(String nomMedi, int quantiMedi,String tipoMedi, float valorMedi ){
         try{
             String medi = ("INSERT INTO medicamentos (nome, quantidade, tipo , valor) VALUES(?,?,?,?)");
@@ -236,17 +157,7 @@ public class Banco {
             System.out.println(e);
         }
     }
-    public void tabelaPedidosMed(){
-        try {
-            if(!tabelaExiste("pedidos")) {
-                executar.execute("CREATE TABLE pedidos(id INT NOT NULL AUTO_INCREMENT ,nomecliente VARCHAR(25), nomemedicamento VARCHAR(25), quantidade INT, tipo VARCHAR(25), valor FLOAT, PRIMARY KEY(id))");
-            }else{
-                System.out.println();
-            }
-        }catch (SQLException e){
-            System.out.println(e);
-        }
-    }
+
     public static int somarentidadeseliente() {
         try {
             String consultaSQLCliente = "SELECT COUNT(id) AS soma_total FROM cliente";
@@ -299,43 +210,6 @@ public class Banco {
         }
         return 0;
     }
-    public void tabelaagendamentos(){
-        try {
-            if(!tabelaExiste("agendamentos")) {
-                executar.execute("CREATE TABLE agendamentos(id INT NOT NULL AUTO_INCREMENT ,nomecliente VARCHAR(25), nomemedicamento VARCHAR(25), quantidade INT,  PRIMARY KEY(id))");
-            }else{
-                System.out.println();
-            }
-        }catch (SQLException e){
-            System.out.println(e);
-        }
-    }
-    public void deletarpedido(String nomecli) throws SQLException {
-        CompraBanco compra1 = new CompraBanco();
-        compra1.status(nomecli);
-        System.out.println("Digite o id do Pedido a ser cancelado: ");
-        int idpedido = scanner1.nextInt();
-        String deletecli = ("DELETE FROM status WHERE id = ?");
-        PreparedStatement preparedStatement = connection.prepareStatement(deletecli);
-        preparedStatement.setInt(1, idpedido);
-
-        preparedStatement.executeUpdate();
-        System.out.println("Pedido cancelado com sucesso");
-
-    }
-    public void deletaragendamento(String nomeCliente1) throws SQLException {
-        CompraBanco compra1 = new CompraBanco();
-        compra1.statusagendamento(nomeCliente1);
-        System.out.println("Digite o id do agendamento a ser cancelado: ");
-        int idagendamento = scanner1.nextInt();
-        String deletecli = ("DELETE FROM agendamentos WHERE id = ?");
-        PreparedStatement preparedStatement = connection.prepareStatement(deletecli);
-        preparedStatement.setInt(1, idagendamento);
-
-        preparedStatement.executeUpdate();
-        System.out.println("Agendamento cancelado com sucesso");
-    }
-    //Adicionar metodo de deletar carrinho de cliente
 
     public void tabelafuncionario(){
         try {

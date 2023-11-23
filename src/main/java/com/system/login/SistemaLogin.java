@@ -45,30 +45,6 @@ public class SistemaLogin {
         }
         return false;
     }
-    public static boolean loginCli(String user, String pass){
-        if (credenciaiscliente(user, pass)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-    public static Boolean credenciaiscliente(String user, String pass){
-        try{
-            String pesquisa ="SELECT COUNT(*) FROM cliente WHERE nome = ? AND password = ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(pesquisa);
-            preparedStatement.setString(1, user);
-            preparedStatement.setString(2, pass);
-            try(ResultSet resultSet = preparedStatement.executeQuery()){
-                if(resultSet.next()){
-                    int rowCount = resultSet.getInt(1);
-                    return rowCount > 0;
-                }
-            }
-        }catch(SQLException e){
-            System.out.println(e);
-        }
-        return false;
-    }
     public static boolean loginFunc(String user, String pass){
         if (credenciaisValidas(user, pass)) {
             return true;

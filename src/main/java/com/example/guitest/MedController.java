@@ -27,8 +27,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class MedController implements Initializable {
-    //@FXML
-    //private Button btMinimize;
     Banco banco = new Banco();
     @FXML
     protected void MainAction(MouseEvent e) {

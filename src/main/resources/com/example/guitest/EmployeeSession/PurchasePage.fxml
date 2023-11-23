@@ -207,6 +207,11 @@
                   <Font size="18.0" />
                </font>
             </TextField>
+            <Button layoutX="960.0" layoutY="141.0" mnemonicParsing="false" onAction="#UpdateTableMed" prefHeight="37.0" prefWidth="122.0" styleClass="Button" stylesheets="@../design/AllPagesDesign.css" text="Atualizar">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
          </children>
       </Pane>
    </children>
