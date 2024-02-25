@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 //Takushi aqui
 public class Banco {
-    Scanner scanner1 = new Scanner(System.in);
+
     public static Connection connection  = conexao();
     Statement executar;
     {

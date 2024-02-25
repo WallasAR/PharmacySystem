@@ -7,7 +7,11 @@
     -fx-border-radius: 5px;
     -fx-text-fill: #f53827;
 }
-
+.Button:focused{
+    -fx-border-color: #f53827;
+    -fx-border-radius: 5px;
+    -fx-text-fill: #f53827;
+}
 .Textfield{
     -fx-background-color:linear-gradient(to bottom, #efefef, #eee);
     -fx-background-radius:4px;

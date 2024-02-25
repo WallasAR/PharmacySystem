@@ -49,9 +49,9 @@
                         </ImageView>
                      </children>
                   </Pane>
-                  <Pane fx:id="btClient11" layoutY="541.0" prefHeight="70.0" prefWidth="512.0" styleClass="btHome" stylesheets="@../design/HomeDesign.css">
+                  <Pane fx:id="btClient11" layoutY="541.0" prefHeight="70.0" prefWidth="512.0" styleClass="btSelected" stylesheets="@../design/HomeDesign.css">
                      <children>
-                        <Label layoutY="1.0" onMouseClicked="#ClientAction" prefHeight="70.0" prefWidth="511.0" styleClass="labelButtonHome" stylesheets="@../design/HomeDesign.css" text="           Clientes" textAlignment="CENTER" textFill="WHITE">
+                        <Label layoutY="1.0" onMouseClicked="#ClientAction" prefHeight="70.0" prefWidth="511.0" stylesheets="@../design/HomeDesign.css" text="           Clientes" textAlignment="CENTER" textFill="WHITE">
                            <font>
                               <Font name="Arial Rounded MT Bold" size="40.0" />
                            </font>
@@ -108,6 +108,11 @@
                   <String fx:value="table-view" />
                </styleClass>
             </TableView>
+            <Label layoutX="1164.0" layoutY="99.0" text="Clientes cadastrados">
+               <font>
+                  <Font name="Arial Black" size="36.0" />
+               </font>
+            </Label>
             <Label layoutX="704.0" layoutY="69.0" text="Campo de pesquisa">
                <font>
                   <Font size="20.0" />
@@ -120,25 +125,25 @@
                   <Font size="30.0" />
                </font>
             </Label>
-            <TextField id="Textfield" fx:id="tfNome" layoutX="839.0" layoutY="725.0" prefHeight="50.0" prefWidth="430.0" promptText="Ex.: Albert" styleClass="Textfield" stylesheets="@../design/AllPagesDesign.css" />
+            <TextField id="Textfield" fx:id="tfNome" layoutX="839.0" layoutY="725.0" prefHeight="50.0" prefWidth="430.0" promptText="Ex.: Claire" styleClass="Textfield" stylesheets="@../design/AllPagesDesign.css" />
             <Label layoutX="742.0" layoutY="799.0" text="Sobrenome">
                <font>
                   <Font size="30.0" />
                </font>
             </Label>
-            <TextField id="Textfield" fx:id="tfSobrenome" layoutX="909.0" layoutY="797.0" prefHeight="50.0" prefWidth="360.0" promptText="Ex.: Eistein" styleClass="Textfield" stylesheets="@../design/AllPagesDesign.css" />
-            <Label layoutX="744.0" layoutY="955.0" text="Usuário">
-               <font>
-                  <Font size="30.0" />
-               </font>
-            </Label>
-            <TextField fx:id="tfUser" layoutX="862.0" layoutY="953.0" prefHeight="50.0" prefWidth="212.0" styleClass="Textfield" stylesheets="@../design/AllPagesDesign.css" />
+            <TextField id="Textfield" fx:id="tfSobrenome" layoutX="909.0" layoutY="797.0" prefHeight="50.0" prefWidth="360.0" promptText="Ex.: Redfield" styleClass="Textfield" stylesheets="@../design/AllPagesDesign.css" />
             <Label layoutX="745.0" layoutY="875.0" text="Telefone">
                <font>
                   <Font size="30.0" />
                </font>
             </Label>
             <TextField fx:id="tfFone" layoutX="873.0" layoutY="873.0" prefHeight="50.0" prefWidth="243.0" styleClass="Textfield" stylesheets="@../design/AllPagesDesign.css" />
+            <Label layoutX="744.0" layoutY="955.0" text="Usuário">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tfUser" layoutX="862.0" layoutY="953.0" prefHeight="50.0" prefWidth="212.0" styleClass="Textfield" stylesheets="@../design/AllPagesDesign.css" />
             <Label layoutX="1149.0" layoutY="875.0" text="ID">
                <font>
                   <Font size="30.0" />
@@ -153,6 +158,11 @@
                   <Font size="18.0" />
                </font>
             </TextField>
+            <Button layoutX="1120.0" layoutY="951.0" mnemonicParsing="false" onAction="#clearTextFields" prefHeight="54.0" prefWidth="153.0" styleClass="Button" stylesheets="@../design/AllPagesDesign.css" text="Limpar">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
             <Button id="Button" layoutX="1338.0" layoutY="707.0" mnemonicParsing="false" onAction="#AddClientInfoAction" prefHeight="90.0" prefWidth="340.0" styleClass="Button" stylesheets="@../design/AllPagesDesign.css" text="Adicionar">
                <font>
                   <Font size="28.0" />
@@ -168,16 +178,6 @@
                   <Font size="28.0" />
                </font>
             </Button>
-            <Button layoutX="1120.0" layoutY="951.0" mnemonicParsing="false" onAction="#clearTextFields" prefHeight="54.0" prefWidth="153.0" styleClass="Button" stylesheets="@../design/AllPagesDesign.css" text="Limpar">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Button>
-            <Label layoutX="955.0" layoutY="15.0" text="Clientes cadastrados">
-               <font>
-                  <Font name="Arial Black" size="36.0" />
-               </font>
-            </Label>
          </children>
       </Pane>
    </children>

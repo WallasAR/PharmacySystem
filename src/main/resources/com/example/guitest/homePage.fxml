@@ -18,7 +18,7 @@
          <children>
             <Pane prefHeight="1081.0" prefWidth="512.0" styleClass="SideHome" stylesheets="@design/HomeDesign.css">
                <children>
-                  <Pane fx:id="btHome" layoutY="302.0" prefHeight="70.0" prefWidth="512.0" styleClass="btHome" stylesheets="@design/HomeDesign.css">
+                  <Pane fx:id="btHome" layoutY="302.0" prefHeight="70.0" prefWidth="512.0" styleClass="btSelected" stylesheets="@design/HomeDesign.css">
                      <children>
                         <Label fx:id="labelButtonHome" layoutX="-1.0" layoutY="-1.0" prefHeight="70.0" prefWidth="512.0" styleClass="labelButtonHome" stylesheets="@design/HomeDesign.css" text="           Home" textAlignment="CENTER" textFill="WHITE">
                            <font>

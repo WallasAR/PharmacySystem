@@ -9,7 +9,24 @@
 .labelButtonHome:hover{
     -fx-translate-x: 15px;
 }
+.btHome{
+    -fx-border-width: .0px .0px .2px .9px;
+    -fx-border-color: #fff;
+}
 .btHome:hover {
     -fx-background-color: linear-gradient(to right, #ff6666, #f53827 );
     -fx-cursor: HAND;
+}
+.bthome:focused{
+    -fx-background-color: #ff1111;
+    -fx-border-width: .0px .0px .2px .1px;
+    -fx-border-color: #fff;
+}
+.btSelected{
+    -fx-background-color: #ff1111;
+    -fx-border-width: .0px .0px .2px .1px;
+    -fx-border-color: #fff;
+}
+.btSelected:hover{
+    -fx-background-color: linear-gradient(to right, #eb0000, #f53827 );
 }

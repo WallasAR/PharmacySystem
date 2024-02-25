@@ -43,12 +43,12 @@
    <right>
       <AnchorPane prefHeight="500.0" prefWidth="521.0" BorderPane.alignment="CENTER">
          <children>
-            <TextField fx:id="tfUser" layoutX="111.0" layoutY="202.0" promptText="Usuário" style="-fx-background-color: transparent; -fx-border-color: #ed2939; -fx-border-width: 0px 0px 2px;">
+            <TextField fx:id="tfUser" layoutX="111.0" layoutY="202.0" onKeyPressed="#LoginButtonKeyAction" promptText="Usuário" style="-fx-background-color: transparent; -fx-border-color: #ed2939; -fx-border-width: 0px 0px 2px;">
                <font>
                   <Font name="Arial" size="12.0" />
                </font>
             </TextField>
-            <PasswordField fx:id="pfPass" layoutX="111.0" layoutY="259.0" promptText="Senha" style="-fx-background-color: transparent; -fx-border-color: #ed2939; -fx-border-width: 0px 0px 2px;">
+            <PasswordField fx:id="pfPass" layoutX="111.0" layoutY="259.0" onKeyPressed="#LoginButtonKeyAction" promptText="Senha" style="-fx-background-color: transparent; -fx-border-color: #ed2939; -fx-border-width: 0px 0px 2px;">
                <font>
                   <Font name="Arial" size="12.0" />
                </font>

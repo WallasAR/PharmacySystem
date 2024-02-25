@@ -34,9 +34,9 @@
                                 </ImageView>
                             </children>
                         </Pane>
-                        <Pane layoutY="416.0" prefHeight="70.0" prefWidth="512.0" styleClass="btHome" stylesheets="@../design/HomeDesign.css">
+                        <Pane layoutY="416.0" prefHeight="70.0" prefWidth="512.0" styleClass="btSelected" stylesheets="@../design/HomeDesign.css">
                             <children>
-                                <Label layoutY="1.0" prefHeight="70.0" prefWidth="511.0" styleClass="labelButtonHome" stylesheets="@../design/HomeDesign.css" text="           Encomendas" textAlignment="CENTER" textFill="WHITE">
+                                <Label layoutY="1.0" prefHeight="70.0" prefWidth="511.0" stylesheets="@../design/HomeDesign.css" text="           Encomendas" textAlignment="CENTER" textFill="WHITE">
                                     <font>
                                         <Font name="Arial Rounded MT Bold" size="40.0" />
                                     </font>
@@ -94,11 +94,22 @@
                         </Pane>
                     </children>
                 </Pane>
-                <Label layoutX="1039.0" layoutY="14.0" text="Pedidos realizados">
+                <Label layoutX="1323.0" layoutY="71.0" text="Pedidos realizados">
                     <font>
                         <Font name="Arial Black" size="36.0" />
                     </font>
                 </Label>
+            <Label layoutX="598.0" layoutY="56.0" text="Campo de pesquisa">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tfSearch" layoutX="594.0" layoutY="88.0" prefHeight="30.0" prefWidth="352.0" promptText="Palavras-chave (nome, sobrenome, etc)" styleClass="Textfield" stylesheets="@../design/AllPagesDesign.css" />
+            <Button layoutX="970.0" layoutY="88.0" mnemonicParsing="false" onAction="#updateTableAction" prefHeight="37.0" prefWidth="174.0" styleClass="Button" stylesheets="@../design/AllPagesDesign.css" text="Atualizar">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
                 <TableView fx:id="tvOrder" layoutX="594.0" layoutY="132.0" prefHeight="829.0" prefWidth="1260.0" stylesheets="@../design/AllPagesDesign.css">
                     <columns>
                         <TableColumn fx:id="tcIdOrder" prefWidth="60.0" text="ID" />
@@ -111,35 +122,19 @@
                   <TableColumn fx:id="tcStatusOrder" prefWidth="120.0" text="Situação" />
                     </columns>
                 </TableView>
-            <Label layoutX="598.0" layoutY="56.0" text="Campo de pesquisa">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
-            <TextField fx:id="tfSearch" layoutX="594.0" layoutY="88.0" prefHeight="30.0" prefWidth="352.0" promptText="Palavras-chave (nome, sobrenome, etc)" styleClass="Textfield" stylesheets="@../design/AllPagesDesign.css" />
-            <Button layoutX="1673.0" layoutY="79.0" mnemonicParsing="false" onAction="#updateTableAction" prefHeight="46.0" prefWidth="174.0" styleClass="Button" stylesheets="@../design/AllPagesDesign.css" text="Atualizar">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Button>
             <Rectangle arcHeight="10.0" arcWidth="10.0" fill="#ffffff5c" height="98.0" layoutX="963.0" layoutY="968.0" stroke="#00000032" strokeType="INSIDE" width="891.0" />
-            <Label layoutX="1186.0" layoutY="976.0" text="Definir situação" textFill="RED">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
-            <TextField fx:id="tfUpdateStatus" layoutX="1186.0" layoutY="1013.0" prefHeight="37.0" prefWidth="396.0" promptText="Pedido em processamento / chegou ao estabelecimento" styleClass="Textfield" stylesheets="@../design/AllPagesDesign.css" />
             <Label layoutX="988.0" layoutY="980.0" text="OBSERVAÇÃO: " textFill="RED">
                <font>
                   <Font name="Arial Bold" size="20.0" />
                </font>
             </Label>
             <Text layoutX="990.0" layoutY="1020.0" strokeType="OUTSIDE" strokeWidth="0.0" text="O cliente deve ser avisado assim que o medicamento chegar ao estabelecimento." wrappingWidth="160.345703125" />
-            <Button layoutX="1710.0" layoutY="992.0" mnemonicParsing="false" onAction="#AlterarSituaçãoPedido" prefHeight="51.0" prefWidth="121.0" styleClass="ButtonRemove" stylesheets="@../design/PurchasePageDesign.css" text="Atualizar">
+            <Label layoutX="1186.0" layoutY="976.0" text="Definir situação" textFill="RED">
                <font>
-                  <Font size="16.0" />
+                  <Font size="20.0" />
                </font>
-            </Button>
+            </Label>
+            <TextField fx:id="tfUpdateStatus" layoutX="1186.0" layoutY="1013.0" prefHeight="37.0" prefWidth="396.0" promptText="Pedido em processamento / chegou ao estabelecimento" styleClass="Textfield" stylesheets="@../design/AllPagesDesign.css" />
             <Label layoutX="1592.0" layoutY="977.0" text="ID" textFill="RED">
                <font>
                   <Font size="20.0" />
@@ -150,6 +145,11 @@
                   <Font size="18.0" />
                </font>
             </TextField>
+            <Button layoutX="1710.0" layoutY="992.0" mnemonicParsing="false" onAction="#AlterarSituaçãoPedido" prefHeight="51.0" prefWidth="121.0" styleClass="ButtonRemove" stylesheets="@../design/PurchasePageDesign.css" text="Atualizar">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
             </children>
         </Pane>
     </children>

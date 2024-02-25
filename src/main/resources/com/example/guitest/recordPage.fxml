@@ -74,9 +74,9 @@
                                 </ImageView>
                             </children>
                         </Pane>
-                  <Pane fx:id="btMed111" layoutY="763.0" onMouseClicked="#MedAction" prefHeight="70.0" prefWidth="512.0" styleClass="btHome" stylesheets="@design/HomeDesign.css">
+                  <Pane fx:id="btMed111" layoutY="763.0" onMouseClicked="#MedAction" prefHeight="70.0" prefWidth="512.0" styleClass="btSelected" stylesheets="@design/HomeDesign.css">
                      <children>
-                        <Label layoutX="14.0" layoutY="-1.0" prefHeight="70.0" prefWidth="495.0" styleClass="labelButtonHome" stylesheets="@design/HomeDesign.css" text="         Registros" textAlignment="CENTER" textFill="WHITE">
+                        <Label layoutX="14.0" layoutY="-1.0" prefHeight="70.0" prefWidth="495.0" stylesheets="@design/HomeDesign.css" text="         Registros" textAlignment="CENTER" textFill="WHITE">
                            <font>
                               <Font name="Arial Rounded MT Bold" size="40.0" />
                            </font>
@@ -120,7 +120,7 @@
                         </Pane>
                     </children>
                 </Pane>
-                <Label layoutX="594.0" layoutY="14.0" text="Registro de vendas">
+                <Label layoutX="615.0" layoutY="57.0" text="Registro de vendas">
                     <font>
                         <Font name="Arial Black" size="36.0" />
                     </font>

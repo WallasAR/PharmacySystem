@@ -14,7 +14,15 @@ public class Main extends Application {
 
     private static Stage stage; // Variavel estaticas para fazer a mudança de tela
 
-    private static Scene mainScene, homeScene, funcScene, medScene, clientScene, recordScene, funcServiceScene, medOrderScene, funcClientScene; // variavel do tipo Scene
+    public static Scene mainScene;
+    private static Scene homeScene;
+    private static Scene funcScene;
+    private static Scene medScene;
+    private static Scene clientScene;
+    private static Scene recordScene;
+    private static Scene funcServiceScene;
+    private static Scene medOrderScene;
+    private static Scene funcClientScene; // variavel do tipo Scene
 
     @Override
     public void start(Stage primaryStage) throws Exception { // Metodo padrão do JavaFX
