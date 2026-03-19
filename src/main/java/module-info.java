@@ -8,6 +8,7 @@ module com.example.guitest {
     requires org.kordamp.bootstrapfx.core;
     requires java.desktop;
     requires java.sql;
+    requires mysql.connector.j;
 
     opens com.session.employee to javafx.fxml;
     opens com.example.guitest to javafx.fxml;

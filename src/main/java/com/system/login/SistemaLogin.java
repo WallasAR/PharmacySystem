@@ -14,8 +14,11 @@ public class SistemaLogin {
         String user = "adm";
         String password = "1234";
         try {
+            // Explicit load improves compatibility in IDE/module executions.
+            Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(url, user, password);
-
+        } catch (ClassNotFoundException erroDriver) {
+            JOptionPane.showMessageDialog(null, "Driver MySQL nao encontrado. Execute Maven para baixar dependencias.");
         } catch (SQLException erro) {
             JOptionPane.showMessageDialog(null, erro.getMessage());
         }
