@@ -1,6 +1,7 @@
 package com.example.guitest;
 
 import com.db.bank.Banco;
+import com.db.bank.DatabaseConnection;
 import com.table.view.EncomendasTable;
 import com.warning.alert.AlertMsg;
 import javafx.collections.FXCollections;
@@ -15,14 +16,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-
-import static com.db.bank.Banco.connection;
 
 public class HomeController implements Initializable {
 
@@ -90,21 +90,22 @@ public class HomeController implements Initializable {
         List<EncomendasTable> order = new ArrayList<>();
 
         String consultaSQLcliente = "SELECT * FROM encomendas";
-        Statement statement = connection.createStatement();
-        ResultSet resultado = statement.executeQuery(consultaSQLcliente);
+        try (Connection connection = DatabaseConnection.open();
+             Statement statement = connection.createStatement();
+             ResultSet resultado = statement.executeQuery(consultaSQLcliente)) {
+            while (resultado.next()) {
+                int valorDaColuna1 = resultado.getInt("id");
+                String valorDaColuna2 = resultado.getString("usuario");
+                String valorDaColuna3 = resultado.getString("medicamento");
+                int valorDaColuna4 = resultado.getInt("quantidade");
+                float valorDaColuna5 = resultado.getFloat("valor");
+                String valorDaColuna6 = resultado.getString("data");
+                String valorDaColuna7 = resultado.getString("telefone");
+                String valorDaColuna8 = resultado.getString("status");
 
-        while (resultado.next()) {
-            int valorDaColuna1 = resultado.getInt("id");
-            String valorDaColuna2 = resultado.getString("usuario");
-            String valorDaColuna3 = resultado.getString("medicamento");
-            int valorDaColuna4 = resultado.getInt("quantidade");
-            float valorDaColuna5 = resultado.getFloat("valor");
-            String valorDaColuna6 = resultado.getString("data");
-            String valorDaColuna7 = resultado.getString("telefone");
-            String valorDaColuna8 = resultado.getString("status");
-
-            EncomendasTable orderTable = new EncomendasTable(valorDaColuna1, valorDaColuna2, valorDaColuna3, valorDaColuna4, valorDaColuna5, valorDaColuna6, valorDaColuna7, valorDaColuna8);
-            order.add(orderTable);
+                EncomendasTable orderTable = new EncomendasTable(valorDaColuna1, valorDaColuna2, valorDaColuna3, valorDaColuna4, valorDaColuna5, valorDaColuna6, valorDaColuna7, valorDaColuna8);
+                order.add(orderTable);
+            }
         }
         ObservableList<EncomendasTable> dateOrder = FXCollections.observableList(order);
 

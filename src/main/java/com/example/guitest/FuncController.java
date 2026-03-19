@@ -1,6 +1,7 @@
 package com.example.guitest;
 
 import com.db.bank.Banco;
+import com.db.bank.DatabaseConnection;
 import com.table.view.FuncionarioTable;
 import com.warning.alert.AlertMsg;
 import javafx.collections.FXCollections;
@@ -8,8 +9,6 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
-import static com.db.bank.Banco.connection;
-
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -18,6 +17,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -93,21 +93,22 @@ public class FuncController implements Initializable {
         List<FuncionarioTable> funcionarios = new ArrayList<>();
 
         String consultaSQLfuc = "SELECT * FROM funcionarios";
-        Statement statement = connection.createStatement();
-        ResultSet resultado = statement.executeQuery(consultaSQLfuc);
+        try (Connection connection = DatabaseConnection.open();
+             Statement statement = connection.createStatement();
+             ResultSet resultado = statement.executeQuery(consultaSQLfuc)) {
+            while (resultado.next()) {
+                int valorDaColuna1 = resultado.getInt("id");
+                String valorDaColuna2 = resultado.getString("nome");
+                String valorDaColuna3 = resultado.getString("sobrenome");
+                String valorDaColuna4 = resultado.getString("usuario");
+                String valorDaColuna5 = resultado.getString("cargo");
+                String valorDaColuna6 = resultado.getString("cpf");
+                Float valorDaColuna7 = resultado.getFloat("salario");
+                String valorDaColuna8 = resultado.getString("senha");
 
-        while (resultado.next()) {
-            int valorDaColuna1 = resultado.getInt("id");
-            String valorDaColuna2 = resultado.getString("nome");
-            String valorDaColuna3 = resultado.getString("sobrenome");
-            String valorDaColuna4 = resultado.getString("usuario");
-            String valorDaColuna5 = resultado.getString("cargo");
-            String valorDaColuna6 = resultado.getString("cpf");
-            Float valorDaColuna7 = resultado.getFloat("salario");
-            String valorDaColuna8 = resultado.getString("senha");
-
-            FuncionarioTable funcionario = new FuncionarioTable(valorDaColuna1, valorDaColuna2, valorDaColuna3, valorDaColuna4, valorDaColuna5, valorDaColuna6, valorDaColuna7, valorDaColuna8);
-            funcionarios.add(funcionario);
+                FuncionarioTable funcionario = new FuncionarioTable(valorDaColuna1, valorDaColuna2, valorDaColuna3, valorDaColuna4, valorDaColuna5, valorDaColuna6, valorDaColuna7, valorDaColuna8);
+                funcionarios.add(funcionario);
+            }
         }
 
         ObservableList<FuncionarioTable> Funcionario = FXCollections.observableList(funcionarios);
@@ -206,7 +207,7 @@ public class FuncController implements Initializable {
             alertMsg.msgInformation("Ops! Algo nos campos não parece certo","Certifique-se de preencher todos.");
 
         } else if (AlertMsg.msgConfirm("Confirmação de exclusão", "Deseja remover o funcionário " + tfNome.getText() + " do sistema?")) {
-            banco.deletarfuncionario(Integer.parseInt(tfId.getText()));
+            Banco.deletarfuncionario(Integer.parseInt(tfId.getText()));
             clearTextFields();
             tabelafuncionarios();
         }

@@ -1,11 +1,10 @@
 package com.session.employee;
 
 import com.db.bank.Banco;
-import com.example.guitest.LoginController;
+import com.db.bank.DatabaseConnection;
 import com.example.guitest.Main;
 import com.table.view.CarrinhoTable;
 import com.table.view.ClienteTable;
-import com.table.view.FuncionarioTable;
 import com.table.view.MedicamentoTable;
 import com.warning.alert.AlertMsg;
 import javafx.collections.FXCollections;
@@ -19,6 +18,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -99,18 +99,19 @@ public class PurchaseController implements Initializable {
         List<MedicamentoTable> medicamentos = new ArrayList<>();
 
         String consultaSQL = "SELECT * FROM medicamentos";
-        Statement statement = connection.createStatement();
-        ResultSet resultado = statement.executeQuery(consultaSQL);
+        try (Connection db = DatabaseConnection.open();
+             Statement statement = db.createStatement();
+             ResultSet resultado = statement.executeQuery(consultaSQL)) {
+            while (resultado.next()) {
+                int valorDaColuna1 = resultado.getInt("id");
+                String valorDaColuna2 = resultado.getString("nome");
+                int valorDaColuna3 = resultado.getInt("quantidade");
+                String valorDaColina4 = resultado.getString("tipo");
+                Float valorDaColuna5 = resultado.getFloat("valor");
 
-        while (resultado.next()) {
-            int valorDaColuna1 = resultado.getInt("id");
-            String valorDaColuna2 = resultado.getString("nome");
-            int valorDaColuna3 = resultado.getInt("quantidade");
-            String valorDaColina4 = resultado.getString("tipo");
-            Float valorDaColuna5 = resultado.getFloat("valor");
-
-            MedicamentoTable medicamento = new MedicamentoTable(valorDaColuna1, valorDaColuna2, valorDaColuna3, valorDaColina4, valorDaColuna5);
-            medicamentos.add(medicamento);
+                MedicamentoTable medicamento = new MedicamentoTable(valorDaColuna1, valorDaColuna2, valorDaColuna3, valorDaColina4, valorDaColuna5);
+                medicamentos.add(medicamento);
+            }
         }
 
         ObservableList<MedicamentoTable> datamedi = FXCollections.observableList(medicamentos);
@@ -161,23 +162,24 @@ public class PurchaseController implements Initializable {
         List<ClienteTable> clientes = new ArrayList<>();
 
         String consultaSQLcliente = "SELECT * FROM cliente";
-        Statement statement = connection.createStatement();
-        ResultSet resultado = statement.executeQuery(consultaSQLcliente);
+        try (Connection db = DatabaseConnection.open();
+             Statement statement = db.createStatement();
+             ResultSet resultado = statement.executeQuery(consultaSQLcliente)) {
+            while (resultado.next()) {
+                int valorDaColuna1 = resultado.getInt("id");
+                String valorDaColuna2 = resultado.getString("nome");
+                String valorDaColuna3 = resultado.getString("sobrenome");
+                String valorDaColuna4 = resultado.getString("usuario");
+                String valorDaColuna5 = resultado.getString("telefone");
 
-        while (resultado.next()) {
-            int valorDaColuna1 = resultado.getInt("id");
-            String valorDaColuna2 = resultado.getString("nome");
-            String valorDaColuna3 = resultado.getString("sobrenome");
-            String valorDaColuna4 = resultado.getString("usuario");
-            String valorDaColuna5 = resultado.getString("telefone");
+                ClienteTable cliente = new ClienteTable(valorDaColuna1, valorDaColuna2, valorDaColuna3, valorDaColuna4, valorDaColuna5);
+                clientes.add(cliente);
 
-            ClienteTable cliente = new ClienteTable(valorDaColuna1, valorDaColuna2, valorDaColuna3, valorDaColuna4, valorDaColuna5);
-            clientes.add(cliente);
-
-            List<String> usercliente= new ArrayList<>();
-            usercliente.add(valorDaColuna4);
-            ObservableList<String> Cliente = FXCollections.observableList(usercliente);
-            Box.getItems().addAll(Cliente);
+                List<String> usercliente= new ArrayList<>();
+                usercliente.add(valorDaColuna4);
+                ObservableList<String> Cliente = FXCollections.observableList(usercliente);
+                Box.getItems().addAll(Cliente);
+            }
         }
 
         // fill the TextFields
@@ -203,16 +205,17 @@ public class PurchaseController implements Initializable {
     }
     public void ViewBox()throws SQLException{
         String consultaSQLcliente = "SELECT usuario FROM cliente";
-        Statement statement = connection.createStatement();
-        ResultSet resultado = statement.executeQuery(consultaSQLcliente);
+        try (Connection db = DatabaseConnection.open();
+             Statement statement = db.createStatement();
+             ResultSet resultado = statement.executeQuery(consultaSQLcliente)) {
+            while (resultado.next()) {
+                String valorDaColuna4 = resultado.getString("usuario");
 
-        while (resultado.next()) {
-            String valorDaColuna4 = resultado.getString("usuario");
-
-            List<String> usercliente= new ArrayList<>();
-            usercliente.add(valorDaColuna4);
-            ObservableList<String> Cliente = FXCollections.observableList(usercliente);
-            Box.getItems().addAll(Cliente);
+                List<String> usercliente= new ArrayList<>();
+                usercliente.add(valorDaColuna4);
+                ObservableList<String> Cliente = FXCollections.observableList(usercliente);
+                Box.getItems().addAll(Cliente);
+            }
         }
     }
     public void colocarRegistro(javafx.event.ActionEvent event) throws SQLException {

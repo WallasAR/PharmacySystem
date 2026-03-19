@@ -1,5 +1,12 @@
 package com.db.bank;
 
+import com.db.repository.AuthRepository;
+import com.db.repository.CarrinhoRepository;
+import com.db.repository.ClienteRepository;
+import com.db.repository.EncomendaRepository;
+import com.db.repository.FuncionarioRepository;
+import com.db.repository.MedicamentoRepository;
+import com.db.repository.RegistroRepository;
 import com.warning.alert.AlertMsg;
 
 import javax.swing.*;
@@ -9,6 +16,13 @@ import java.sql.*;
 public class Banco {
 
     public static Connection connection  = conexao();
+    private static final ClienteRepository clienteRepository = new ClienteRepository();
+    private static final FuncionarioRepository funcionarioRepository = new FuncionarioRepository();
+    private static final MedicamentoRepository medicamentoRepository = new MedicamentoRepository();
+    private static final RegistroRepository registroRepository = new RegistroRepository();
+    private static final CarrinhoRepository carrinhoRepository = new CarrinhoRepository();
+    private static final EncomendaRepository encomendaRepository = new EncomendaRepository();
+    private static final AuthRepository authRepository = new AuthRepository();
     public static Connection conexao(){
         Connection conn = null;
         try {
@@ -37,11 +51,7 @@ public class Banco {
         }
     }
     public static void deletarcliente(String idcli) throws SQLException{
-        Connection connection  = conexao();
-        String deletecli = ("DELETE FROM cliente WHERE id = ?");
-        PreparedStatement preparedStatement = connection.prepareStatement(deletecli);
-        preparedStatement.setString(1, idcli);
-        preparedStatement.executeUpdate();
+        clienteRepository.deleteById(idcli);
     }
     private boolean tabelaExiste(String nomeTabela) throws SQLException {
         // Verificar se a tabela já existe no banco de dados
@@ -66,13 +76,7 @@ public class Banco {
     }
     public void inseriradm(String user, String pass){
         try{
-            String adm = ("INSERT INTO autenticar (usuario, password) VALUES (?, ?)");
-            PreparedStatement preparedStatement = connection.prepareStatement(adm);
-            preparedStatement.setString(1, user);
-            preparedStatement.setString(2, pass);
-
-            preparedStatement.executeUpdate();
-
+            authRepository.insertAdmin(user, pass);
         }catch(SQLException e){
             System.out.println(e);
         }
@@ -92,20 +96,12 @@ public class Banco {
         }
     }
     public static boolean verificarusuario(String user){
-        boolean existe = false;
-        Connection connection  = conexao();
         try{
-            String verificar = "SELECT * FROM cliente WHERE usuario = ?";
-            try(PreparedStatement verificarexis = connection.prepareStatement(verificar)){
-                verificarexis.setString(1, user);
-                try(ResultSet verificarresultado = verificarexis.executeQuery()){
-                    existe = verificarresultado.next();
-                }
-            }
+            return clienteRepository.existsByUsuario(user);
         }catch(SQLException e){
             System.out.println(e);
+            return false;
         }
-        return existe;
     }
     public void inserircliente(String nomecli, String sobrenomecli, String user, String fone){
         try{
@@ -113,14 +109,7 @@ public class Banco {
                 AlertMsg alert = new AlertMsg();
                 alert.msgInformation("Erro ao registrar" , "Nome de usuário ja está sendo utilizado, tente novamente.");
             }else{
-                String cliente = ("INSERT INTO cliente (nome, sobrenome, usuario, telefone) VALUES(?,?,?,?)");
-                PreparedStatement preparedStatement = connection.prepareStatement(cliente);
-                preparedStatement.setString(1, nomecli);
-                preparedStatement.setString(2, sobrenomecli);
-                preparedStatement.setString(3, user);
-                preparedStatement.setString(4, fone);
-
-                preparedStatement.executeUpdate();
+                clienteRepository.insert(nomecli, sobrenomecli, user, fone);
             }
 
         }catch(SQLException e){
@@ -129,27 +118,12 @@ public class Banco {
     }
 
     public void updateClient(String nome, String sobrenome, String usuario, String fone, String idcli) throws SQLException {
-        String updateQuaryCli = "UPDATE cliente SET nome = ?, sobrenome = ?, usuario = ?, telefone = ? WHERE id = ?";
-        PreparedStatement preparedStatement = connection.prepareStatement(updateQuaryCli);
-        preparedStatement.setString(1, nome);
-        preparedStatement.setString(2, sobrenome);
-        preparedStatement.setString(3, usuario);
-        preparedStatement.setString(4, fone);
-        preparedStatement.setString(5, idcli);
-        preparedStatement.executeUpdate();
+        clienteRepository.update(nome, sobrenome, usuario, fone, idcli);
     }
 
     public void inserirmedicamento(String nomMedi, int quantiMedi,String tipoMedi, float valorMedi ){
         try{
-            String medi = ("INSERT INTO medicamentos (nome, quantidade, tipo , valor) VALUES(?,?,?,?)");
-            PreparedStatement preparedStatement = connection.prepareStatement(medi);
-            preparedStatement.setString(1, nomMedi);
-            preparedStatement.setInt(2, quantiMedi);
-            preparedStatement.setString(3, tipoMedi);
-            preparedStatement.setFloat(4, valorMedi);
-
-            preparedStatement.executeUpdate();
-
+            medicamentoRepository.insert(nomMedi, quantiMedi, tipoMedi, valorMedi);
         }catch(SQLException e){
             System.out.println(e);
         }
@@ -157,16 +131,7 @@ public class Banco {
 
     public static int somarentidadeseliente() {
         try {
-            String consultaSQLCliente = "SELECT COUNT(id) AS soma_total FROM cliente";
-
-            try (PreparedStatement statement = connection.prepareStatement(consultaSQLCliente);
-                 ResultSet consultaSoma = statement.executeQuery()) {
-
-                if (consultaSoma.next()) {
-                    int soma = consultaSoma.getInt("soma_total");
-                    return soma;
-                }
-            }
+            return clienteRepository.countAll();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -174,16 +139,7 @@ public class Banco {
     }
     public static int somarentidadesefuncionarios() {
         try {
-            String consultaSQLCliente = "SELECT COUNT(id) AS soma_total FROM funcionarios";
-
-            try (PreparedStatement statement = connection.prepareStatement(consultaSQLCliente);
-                 ResultSet consultaSomafu = statement.executeQuery()) {
-
-                if (consultaSomafu.next()) {
-                    int somafu = consultaSomafu.getInt("soma_total");
-                    return somafu;
-                }
-            }
+            return funcionarioRepository.countAll();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -191,17 +147,7 @@ public class Banco {
     }
     public static int somarentidadesmedicamentos() {
         try {
-            String consultaSQLCliente = "SELECT COUNT(id) AS soma_total FROM medicamentos";
-
-            try (PreparedStatement statement = connection.prepareStatement(consultaSQLCliente);
-                 ResultSet consultaSomamedi = statement.executeQuery()) {
-
-                if (consultaSomamedi.next()) {
-                    int somamedi = consultaSomamedi.getInt("soma_total");
-                    return somamedi;
-                    //System.out.println("Soma total de Medicamentos registrados: " + somamedi);
-                }
-            }
+            return medicamentoRepository.countAll();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -227,17 +173,7 @@ public class Banco {
             if(verificarusuario(user)) {
                 System.out.println("O nome de usuario não pode ser utilizado, tente outro.");
             }else{
-                String cliente = ("INSERT INTO funcionarios (nome, sobrenome, usuario, cargo, cpf, salario, senha) VALUES(?,?,?,?,?,?,?)");
-                PreparedStatement preparedStatement = connection.prepareStatement(cliente);
-                preparedStatement.setString(1, nome);
-                preparedStatement.setString(2, sobrenome);
-                preparedStatement.setString(3, user);
-                preparedStatement.setString(4, cargo);
-                preparedStatement.setString(5, Cpf);
-                preparedStatement.setFloat(6, salario);
-                preparedStatement.setString(7, senha);
-
-                preparedStatement.executeUpdate();
+                funcionarioRepository.insert(nome, sobrenome, user, cargo, Cpf, salario, senha);
             }
 
         }catch(SQLException e){
@@ -245,43 +181,16 @@ public class Banco {
         }
     }
     public void updateFuncionario(String nome, String sobrenome, String user, String cargo, String cpf, float salario, String senha, int idfunc) throws SQLException {
-        String updateQuaryCli = "UPDATE funcionarios SET nome = ?, sobrenome = ?, usuario = ?, cargo = ?, cpf = ?, salario = ?, senha = ? WHERE id = ?";
-        PreparedStatement preparedStatement = connection.prepareStatement(updateQuaryCli);
-        preparedStatement.setString(1, nome);
-        preparedStatement.setString(2, sobrenome);
-        preparedStatement.setString(3, user);
-        preparedStatement.setString(4, cargo);
-        preparedStatement.setString(5, cpf);
-        preparedStatement.setFloat(6, salario);
-        preparedStatement.setString(7, senha);
-        preparedStatement.setInt(8,idfunc);
-        preparedStatement.executeUpdate();
+        funcionarioRepository.update(nome, sobrenome, user, cargo, cpf, salario, senha, idfunc);
     }
     public static void deletarfuncionario(int num) throws SQLException{
-        Connection connection  = conexao();
-        String delete = ("DELETE FROM funcionarios WHERE id = ?");
-        PreparedStatement preparedStatement = connection.prepareStatement(delete);
-        preparedStatement.setInt(1, num);
-
-        preparedStatement.executeUpdate();
+        funcionarioRepository.deleteById(num);
     }
     public static void deletarmedicamento(int num) throws SQLException{
-        Connection connection  = conexao();
-        String delete = ("DELETE FROM medicamentos WHERE id = ?");
-        PreparedStatement preparedStatement = connection.prepareStatement(delete);
-        preparedStatement.setInt(1, num);
-
-        preparedStatement.executeUpdate();
+        medicamentoRepository.deleteById(num);
     }
     public void updateMedicamento(String nome, int quantidade, String tipo, float valor, int idfunc) throws SQLException {
-        String updateQuaryCli = "UPDATE medicamentos SET nome = ?, quantidade = ?, tipo = ?, valor = ? WHERE id = ?";
-        PreparedStatement preparedStatement = connection.prepareStatement(updateQuaryCli);
-        preparedStatement.setString(1, nome);
-        preparedStatement.setInt(2, quantidade);
-        preparedStatement.setString(3, tipo);
-        preparedStatement.setFloat(4, valor);
-        preparedStatement.setInt(5,idfunc);
-        preparedStatement.executeUpdate();
+        medicamentoRepository.update(nome, quantidade, tipo, valor, idfunc);
     }
     public void registro(){
         try {
@@ -299,15 +208,7 @@ public class Banco {
     }
 
     public void inseriregistro(String user, String medicamento, int quantidade, float valor, String date) throws SQLException {
-        String dados = ("INSERT INTO registros (usuario, medicamento, quantidade, valor, data) VALUES (?, ?, ?,?, ?)");
-        PreparedStatement preparedStatement = connection.prepareStatement(dados);
-        preparedStatement.setString(1, user);
-        preparedStatement.setString(2, medicamento);
-        preparedStatement.setInt(3, quantidade);
-        preparedStatement.setFloat(4, valor);
-        preparedStatement.setString(5, date);
-
-        preparedStatement.executeUpdate();
+        registroRepository.insert(user, medicamento, quantidade, valor, date);
     }
     public void carrinho(){
         try {
@@ -324,14 +225,7 @@ public class Banco {
         }
     }
     public void inserircarrinho(String user, String medicamento, int quantidade, float valor) throws SQLException {
-        String dados = ("INSERT INTO carrinho (usuario, medicamento, quantidade, valor) VALUES (?, ?, ?,?)");
-        PreparedStatement preparedStatement = connection.prepareStatement(dados);
-        preparedStatement.setString(1, user);
-        preparedStatement.setString(2, medicamento);
-        preparedStatement.setInt(3, quantidade);
-        preparedStatement.setFloat(4, valor);
-
-        preparedStatement.executeUpdate();
+        carrinhoRepository.insert(user, medicamento, quantidade, valor);
     }
     public void encomendas(){
         try {
@@ -348,16 +242,6 @@ public class Banco {
         }
     }
     public void inserirencomendas(String user, String medicamento, int quantidade, float valor, String data,String fone, String status) throws SQLException {
-        String dados = ("INSERT INTO encomendas (usuario, medicamento, quantidade, valor, telefone, data, status) VALUES (?, ?, ?, ?, ?, ?, ?)");
-        PreparedStatement preparedStatement = connection.prepareStatement(dados);
-        preparedStatement.setString(1, user);
-        preparedStatement.setString(2, medicamento);
-        preparedStatement.setInt(3, quantidade);
-        preparedStatement.setFloat(4, valor);
-        preparedStatement.setString(5, fone);
-        preparedStatement.setString(6, data);
-        preparedStatement.setString(7, status);
-
-        preparedStatement.executeUpdate();
+        encomendaRepository.insert(user, medicamento, quantidade, valor, data, fone, status);
     }
 }

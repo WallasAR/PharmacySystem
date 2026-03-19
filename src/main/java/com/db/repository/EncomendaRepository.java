@@ -1,0 +1,25 @@
+package com.db.repository;
+
+import com.db.bank.DatabaseConnection;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+public class EncomendaRepository {
+
+    public void insert(String usuario, String medicamento, int quantidade, float valor, String data, String telefone, String status) throws SQLException {
+        String sql = "INSERT INTO encomendas (usuario, medicamento, quantidade, valor, telefone, data, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        try (Connection connection = DatabaseConnection.open();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, usuario);
+            statement.setString(2, medicamento);
+            statement.setInt(3, quantidade);
+            statement.setFloat(4, valor);
+            statement.setString(5, telefone);
+            statement.setString(6, data);
+            statement.setString(7, status);
+            statement.executeUpdate();
+        }
+    }
+}

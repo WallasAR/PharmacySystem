@@ -1,6 +1,7 @@
 package com.session.employee;
 
 import com.db.bank.Banco;
+import com.db.bank.DatabaseConnection;
 import com.example.guitest.Main;
 import com.table.view.ClienteTable;
 import com.warning.alert.AlertMsg;
@@ -17,14 +18,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-
-import static com.db.bank.Banco.connection;
 
 public class employeeClientController implements Initializable {
 
@@ -82,18 +82,19 @@ public class employeeClientController implements Initializable {
         List<ClienteTable> clientes = new ArrayList<>();
 
         String consultaSQLcliente = "SELECT * FROM cliente";
-        Statement statement = connection.createStatement();
-        ResultSet resultado = statement.executeQuery(consultaSQLcliente);
+        try (Connection connection = DatabaseConnection.open();
+             Statement statement = connection.createStatement();
+             ResultSet resultado = statement.executeQuery(consultaSQLcliente)) {
+            while (resultado.next()) {
+                int valorDaColuna1 = resultado.getInt("id");
+                String valorDaColuna2 = resultado.getString("nome");
+                String valorDaColuna3 = resultado.getString("sobrenome");
+                String valorDaColina4 = resultado.getString("usuario");
+                String valorDaColuna5 = resultado.getString("telefone");
 
-        while (resultado.next()) {
-            int valorDaColuna1 = resultado.getInt("id");
-            String valorDaColuna2 = resultado.getString("nome");
-            String valorDaColuna3 = resultado.getString("sobrenome");
-            String valorDaColina4 = resultado.getString("usuario");
-            String valorDaColuna5 = resultado.getString("telefone");
-
-            ClienteTable cliente = new ClienteTable(valorDaColuna1, valorDaColuna2, valorDaColuna3, valorDaColina4, valorDaColuna5);
-            clientes.add(cliente);
+                ClienteTable cliente = new ClienteTable(valorDaColuna1, valorDaColuna2, valorDaColuna3, valorDaColina4, valorDaColuna5);
+                clientes.add(cliente);
+            }
         }
         ObservableList<ClienteTable> datacli = FXCollections.observableList(clientes);
 
@@ -185,7 +186,7 @@ public class employeeClientController implements Initializable {
             alertMsg.msgInformation("Ops! Algo nos campos não parece certo","Certifique-se de preencher todos.");
 
         } else if (AlertMsg.msgConfirm("Confirmação de exclusão", "Deseja remover o cliente " + tfNome.getText() + " do sistema?")){
-            banco.deletarcliente(tfId.getText());
+            Banco.deletarcliente(tfId.getText());
             clearTextFields();
             tabelacliente();
         }

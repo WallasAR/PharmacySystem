@@ -1,5 +1,6 @@
 package com.example.guitest;
 
+import com.db.bank.DatabaseConnection;
 import com.table.view.RecordTable;
 import com.warning.alert.AlertMsg;
 import javafx.collections.FXCollections;
@@ -12,14 +13,13 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import java.net.URL;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-
-import static com.db.bank.Banco.connection;
 
 public class RecordController implements Initializable {
 
@@ -71,19 +71,20 @@ public class RecordController implements Initializable {
         List<RecordTable> order = new ArrayList<>();
 
         String consultaSQLregistro = "SELECT * FROM registros";
-        Statement statement = connection.createStatement();
-        ResultSet resultado = statement.executeQuery(consultaSQLregistro);
+        try (Connection connection = DatabaseConnection.open();
+             Statement statement = connection.createStatement();
+             ResultSet resultado = statement.executeQuery(consultaSQLregistro)) {
+            while (resultado.next()) {
+                int valorDaColuna1 = resultado.getInt("id");
+                String valorDaColuna2 = resultado.getString("usuario");
+                String valorDaColuna3 = resultado.getString("medicamento");
+                int valorDaColuna4 = resultado.getInt("quantidade");
+                float valorDaColuna5 = resultado.getFloat("valor");
+                String valorDaColuna6 = resultado.getString("data");
 
-        while (resultado.next()) {
-            int valorDaColuna1 = resultado.getInt("id");
-            String valorDaColuna2 = resultado.getString("usuario");
-            String valorDaColuna3 = resultado.getString("medicamento");
-            int valorDaColuna4 = resultado.getInt("quantidade");
-            float valorDaColuna5 = resultado.getFloat("valor");
-            String valorDaColuna6 = resultado.getString("data");
-
-            RecordTable recordTable = new RecordTable(valorDaColuna1, valorDaColuna2, valorDaColuna3, valorDaColuna4, valorDaColuna5, valorDaColuna6);
-            order.add(recordTable);
+                RecordTable recordTable = new RecordTable(valorDaColuna1, valorDaColuna2, valorDaColuna3, valorDaColuna4, valorDaColuna5, valorDaColuna6);
+                order.add(recordTable);
+            }
         }
         ObservableList<RecordTable> dateRecord = FXCollections.observableList(order);
 
