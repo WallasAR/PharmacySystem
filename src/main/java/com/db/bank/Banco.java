@@ -1,12 +1,12 @@
 package com.db.bank;
 
-import com.db.repository.AuthRepository;
-import com.db.repository.CarrinhoRepository;
-import com.db.repository.ClienteRepository;
-import com.db.repository.EncomendaRepository;
-import com.db.repository.FuncionarioRepository;
-import com.db.repository.MedicamentoRepository;
-import com.db.repository.RegistroRepository;
+import com.db.service.AuthService;
+import com.db.service.CarrinhoService;
+import com.db.service.ClienteService;
+import com.db.service.EncomendaService;
+import com.db.service.FuncionarioService;
+import com.db.service.MedicamentoService;
+import com.db.service.RegistroService;
 import com.warning.alert.AlertMsg;
 
 import javax.swing.*;
@@ -16,13 +16,13 @@ import java.sql.*;
 public class Banco {
 
     public static Connection connection  = conexao();
-    private static final ClienteRepository clienteRepository = new ClienteRepository();
-    private static final FuncionarioRepository funcionarioRepository = new FuncionarioRepository();
-    private static final MedicamentoRepository medicamentoRepository = new MedicamentoRepository();
-    private static final RegistroRepository registroRepository = new RegistroRepository();
-    private static final CarrinhoRepository carrinhoRepository = new CarrinhoRepository();
-    private static final EncomendaRepository encomendaRepository = new EncomendaRepository();
-    private static final AuthRepository authRepository = new AuthRepository();
+    private static final ClienteService clienteService = new ClienteService();
+    private static final FuncionarioService funcionarioService = new FuncionarioService();
+    private static final MedicamentoService medicamentoService = new MedicamentoService();
+    private static final RegistroService registroService = new RegistroService();
+    private static final CarrinhoService carrinhoService = new CarrinhoService();
+    private static final EncomendaService encomendaService = new EncomendaService();
+    private static final AuthService authService = new AuthService();
     public static Connection conexao(){
         Connection conn = null;
         try {
@@ -51,7 +51,7 @@ public class Banco {
         }
     }
     public static void deletarcliente(String idcli) throws SQLException{
-        clienteRepository.deleteById(idcli);
+        clienteService.deleteById(idcli);
     }
     private boolean tabelaExiste(String nomeTabela) throws SQLException {
         // Verificar se a tabela já existe no banco de dados
@@ -76,7 +76,7 @@ public class Banco {
     }
     public void inseriradm(String user, String pass){
         try{
-            authRepository.insertAdmin(user, pass);
+            authService.insertAdmin(user, pass);
         }catch(SQLException e){
             System.out.println(e);
         }
@@ -97,7 +97,7 @@ public class Banco {
     }
     public static boolean verificarusuario(String user){
         try{
-            return clienteRepository.existsByUsuario(user);
+            return clienteService.existsByUsuario(user);
         }catch(SQLException e){
             System.out.println(e);
             return false;
@@ -109,7 +109,7 @@ public class Banco {
                 AlertMsg alert = new AlertMsg();
                 alert.msgInformation("Erro ao registrar" , "Nome de usuário ja está sendo utilizado, tente novamente.");
             }else{
-                clienteRepository.insert(nomecli, sobrenomecli, user, fone);
+                clienteService.insert(nomecli, sobrenomecli, user, fone);
             }
 
         }catch(SQLException e){
@@ -118,12 +118,12 @@ public class Banco {
     }
 
     public void updateClient(String nome, String sobrenome, String usuario, String fone, String idcli) throws SQLException {
-        clienteRepository.update(nome, sobrenome, usuario, fone, idcli);
+        clienteService.update(nome, sobrenome, usuario, fone, idcli);
     }
 
     public void inserirmedicamento(String nomMedi, int quantiMedi,String tipoMedi, float valorMedi ){
         try{
-            medicamentoRepository.insert(nomMedi, quantiMedi, tipoMedi, valorMedi);
+            medicamentoService.insert(nomMedi, quantiMedi, tipoMedi, valorMedi);
         }catch(SQLException e){
             System.out.println(e);
         }
@@ -131,7 +131,7 @@ public class Banco {
 
     public static int somarentidadeseliente() {
         try {
-            return clienteRepository.countAll();
+            return clienteService.countAll();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -139,7 +139,7 @@ public class Banco {
     }
     public static int somarentidadesefuncionarios() {
         try {
-            return funcionarioRepository.countAll();
+            return funcionarioService.countAll();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -147,7 +147,7 @@ public class Banco {
     }
     public static int somarentidadesmedicamentos() {
         try {
-            return medicamentoRepository.countAll();
+            return medicamentoService.countAll();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -173,7 +173,7 @@ public class Banco {
             if(verificarusuario(user)) {
                 System.out.println("O nome de usuario não pode ser utilizado, tente outro.");
             }else{
-                funcionarioRepository.insert(nome, sobrenome, user, cargo, Cpf, salario, senha);
+                funcionarioService.insert(nome, sobrenome, user, cargo, Cpf, salario, senha);
             }
 
         }catch(SQLException e){
@@ -181,16 +181,16 @@ public class Banco {
         }
     }
     public void updateFuncionario(String nome, String sobrenome, String user, String cargo, String cpf, float salario, String senha, int idfunc) throws SQLException {
-        funcionarioRepository.update(nome, sobrenome, user, cargo, cpf, salario, senha, idfunc);
+        funcionarioService.update(nome, sobrenome, user, cargo, cpf, salario, senha, idfunc);
     }
     public static void deletarfuncionario(int num) throws SQLException{
-        funcionarioRepository.deleteById(num);
+        funcionarioService.deleteById(num);
     }
     public static void deletarmedicamento(int num) throws SQLException{
-        medicamentoRepository.deleteById(num);
+        medicamentoService.deleteById(num);
     }
     public void updateMedicamento(String nome, int quantidade, String tipo, float valor, int idfunc) throws SQLException {
-        medicamentoRepository.update(nome, quantidade, tipo, valor, idfunc);
+        medicamentoService.update(nome, quantidade, tipo, valor, idfunc);
     }
     public void registro(){
         try {
@@ -208,7 +208,7 @@ public class Banco {
     }
 
     public void inseriregistro(String user, String medicamento, int quantidade, float valor, String date) throws SQLException {
-        registroRepository.insert(user, medicamento, quantidade, valor, date);
+        registroService.insert(user, medicamento, quantidade, valor, date);
     }
     public void carrinho(){
         try {
@@ -225,7 +225,7 @@ public class Banco {
         }
     }
     public void inserircarrinho(String user, String medicamento, int quantidade, float valor) throws SQLException {
-        carrinhoRepository.insert(user, medicamento, quantidade, valor);
+        carrinhoService.insert(user, medicamento, quantidade, valor);
     }
     public void encomendas(){
         try {
@@ -242,6 +242,6 @@ public class Banco {
         }
     }
     public void inserirencomendas(String user, String medicamento, int quantidade, float valor, String data,String fone, String status) throws SQLException {
-        encomendaRepository.insert(user, medicamento, quantidade, valor, data, fone, status);
+        encomendaService.insert(user, medicamento, quantidade, valor, data, fone, status);
     }
 }
