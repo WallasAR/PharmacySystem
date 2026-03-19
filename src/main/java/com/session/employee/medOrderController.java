@@ -45,31 +45,31 @@ public class medOrderController implements Initializable {
 
 
     @FXML
-    private TableColumn tcDateOrder;
+    private TableColumn<EncomendasTable, String> tcDateOrder;
 
     @FXML
-    private TableColumn tcIdOrder;
+    private TableColumn<EncomendasTable, Integer> tcIdOrder;
 
     @FXML
-    private TableColumn tcMedOrder;
+    private TableColumn<EncomendasTable, String> tcMedOrder;
 
     @FXML
-    private TableColumn tcPhoneOrder;
+    private TableColumn<EncomendasTable, String> tcPhoneOrder;
 
     @FXML
-    private TableColumn tcPriceOrder;
+    private TableColumn<EncomendasTable, Float> tcPriceOrder;
 
     @FXML
-    private TableColumn tcQuantOrder;
+    private TableColumn<EncomendasTable, Integer> tcQuantOrder;
 
     @FXML
-    private TableColumn tcStatusOrder;
+    private TableColumn<EncomendasTable, String> tcStatusOrder;
 
     @FXML
-    private TableColumn tcUserOrder;
+    private TableColumn<EncomendasTable, String> tcUserOrder;
 
     @FXML
-    private TableView tvOrder;
+    private TableView<EncomendasTable> tvOrder;
 
     @FXML
     private TextField tfSearch;

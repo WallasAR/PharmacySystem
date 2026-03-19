@@ -52,17 +52,17 @@ public class MedController implements Initializable {
 
 
     @FXML
-    private TableView tbMedicamento;
+    private TableView<MedicamentoTable> tbMedicamento;
     @FXML
-    private TableColumn clIdmedi;
+    private TableColumn<MedicamentoTable, Integer> clIdmedi;
     @FXML
-    private TableColumn clNomemedi;
+    private TableColumn<MedicamentoTable, String> clNomemedi;
     @FXML
-    private TableColumn clQuantimedi;
+    private TableColumn<MedicamentoTable, Integer> clQuantimedi;
     @FXML
-    private TableColumn clTipomedi;
+    private TableColumn<MedicamentoTable, String> clTipomedi;
     @FXML
-    private TableColumn clPreçomedi;
+    private TableColumn<MedicamentoTable, Float> clPreçomedi;
     @FXML
     private TextField tfSearch;
 
@@ -145,9 +145,11 @@ public class MedController implements Initializable {
         // fill the TextFields
         tfId.setText(String.valueOf(clIdmedi.getCellData(index)));
         tfNome.setText((String) clNomemedi.getCellData(index));
-        tfQuantidade.setText(String.valueOf((int) clQuantimedi.getCellData(index)));
+        Integer quantidade = clQuantimedi.getCellData(index);
+        tfQuantidade.setText(quantidade == null ? "" : String.valueOf(quantidade));
         tfTipo.setText((String) clTipomedi.getCellData(index));
-        tfValor.setText(String.valueOf((Float) clPreçomedi.getCellData(index)));
+        Float valor = clPreçomedi.getCellData(index);
+        tfValor.setText(valor == null ? "" : String.valueOf(valor));
     }
 
     public void clearTextFields(){

@@ -51,23 +51,23 @@ public class FuncController implements Initializable {
     }
 
     @FXML
-    private TableColumn tcFuncId;
+    private TableColumn<FuncionarioTable, Integer> tcFuncId;
     @FXML
-    private TableColumn tcFuncNome;
+    private TableColumn<FuncionarioTable, String> tcFuncNome;
     @FXML
-    private TableColumn tcFuncSobrenome;
+    private TableColumn<FuncionarioTable, String> tcFuncSobrenome;
     @FXML
-    private TableColumn tcFuncCargo;
+    private TableColumn<FuncionarioTable, String> tcFuncCargo;
     @FXML
-    private TableColumn tcFuncCpf;
+    private TableColumn<FuncionarioTable, String> tcFuncCpf;
     @FXML
-    private TableColumn tcFuncSalario;
+    private TableColumn<FuncionarioTable, Float> tcFuncSalario;
     @FXML
-    private TableColumn tcUser;
+    private TableColumn<FuncionarioTable, String> tcUser;
     @FXML
-    private TableColumn tcPass;
+    private TableColumn<FuncionarioTable, String> tcPass;
     @FXML
-    private TableView tbFunc;
+    private TableView<FuncionarioTable> tbFunc;
     @FXML
     private TextField tfSearch;
 

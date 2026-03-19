@@ -1,10 +1,8 @@
 package com.session.employee;
 
-import com.db.bank.Banco;
 import com.db.bank.DatabaseConnection;
 import com.example.guitest.Main;
 import com.table.view.CarrinhoTable;
-import com.table.view.ClienteTable;
 import com.table.view.MedicamentoTable;
 import com.warning.alert.AlertMsg;
 import javafx.collections.FXCollections;
@@ -29,38 +27,36 @@ import java.util.ResourceBundle;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
-import static com.db.bank.Banco.connection;
-
 public class PurchaseController implements Initializable {
 
 
     @FXML
-    private TableView tvCarrinho;
+    private TableView<CarrinhoTable> tvCarrinho;
     @FXML
-    private TableView tvCompra;
+    private TableView<MedicamentoTable> tvCompra;
     @FXML
-    private TableColumn tcIdmedi;
+    private TableColumn<MedicamentoTable, Integer> tcIdmedi;
     @FXML
-    private TableColumn tcNomemedi;
+    private TableColumn<MedicamentoTable, String> tcNomemedi;
     @FXML
-    private TableColumn tcQuantimedi;
+    private TableColumn<MedicamentoTable, Integer> tcQuantimedi;
     @FXML
-    private TableColumn tcTipomedi;
+    private TableColumn<MedicamentoTable, String> tcTipomedi;
     @FXML
-    private TableColumn tcPreçomedi;
+    private TableColumn<MedicamentoTable, Float> tcPreçomedi;
     @FXML
-    private TableColumn tcUser;
+    private TableColumn<?, ?> tcUser;
     @FXML
-    private TableColumn tfUser;
+    private TableColumn<CarrinhoTable, String> tfUser;
     @FXML
-    private TableColumn tfIdmedi;
+    private TableColumn<CarrinhoTable, Integer> tfIdmedi;
     @FXML
-    private TableColumn tfNomemedi;
+    private TableColumn<CarrinhoTable, String> tfNomemedi;
     @FXML
-    private TableColumn tfQuantimedi;
+    private TableColumn<CarrinhoTable, Integer> tfQuantimedi;
 
     @FXML
-    private TableColumn tfPreçomedi;
+    private TableColumn<CarrinhoTable, Float> tfPreçomedi;
     @FXML
     private TextField tfSearch;
     @FXML
@@ -76,7 +72,7 @@ public class PurchaseController implements Initializable {
     @FXML
     private TextField tfId;
     @FXML
-    private ComboBox Box;
+    private ComboBox<String> Box;
     @FXML
     private Label labelShowTotal;
 
@@ -159,21 +155,13 @@ public class PurchaseController implements Initializable {
         if (index <= -1){
             return;
         }
-        List<ClienteTable> clientes = new ArrayList<>();
-
         String consultaSQLcliente = "SELECT * FROM cliente";
+        Box.getItems().clear();
         try (Connection db = DatabaseConnection.open();
              Statement statement = db.createStatement();
              ResultSet resultado = statement.executeQuery(consultaSQLcliente)) {
             while (resultado.next()) {
-                int valorDaColuna1 = resultado.getInt("id");
-                String valorDaColuna2 = resultado.getString("nome");
-                String valorDaColuna3 = resultado.getString("sobrenome");
                 String valorDaColuna4 = resultado.getString("usuario");
-                String valorDaColuna5 = resultado.getString("telefone");
-
-                ClienteTable cliente = new ClienteTable(valorDaColuna1, valorDaColuna2, valorDaColuna3, valorDaColuna4, valorDaColuna5);
-                clientes.add(cliente);
 
                 List<String> usercliente= new ArrayList<>();
                 usercliente.add(valorDaColuna4);
@@ -186,7 +174,8 @@ public class PurchaseController implements Initializable {
         tfId.setText(String.valueOf(tcIdmedi.getCellData(index)));
         tfNome.setText((String) tcNomemedi.getCellData(index));
         tfTipo.setText((String) tcTipomedi.getCellData(index));
-        tfValor.setText(String.valueOf((float) tcPreçomedi.getCellData(index)));
+        Float preco = tcPreçomedi.getCellData(index);
+        tfValor.setText(preco == null ? "" : String.valueOf(preco));
     }
 
     @Override
@@ -205,6 +194,7 @@ public class PurchaseController implements Initializable {
     }
     public void ViewBox()throws SQLException{
         String consultaSQLcliente = "SELECT usuario FROM cliente";
+        Box.getItems().clear();
         try (Connection db = DatabaseConnection.open();
              Statement statement = db.createStatement();
              ResultSet resultado = statement.executeQuery(consultaSQLcliente)) {
@@ -219,94 +209,109 @@ public class PurchaseController implements Initializable {
         }
     }
     public void colocarRegistro(javafx.event.ActionEvent event) throws SQLException {
-        Banco banco = new Banco();
-        String user = Box.getSelectionModel().getSelectedItem().toString();
+        String user = selectedUser();
+        if (user == null) {
+            return;
+        }
         String nome = tfNome.getText();
         int quantidade = Integer.parseInt(tfQuantidade.getText());
         float valor = Float.parseFloat(tfValor.getText());
-        String tipo = tfTipo.getText();
+        if (quantidade <= 0) {
+            return;
+        }
 
+        try (Connection db = DatabaseConnection.open()) {
+            db.setAutoCommit(false);
+            try {
+                String tipoMedicamento = null;
+                int quantidadeBanco = 0;
+                String fone = null;
 
-        String consultatipo = "SELECT nome, quantidade, tipo FROM medicamentos WHERE nome = ?";
-        PreparedStatement preparedStatement = connection.prepareStatement(consultatipo);
-        preparedStatement.setString(1, nome);
-        ResultSet resultado = preparedStatement.executeQuery();
-        String consultafone = "SELECT telefone FROM cliente WHERE usuario = ?";
-        preparedStatement = connection.prepareStatement(consultafone);
-        preparedStatement.setString(1, user);
-        ResultSet resultadofone = preparedStatement.executeQuery();
-        String nomemedicamento = null;
-        while(resultado.next() && resultadofone.next()) {
-            String tipomedi = resultado.getString("tipo");
-            nomemedicamento = resultado.getString("nome");
-            int quantidadebanco = resultado.getInt("quantidade");
-            String fone = resultadofone.getString("telefone");
-            if (tipomedi.equalsIgnoreCase("TarjaPreta") && quantidadebanco > 0) {
-                AlertMsg alert = new AlertMsg();
-                if (alert.msgConfirm("Alerta de tarja preta! O medicamento " + nomemedicamento + " necessita de receita", "Solicite-a ao cliente.")) {
-                    float novoValor = valor * quantidade;
-
-                    // Date system to table registro
-                    int novaquanti = quantidadebanco - quantidade;
-                    banco.inserircarrinho(user, nome, quantidade, novoValor);
-                    String updateselect1 = "UPDATE medicamentos SET quantidade = ? WHERE nome = ?";
-                    try (PreparedStatement preparedStatementselect = connection.prepareStatement(updateselect1)) {
-                        preparedStatementselect.setInt(1, novaquanti);
-                        preparedStatementselect.setString(2, nomemedicamento);
-
-                        preparedStatementselect.executeUpdate();
-                        tabelamedi();
-                        Carrinho();
+                try (PreparedStatement medicamentoStmt = db.prepareStatement("SELECT nome, quantidade, tipo FROM medicamentos WHERE nome = ?")) {
+                    medicamentoStmt.setString(1, nome);
+                    try (ResultSet resultado = medicamentoStmt.executeQuery()) {
+                        if (resultado.next()) {
+                            tipoMedicamento = resultado.getString("tipo");
+                            quantidadeBanco = resultado.getInt("quantidade");
+                        } else {
+                            db.rollback();
+                            return;
+                        }
                     }
-                    break;
-                } else {
                 }
-            } else if (tipomedi.equalsIgnoreCase("TarjaVermelha") && quantidadebanco > 0) {
-                AlertMsg alert = new AlertMsg();
-                if (alert.msgConfirm("Alerta de tarja vermelha! O medicamento " + nomemedicamento + " necessita de receita dupla", "Solicite-a ao cliente.")) {
-                    float novoValor = valor * quantidade;
 
-                    // Date system to table registro
-                    int novaquanti = quantidadebanco - quantidade;
-                    banco.inserircarrinho(user, nome, quantidade, novoValor);
-                    String updateselect1 = "UPDATE medicamentos SET quantidade = ? WHERE nome = ?";
-                    try (PreparedStatement preparedStatementselect = connection.prepareStatement(updateselect1)) {
-                        preparedStatementselect.setInt(1, novaquanti);
-                        preparedStatementselect.setString(2, nomemedicamento);
-
-                        preparedStatementselect.executeUpdate();
-                        tabelamedi();
-                        Carrinho();
+                try (PreparedStatement foneStmt = db.prepareStatement("SELECT telefone FROM cliente WHERE usuario = ?")) {
+                    foneStmt.setString(1, user);
+                    try (ResultSet resultadoFone = foneStmt.executeQuery()) {
+                        if (resultadoFone.next()) {
+                            fone = resultadoFone.getString("telefone");
+                        }
                     }
-                    break;
-                } else {
                 }
-            } else if (tipo.equalsIgnoreCase("SemTarja") && quantidadebanco > 0) {
+
+                if (quantidadeBanco == 0) {
+                    if (AlertMsg.msgConfirm("A quantidade do medicamento selecionado é: " + quantidadeBanco, "Faça um agendamento.")) {
+                        float novoValor = valor * quantidade;
+                        String date = new SimpleDateFormat("dd/MM/yyyy | HH:mm:ss").format(new Date());
+                        String status = "Pedido Efetuado";
+                        try (PreparedStatement insertEncomenda = db.prepareStatement(
+                                "INSERT INTO encomendas (usuario, medicamento, quantidade, valor, telefone, data, status) VALUES (?, ?, ?, ?, ?, ?, ?)")) {
+                            insertEncomenda.setString(1, user);
+                            insertEncomenda.setString(2, nome);
+                            insertEncomenda.setInt(3, quantidade);
+                            insertEncomenda.setFloat(4, novoValor);
+                            insertEncomenda.setString(5, fone);
+                            insertEncomenda.setString(6, date);
+                            insertEncomenda.setString(7, status);
+                            insertEncomenda.executeUpdate();
+                        }
+                    }
+                    db.commit();
+                    return;
+                }
+
+                if (quantidade > quantidadeBanco) {
+                    db.rollback();
+                    return;
+                }
+
+                boolean requerReceita = tipoMedicamento.equalsIgnoreCase("TarjaPreta") || tipoMedicamento.equalsIgnoreCase("TarjaVermelha");
+                if (requerReceita) {
+                    String titulo = tipoMedicamento.equalsIgnoreCase("TarjaPreta")
+                            ? "Alerta de tarja preta! O medicamento " + nome + " necessita de receita"
+                            : "Alerta de tarja vermelha! O medicamento " + nome + " necessita de receita dupla";
+                    if (!AlertMsg.msgConfirm(titulo, "Solicite-a ao cliente.")) {
+                        db.rollback();
+                        return;
+                    }
+                }
+
                 float novoValor = valor * quantidade;
-                // Date system to table registro
-                int novaquanti = quantidadebanco - quantidade;
-                banco.inserircarrinho(user, nome, quantidade, novoValor);
-                String updateselect1 = "UPDATE medicamentos SET quantidade = ? WHERE nome = ?";
-                try (PreparedStatement preparedStatementselect = connection.prepareStatement(updateselect1)) {
-                    preparedStatementselect.setInt(1, novaquanti);
-                    preparedStatementselect.setString(2, nomemedicamento);
+                int novaQuantidade = quantidadeBanco - quantidade;
 
-                    preparedStatementselect.executeUpdate();
-                    tabelamedi();
-                    Carrinho();
+                try (PreparedStatement insertCarrinho = db.prepareStatement(
+                        "INSERT INTO carrinho (usuario, medicamento, quantidade, valor) VALUES (?, ?, ?, ?)")) {
+                    insertCarrinho.setString(1, user);
+                    insertCarrinho.setString(2, nome);
+                    insertCarrinho.setInt(3, quantidade);
+                    insertCarrinho.setFloat(4, novoValor);
+                    insertCarrinho.executeUpdate();
                 }
-                break;
-            }else if(quantidadebanco == 0){
-                AlertMsg alert = new AlertMsg();
-                if(alert.msgConfirm("A quantidade do medicamento selecionado é: " + quantidadebanco, "Faça um agendamento.")){
-                    float novoValor = valor * quantidade;
-                    Date dataHoraAtual = new Date();
-                    String date = new SimpleDateFormat("dd/MM/yyyy | HH:mm:ss").format(dataHoraAtual);
-                    String status = "Pedido Efetuado";
-                    banco.inserirencomendas(user, nome, quantidade, novoValor, date, fone, status);
 
-
+                try (PreparedStatement updateMedicamento = db.prepareStatement("UPDATE medicamentos SET quantidade = ? WHERE nome = ?")) {
+                    updateMedicamento.setInt(1, novaQuantidade);
+                    updateMedicamento.setString(2, nome);
+                    updateMedicamento.executeUpdate();
                 }
+
+                db.commit();
+                tabelamedi();
+                Carrinho();
+            } catch (SQLException e) {
+                db.rollback();
+                throw e;
+            } finally {
+                db.setAutoCommit(true);
             }
         }
     }
@@ -315,189 +320,160 @@ public class PurchaseController implements Initializable {
 
         if (index <= -1) {
             List<CarrinhoTable> carrinho = new ArrayList<>();
-            String user = Box.getSelectionModel().getSelectedItem().toString();
-            String consultaSQLcliente = "SELECT * FROM carrinho WHERE usuario = ?";
+            String user = selectedUser();
+            if (user == null) {
+                return;
+            }
+            try (Connection db = DatabaseConnection.open()) {
+                String consultaSQLcliente = "SELECT * FROM carrinho WHERE usuario = ?";
+                try (PreparedStatement preparedStatement = db.prepareStatement(consultaSQLcliente)) {
+                    preparedStatement.setString(1, user);
 
-            try (PreparedStatement preparedStatement = connection.prepareStatement(consultaSQLcliente)) {
-                preparedStatement.setString(1, user);
+                    try (ResultSet resultado = preparedStatement.executeQuery()) {
+                        while (resultado.next()) {
+                            int valorDaColuna1 = resultado.getInt("id");
+                            String valorDaColuna2 = resultado.getString("usuario");
+                            String valorDaColuna3 = resultado.getString("medicamento");
+                            int valorDaColuna4 = resultado.getInt("quantidade");
+                            float valorDaColuna5 = resultado.getFloat("valor");
 
-                try (ResultSet resultado = preparedStatement.executeQuery()) {
-                    while (resultado.next()) {
-                        int valorDaColuna1 = resultado.getInt("id");
-                        String valorDaColuna2 = resultado.getString("usuario");
-                        String valorDaColuna3 = resultado.getString("medicamento");
-                        int valorDaColuna4 = resultado.getInt("quantidade");
-                        float valorDaColuna5 = resultado.getFloat("valor");
+                            CarrinhoTable Carrinhocliente = new CarrinhoTable(valorDaColuna1, valorDaColuna2, valorDaColuna3, valorDaColuna4, valorDaColuna5);
+                            carrinho.add(Carrinhocliente);
+                        }
+                    }
+                }
 
-                        CarrinhoTable Carrinhocliente = new CarrinhoTable(valorDaColuna1, valorDaColuna2, valorDaColuna3, valorDaColuna4, valorDaColuna5);
-                        carrinho.add(Carrinhocliente);
+                ObservableList<CarrinhoTable> datamedi = FXCollections.observableList(carrinho);
+
+                tfIdmedi.setCellValueFactory(new PropertyValueFactory<>("id"));
+                tfUser.setCellValueFactory(new PropertyValueFactory<>("usuario"));
+                tfNomemedi.setCellValueFactory(new PropertyValueFactory<>("nomeMed"));
+                tfQuantimedi.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
+                tfPreçomedi.setCellValueFactory(new PropertyValueFactory<>("valor"));
+
+                tvCarrinho.setItems(datamedi);
+
+                String consultaSQLCliente = "SELECT SUM(valor) AS soma_total FROM carrinho WHERE usuario = ?";
+                try (PreparedStatement statement = db.prepareStatement(consultaSQLCliente)) {
+                    statement.setString(1, user);
+                    try (ResultSet consultaSoma = statement.executeQuery()) {
+                        if (consultaSoma.next()) {
+                            float soma = consultaSoma.getFloat("soma_total");
+                            String result = String.format("%.2f", soma);
+                            labelShowTotal.setText(result);
+                        }
                     }
                 }
             }
-
-            ObservableList<CarrinhoTable> datamedi = FXCollections.observableList(carrinho);
-
-            tfIdmedi.setCellValueFactory(new PropertyValueFactory<>("id"));
-            tfUser.setCellValueFactory(new PropertyValueFactory<>("usuario"));
-            tfNomemedi.setCellValueFactory(new PropertyValueFactory<>("nomeMed"));
-            tfQuantimedi.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
-            tfPreçomedi.setCellValueFactory(new PropertyValueFactory<>("valor"));
-
-            tvCarrinho.setItems(datamedi);
-
-            try {
-                String consultaSQLCliente = "SELECT SUM(valor) AS soma_total FROM carrinho WHERE usuario = ?";
-
-                try (PreparedStatement statement = connection.prepareStatement(consultaSQLCliente)) {
-                    statement.setString(1, user);
-                    ResultSet consultaSoma = statement.executeQuery();
-
-                    if (consultaSoma.next()) {
-                        float soma = consultaSoma.getFloat("soma_total");
-                        String result = String.format("%.2f", soma);
-                        labelShowTotal.setText(String.valueOf(result));
-                    }
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-                }
         }
     }
     public void ConfirmarCompra(javafx.event.ActionEvent event)throws SQLException{
-        Banco banco = new Banco();
-        String user = Box.getSelectionModel().getSelectedItem().toString();
+        String user = selectedUser();
+        if (user == null) {
+            return;
+        }
         String nome = tfNome.getText();
         int quantidade = Integer.parseInt(tfQuantidade.getText());
         float valor = Float.parseFloat(tfValor.getText());
-        String tipo = tfTipo.getText();
-        Date dataHoraAtual = new Date();
-        String date = new SimpleDateFormat("dd/MM/yyyy | HH:mm:ss").format(dataHoraAtual);
+        String date = new SimpleDateFormat("dd/MM/yyyy | HH:mm:ss").format(new Date());
+        float novovalor = valor * quantidade;
 
-        String consultatipo = "SELECT nome, quantidade, tipo, valor FROM medicamentos WHERE tipo = ?";
-        PreparedStatement preparedStatement = connection.prepareStatement(consultatipo);
-        preparedStatement.setString(1, tipo);
-        ResultSet resultado = preparedStatement.executeQuery();
-        while(resultado.next()) {
-            String tipomedi = resultado.getString("tipo");
-            String nomemedicamento = resultado.getString("nome");
-            int quantidadebanco = resultado.getInt("quantidade");
-            float valormedi = resultado.getFloat("valor");
-            float novovalor = valor * quantidade;
-            banco.inseriregistro(user, nome, quantidade,  novovalor, date);
+        try (Connection db = DatabaseConnection.open()) {
+            db.setAutoCommit(false);
+            try (PreparedStatement insertRegistro = db.prepareStatement(
+                    "INSERT INTO registros (usuario, medicamento, quantidade, valor, data) VALUES (?, ?, ?, ?, ?)");
+                 PreparedStatement deleteCarrinho = db.prepareStatement("DELETE FROM carrinho WHERE usuario = ?")) {
+                insertRegistro.setString(1, user);
+                insertRegistro.setString(2, nome);
+                insertRegistro.setInt(3, quantidade);
+                insertRegistro.setFloat(4, novovalor);
+                insertRegistro.setString(5, date);
+                insertRegistro.executeUpdate();
 
-            AlertMsg info = new AlertMsg();
-            info.msgInformation("Confirmação de venda", "Venda realizada com sucesso!");
+                deleteCarrinho.setString(1, user);
+                deleteCarrinho.executeUpdate();
 
-            String deletecli = ("DELETE FROM carrinho WHERE usuario = ?");
-            preparedStatement = connection.prepareStatement(deletecli);
-            preparedStatement.setString(1, user);
-            preparedStatement.executeUpdate();
-            Carrinho();
-            break;
+                db.commit();
+            } catch (SQLException e) {
+                db.rollback();
+                throw e;
+            } finally {
+                db.setAutoCommit(true);
+            }
         }
+
+        AlertMsg info = new AlertMsg();
+        info.msgInformation("Confirmação de venda", "Venda realizada com sucesso!");
+        Carrinho();
     }
     public void RemoverDoCarrinho(javafx.event.ActionEvent event)throws SQLException{
-        String nome = tfNome.getText();
         int iduser = Integer.parseInt(tfIdCarrinho.getText());
-        AlertMsg alert = new AlertMsg();
-        if (alert.msgConfirm("Remoção de Pedido", "Tem certeza?")) {
+        if (AlertMsg.msgConfirm("Remoção de Pedido", "Tem certeza?")) {
+            try (Connection db = DatabaseConnection.open()) {
+                db.setAutoCommit(false);
+                try {
+                    String medicamento = null;
+                    int quantidadeCarrinho = 0;
 
-            String consultacarrinho = "SELECT medicamento, quantidade FROM carrinho WHERE id = ?";
-            PreparedStatement consultacarrinnho = connection.prepareStatement(consultacarrinho);
-            consultacarrinnho.setInt(1, iduser);
-            ResultSet resultadocarrinho = consultacarrinnho.executeQuery();
-            while(resultadocarrinho.next()){
-                String medicamento = resultadocarrinho.getString("medicamento");
-                int quantidadecarrinho = resultadocarrinho.getInt("quantidade");
-                System.out.println(quantidadecarrinho);
-                System.out.println(medicamento);
+                    try (PreparedStatement consultaCarrinho = db.prepareStatement(
+                            "SELECT medicamento, quantidade FROM carrinho WHERE id = ?")) {
+                        consultaCarrinho.setInt(1, iduser);
+                        try (ResultSet resultadoCarrinho = consultaCarrinho.executeQuery()) {
+                            if (resultadoCarrinho.next()) {
+                                medicamento = resultadoCarrinho.getString("medicamento");
+                                quantidadeCarrinho = resultadoCarrinho.getInt("quantidade");
+                            } else {
+                                db.rollback();
+                                return;
+                            }
+                        }
+                    }
 
-                String consultamedicamentos = "SELECT nome, quantidade FROM medicamentos WHERE nome = ?";
-                PreparedStatement consultamedicamento = connection.prepareStatement(consultamedicamentos);
-                consultamedicamento.setString(1, medicamento);
-                ResultSet resultadomedicamento = consultamedicamento.executeQuery();
-                while(resultadomedicamento.next()){
-                    String medicamentomedicamento = resultadomedicamento.getString("nome");
-                    int quantidadebanco = resultadomedicamento.getInt("quantidade");
-                    System.out.println(medicamentomedicamento);
-                    System.out.println(quantidadebanco);
-                    int quantidadenova = quantidadebanco + quantidadecarrinho;
-                    System.out.println(quantidadenova);
+                    int quantidadeBanco = 0;
+                    try (PreparedStatement consultaMedicamento = db.prepareStatement(
+                            "SELECT quantidade FROM medicamentos WHERE nome = ?")) {
+                        consultaMedicamento.setString(1, medicamento);
+                        try (ResultSet resultadoMedicamento = consultaMedicamento.executeQuery()) {
+                            if (resultadoMedicamento.next()) {
+                                quantidadeBanco = resultadoMedicamento.getInt("quantidade");
+                            }
+                        }
+                    }
 
-                    String updatemedicamento = "UPDATE medicamentos SET quantidade = ? WHERE nome = ?";
-                    PreparedStatement updatemedi = connection.prepareStatement(updatemedicamento);
-                    updatemedi.setInt(1, quantidadenova);
-                    updatemedi.setString(2, medicamentomedicamento);
-                    updatemedi.executeUpdate();
-                    tabelamedi();
+                    try (PreparedStatement updateEstoque = db.prepareStatement(
+                            "UPDATE medicamentos SET quantidade = ? WHERE nome = ?");
+                         PreparedStatement deleteCarrinho = db.prepareStatement(
+                                 "DELETE FROM carrinho WHERE id = ?")) {
+                        updateEstoque.setInt(1, quantidadeBanco + quantidadeCarrinho);
+                        updateEstoque.setString(2, medicamento);
+                        updateEstoque.executeUpdate();
+
+                        deleteCarrinho.setInt(1, iduser);
+                        deleteCarrinho.executeUpdate();
+                    }
+
+                    db.commit();
+                } catch (SQLException e) {
+                    db.rollback();
+                    throw e;
+                } finally {
+                    db.setAutoCommit(true);
                 }
-
-
-
-
-                String deletecli = ("DELETE FROM carrinho WHERE id = ?");
-                PreparedStatement preparedStatement = connection.prepareStatement(deletecli);
-                preparedStatement.setInt(1, iduser);
-                preparedStatement.executeUpdate();
-
-                Carrinho();
             }
+            tabelamedi();
+            Carrinho();
         }
     }
     public void AtualizarCarrinho(javafx.event.ActionEvent event)throws SQLException {
-        int index = tvCarrinho.getSelectionModel().getSelectedIndex();
-
-        if (index <= -1) {
-            List<CarrinhoTable> carrinho = new ArrayList<>();
-            String user = Box.getSelectionModel().getSelectedItem().toString();
-            String consultaSQLcliente = "SELECT * FROM carrinho WHERE usuario = ?";
-
-            try (PreparedStatement preparedStatement = connection.prepareStatement(consultaSQLcliente)) {
-                preparedStatement.setString(1, user);
-
-                try (ResultSet resultado = preparedStatement.executeQuery()) {
-                    while (resultado.next()) {
-                        int valorDaColuna1 = resultado.getInt("id");
-                        String valorDaColuna2 = resultado.getString("usuario");
-                        String valorDaColuna3 = resultado.getString("medicamento");
-                        int valorDaColuna4 = resultado.getInt("quantidade");
-                        float valorDaColuna5 = resultado.getFloat("valor");
-
-                        CarrinhoTable Carrinhocliente = new CarrinhoTable(valorDaColuna1, valorDaColuna2, valorDaColuna3, valorDaColuna4, valorDaColuna5);
-                        carrinho.add(Carrinhocliente);
-                    }
-                }
-            }
-
-            ObservableList<CarrinhoTable> datamedi = FXCollections.observableList(carrinho);
-
-            tfIdmedi.setCellValueFactory(new PropertyValueFactory<>("id"));
-            tfUser.setCellValueFactory(new PropertyValueFactory<>("usuario"));
-            tfNomemedi.setCellValueFactory(new PropertyValueFactory<>("nomeMed"));
-            tfQuantimedi.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
-            tfPreçomedi.setCellValueFactory(new PropertyValueFactory<>("valor"));
-
-            tvCarrinho.setItems(datamedi);
-
-            try {
-                String consultaSQLCliente = "SELECT SUM(valor) AS soma_total FROM carrinho WHERE usuario = ?";
-
-                try (PreparedStatement statement = connection.prepareStatement(consultaSQLCliente)) {
-                    statement.setString(1, user);
-                    ResultSet consultaSoma = statement.executeQuery();
-
-                    if (consultaSoma.next()) {
-                        float soma = consultaSoma.getFloat("soma_total");
-                        labelShowTotal.setText(String.valueOf(soma));
-                    }
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
+        Carrinho();
     }
 
     public void UpdateTableMed(javafx.event.ActionEvent event) throws SQLException{
         tabelamedi();
+    }
+
+    private String selectedUser() {
+        Object selected = Box.getSelectionModel().getSelectedItem();
+        return selected == null ? null : selected.toString();
     }
 }

@@ -55,17 +55,17 @@ public class ClientController implements Initializable {
 
     // GUI IDs
     @FXML
-    private TableView tbCliente;
+    private TableView<ClienteTable> tbCliente;
     @FXML
-    private TableColumn clIdcli;
+    private TableColumn<ClienteTable, Integer> clIdcli;
     @FXML
-    private TableColumn clNomecli;
+    private TableColumn<ClienteTable, String> clNomecli;
     @FXML
-    private TableColumn clSobrenomeli;
+    private TableColumn<ClienteTable, String> clSobrenomeli;
     @FXML
-    private TableColumn clUsuario;
+    private TableColumn<ClienteTable, String> clUsuario;
     @FXML
-    private TableColumn clFoneCli;
+    private TableColumn<ClienteTable, String> clFoneCli;
     @FXML
     private TextField tfNome;
     @FXML

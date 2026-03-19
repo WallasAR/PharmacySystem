@@ -47,25 +47,25 @@ public class RecordController implements Initializable {
     }
 
     @FXML
-    private TableColumn tcDateRecord;
+    private TableColumn<RecordTable, String> tcDateRecord;
 
     @FXML
-    private TableColumn tcIdRecord;
+    private TableColumn<RecordTable, Integer> tcIdRecord;
 
     @FXML
-    private TableColumn tcMedRecord;
+    private TableColumn<RecordTable, String> tcMedRecord;
 
     @FXML
-    private TableColumn tcPriceRecord;
+    private TableColumn<RecordTable, Float> tcPriceRecord;
 
     @FXML
-    private TableColumn tcQuantRecord;
+    private TableColumn<RecordTable, Integer> tcQuantRecord;
 
     @FXML
-    private TableColumn tcUserRecord;
+    private TableColumn<RecordTable, String> tcUserRecord;
 
     @FXML
-    private TableView tvRecord;
+    private TableView<RecordTable> tvRecord;
 
     public void tableRecord()throws SQLException {
         List<RecordTable> order = new ArrayList<>();
