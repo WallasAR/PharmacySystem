@@ -1,7 +1,7 @@
 package com.example.guitest;
 
 import com.db.bank.Banco;
-import com.db.bank.DatabaseConnection;
+import com.db.service.FuncionarioService;
 import com.table.view.FuncionarioTable;
 import com.warning.alert.AlertMsg;
 import javafx.collections.FXCollections;
@@ -17,16 +17,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class FuncController implements Initializable {
     Banco banco = new Banco();
+    private final FuncionarioService funcionarioService = new FuncionarioService();
     @FXML
     protected void MainAction(MouseEvent e) {
         if (AlertMsg.msgConfirm( "Confimar Logout", "Deseja sair para a página de login?")) {
@@ -90,26 +86,7 @@ public class FuncController implements Initializable {
 
 
     public void tabelafuncionarios()throws SQLException{
-        List<FuncionarioTable> funcionarios = new ArrayList<>();
-
-        String consultaSQLfuc = "SELECT * FROM funcionarios";
-        try (Connection connection = DatabaseConnection.open();
-             Statement statement = connection.createStatement();
-             ResultSet resultado = statement.executeQuery(consultaSQLfuc)) {
-            while (resultado.next()) {
-                int valorDaColuna1 = resultado.getInt("id");
-                String valorDaColuna2 = resultado.getString("nome");
-                String valorDaColuna3 = resultado.getString("sobrenome");
-                String valorDaColuna4 = resultado.getString("usuario");
-                String valorDaColuna5 = resultado.getString("cargo");
-                String valorDaColuna6 = resultado.getString("cpf");
-                Float valorDaColuna7 = resultado.getFloat("salario");
-                String valorDaColuna8 = resultado.getString("senha");
-
-                FuncionarioTable funcionario = new FuncionarioTable(valorDaColuna1, valorDaColuna2, valorDaColuna3, valorDaColuna4, valorDaColuna5, valorDaColuna6, valorDaColuna7, valorDaColuna8);
-                funcionarios.add(funcionario);
-            }
-        }
+        var funcionarios = funcionarioService.listAll();
 
         ObservableList<FuncionarioTable> Funcionario = FXCollections.observableList(funcionarios);
 

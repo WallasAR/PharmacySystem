@@ -1,6 +1,7 @@
 package com.session.employee;
 
-import com.db.bank.DatabaseConnection;
+import com.db.service.ClienteService;
+import com.db.service.MedicamentoService;
 import com.db.service.PurchaseService;
 import com.example.guitest.Main;
 import com.table.view.CarrinhoTable;
@@ -17,18 +18,16 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Date;
+import java.util.List;
 import java.text.SimpleDateFormat;
 
 public class PurchaseController implements Initializable {
     private final PurchaseService purchaseService = new PurchaseService();
+    private final MedicamentoService medicamentoService = new MedicamentoService();
+    private final ClienteService clienteService = new ClienteService();
 
 
     @FXML
@@ -93,23 +92,7 @@ public class PurchaseController implements Initializable {
     }
 
     public void tabelamedi() throws SQLException {
-        List<MedicamentoTable> medicamentos = new ArrayList<>();
-
-        String consultaSQL = "SELECT * FROM medicamentos";
-        try (Connection db = DatabaseConnection.open();
-             Statement statement = db.createStatement();
-             ResultSet resultado = statement.executeQuery(consultaSQL)) {
-            while (resultado.next()) {
-                int valorDaColuna1 = resultado.getInt("id");
-                String valorDaColuna2 = resultado.getString("nome");
-                int valorDaColuna3 = resultado.getInt("quantidade");
-                String valorDaColina4 = resultado.getString("tipo");
-                Float valorDaColuna5 = resultado.getFloat("valor");
-
-                MedicamentoTable medicamento = new MedicamentoTable(valorDaColuna1, valorDaColuna2, valorDaColuna3, valorDaColina4, valorDaColuna5);
-                medicamentos.add(medicamento);
-            }
-        }
+        var medicamentos = medicamentoService.listAll();
 
         ObservableList<MedicamentoTable> datamedi = FXCollections.observableList(medicamentos);
 
@@ -156,20 +139,8 @@ public class PurchaseController implements Initializable {
         if (index <= -1){
             return;
         }
-        String consultaSQLcliente = "SELECT * FROM cliente";
         Box.getItems().clear();
-        try (Connection db = DatabaseConnection.open();
-             Statement statement = db.createStatement();
-             ResultSet resultado = statement.executeQuery(consultaSQLcliente)) {
-            while (resultado.next()) {
-                String valorDaColuna4 = resultado.getString("usuario");
-
-                List<String> usercliente= new ArrayList<>();
-                usercliente.add(valorDaColuna4);
-                ObservableList<String> Cliente = FXCollections.observableList(usercliente);
-                Box.getItems().addAll(Cliente);
-            }
-        }
+        Box.getItems().addAll(FXCollections.observableList(clienteService.listUsernames()));
 
         // fill the TextFields
         tfId.setText(String.valueOf(tcIdmedi.getCellData(index)));
@@ -194,20 +165,8 @@ public class PurchaseController implements Initializable {
         }
     }
     public void ViewBox()throws SQLException{
-        String consultaSQLcliente = "SELECT usuario FROM cliente";
         Box.getItems().clear();
-        try (Connection db = DatabaseConnection.open();
-             Statement statement = db.createStatement();
-             ResultSet resultado = statement.executeQuery(consultaSQLcliente)) {
-            while (resultado.next()) {
-                String valorDaColuna4 = resultado.getString("usuario");
-
-                List<String> usercliente= new ArrayList<>();
-                usercliente.add(valorDaColuna4);
-                ObservableList<String> Cliente = FXCollections.observableList(usercliente);
-                Box.getItems().addAll(Cliente);
-            }
-        }
+        Box.getItems().addAll(FXCollections.observableList(clienteService.listUsernames()));
     }
     public void colocarRegistro(javafx.event.ActionEvent event) throws SQLException {
         String user = selectedUser();

@@ -1,6 +1,6 @@
 package com.session.employee;
 
-import com.db.bank.DatabaseConnection;
+import com.db.service.EncomendaService;
 import com.example.guitest.Main;
 import com.table.view.EncomendasTable;
 import com.warning.alert.AlertMsg;
@@ -17,16 +17,11 @@ import javafx.collections.transformation.SortedList;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class medOrderController implements Initializable {
+    private final EncomendaService encomendaService = new EncomendaService();
 
     @FXML
     protected void MainAction(MouseEvent e) {
@@ -79,26 +74,7 @@ public class medOrderController implements Initializable {
     private TextField tfIdStatus;
 
     public void tableOrder()throws SQLException{
-        List<EncomendasTable> order = new ArrayList<>();
-
-        String consultaSQLcliente = "SELECT * FROM encomendas";
-        try (Connection connection = DatabaseConnection.open();
-             Statement statement = connection.createStatement();
-             ResultSet resultado = statement.executeQuery(consultaSQLcliente)) {
-            while (resultado.next()) {
-                int valorDaColuna1 = resultado.getInt("id");
-                String valorDaColuna2 = resultado.getString("usuario");
-                String valorDaColuna3 = resultado.getString("medicamento");
-                int valorDaColuna4 = resultado.getInt("quantidade");
-                float valorDaColuna5 = resultado.getFloat("valor");
-                String valorDaColuna6 = resultado.getString("data");
-                String valorDaColuna7 = resultado.getString("telefone");
-                String valorDaColuna8 = resultado.getString("status");
-
-                EncomendasTable orderTable = new EncomendasTable(valorDaColuna1, valorDaColuna2, valorDaColuna3, valorDaColuna4, valorDaColuna5, valorDaColuna6, valorDaColuna7, valorDaColuna8);
-                order.add(orderTable);
-            }
-        }
+        var order = encomendaService.listAll();
         ObservableList<EncomendasTable> dateOrder = FXCollections.observableList(order);
 
         tcIdOrder.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -159,13 +135,7 @@ public class medOrderController implements Initializable {
     public void AlterarSituaçãoPedido(javafx.event.ActionEvent event)throws SQLException {
         int idsituação = Integer.parseInt(tfIdStatus.getText());
         String situação = tfUpdateStatus.getText();
-        String uptadasituação = "UPDATE encomendas SET status = ? WHERE id = ?";
-        try (Connection connection = DatabaseConnection.open();
-             PreparedStatement updatesitu = connection.prepareStatement(uptadasituação)) {
-            updatesitu.setString(1, situação);
-            updatesitu.setInt(2, idsituação);
-            updatesitu.executeUpdate();
-        }
+        encomendaService.updateStatus(idsituação, situação);
         tableOrder();
     }
 }

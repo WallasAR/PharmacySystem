@@ -1,7 +1,7 @@
 package com.example.guitest;
 
 import com.db.bank.Banco;
-import com.db.bank.DatabaseConnection;
+import com.db.service.MedicamentoService;
 import com.table.view.MedicamentoTable;
 import com.warning.alert.AlertMsg;
 import javafx.collections.FXCollections;
@@ -17,16 +17,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class MedController implements Initializable {
     Banco banco = new Banco();
+    private final MedicamentoService medicamentoService = new MedicamentoService();
     @FXML
     protected void MainAction(MouseEvent e) {
         if (AlertMsg.msgConfirm("Confimar Logout", "Deseja sair para a página de login?")) {
@@ -78,23 +74,7 @@ public class MedController implements Initializable {
     private TextField tfId;
 
     public void tabelamedi() throws SQLException {
-        List<MedicamentoTable> medicamentos = new ArrayList<>();
-
-        String consultaSQL = "SELECT * FROM medicamentos";
-        try (Connection connection = DatabaseConnection.open();
-             Statement statement = connection.createStatement();
-             ResultSet resultado = statement.executeQuery(consultaSQL)) {
-            while (resultado.next()) {
-                int valorDaColuna1 = resultado.getInt("id");
-                String valorDaColuna2 = resultado.getString("nome");
-                int valorDaColuna3 = resultado.getInt("quantidade");
-                String valorDaColina4 = resultado.getString("tipo");
-                Float valorDaColuna5 = resultado.getFloat("valor");
-
-                MedicamentoTable medicamento = new MedicamentoTable(valorDaColuna1, valorDaColuna2, valorDaColuna3, valorDaColina4, valorDaColuna5);
-                medicamentos.add(medicamento);
-            }
-        }
+        var medicamentos = medicamentoService.listAll();
 
         ObservableList<MedicamentoTable> datamedi = FXCollections.observableList(medicamentos);
 

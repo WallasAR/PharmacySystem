@@ -1,7 +1,7 @@
 package com.session.employee;
 
 import com.db.bank.Banco;
-import com.db.bank.DatabaseConnection;
+import com.db.service.ClienteService;
 import com.example.guitest.Main;
 import com.table.view.ClienteTable;
 import com.warning.alert.AlertMsg;
@@ -18,15 +18,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class employeeClientController implements Initializable {
+    private final ClienteService clienteService = new ClienteService();
 
     // Ações para troca de cena
     @FXML
@@ -79,23 +75,7 @@ public class employeeClientController implements Initializable {
 
     // Show The Client Table
     public void tabelacliente()throws SQLException {
-        List<ClienteTable> clientes = new ArrayList<>();
-
-        String consultaSQLcliente = "SELECT * FROM cliente";
-        try (Connection connection = DatabaseConnection.open();
-             Statement statement = connection.createStatement();
-             ResultSet resultado = statement.executeQuery(consultaSQLcliente)) {
-            while (resultado.next()) {
-                int valorDaColuna1 = resultado.getInt("id");
-                String valorDaColuna2 = resultado.getString("nome");
-                String valorDaColuna3 = resultado.getString("sobrenome");
-                String valorDaColina4 = resultado.getString("usuario");
-                String valorDaColuna5 = resultado.getString("telefone");
-
-                ClienteTable cliente = new ClienteTable(valorDaColuna1, valorDaColuna2, valorDaColuna3, valorDaColina4, valorDaColuna5);
-                clientes.add(cliente);
-            }
-        }
+        var clientes = clienteService.listAll();
         ObservableList<ClienteTable> datacli = FXCollections.observableList(clientes);
 
         clIdcli.setCellValueFactory(new PropertyValueFactory<>("idcli"));
