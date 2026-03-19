@@ -1,35 +1,20 @@
 package com.db.bank;
 
 import com.warning.alert.AlertMsg;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
 
 import javax.swing.*;
 import java.sql.*;
-import java.util.Scanner;
 
 //Takushi aqui
 public class Banco {
 
     public static Connection connection  = conexao();
-    Statement executar;
-    {
-        try {
-            executar = connection.createStatement();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
     public static Connection conexao(){
         Connection conn = null;
-        String url = "jdbc:mysql://localhost:3306/farmacia";
-        String user = "adm";
-        String password = "1234";
         try {
             // Explicit load improves compatibility in IDE/module executions.
             Class.forName("com.mysql.cj.jdbc.Driver");
-            conn = DriverManager.getConnection(url, user, password);
+            conn = DatabaseConnection.open();
         } catch (ClassNotFoundException erroDriver) {
             JOptionPane.showMessageDialog(null, "Driver MySQL nao encontrado. Execute Maven para baixar dependencias.");
         } catch (SQLException erro) {
@@ -40,7 +25,10 @@ public class Banco {
     public void criartabela(){
         try {
             if(!tabelaExiste("medicamentos")) {
-                executar.execute("CREATE TABLE medicamentos(id INT NOT NULL AUTO_INCREMENT ,nome VARCHAR(25), quantidade INT, tipo VARCHAR(25), valor FLOAT, PRIMARY KEY(id))");
+                try (Connection current = conexao();
+                     Statement executar = current.createStatement()) {
+                    executar.execute("CREATE TABLE medicamentos(id INT NOT NULL AUTO_INCREMENT ,nome VARCHAR(25), quantidade INT, tipo VARCHAR(25), valor FLOAT, PRIMARY KEY(id))");
+                }
             }else{
                 System.out.println();
             }
@@ -65,7 +53,10 @@ public class Banco {
     public void autenticar(){
         try {
             if(!tabelaExiste("autenticar")) {
-                executar.execute("CREATE TABLE autenticar(id INT NOT NULL AUTO_INCREMENT, usuario VARCHAR(25), password VARCHAR(25), PRIMARY KEY(id))");
+                try (Connection current = conexao();
+                     Statement executar = current.createStatement()) {
+                    executar.execute("CREATE TABLE autenticar(id INT NOT NULL AUTO_INCREMENT, usuario VARCHAR(25), password VARCHAR(25), PRIMARY KEY(id))");
+                }
             }else{
                 System.out.println();
             }
@@ -89,7 +80,10 @@ public class Banco {
     public void tablecliete(){
         try{
             if(!tabelaExiste("cliente")){
-                executar.execute("CREATE TABLE cliente(id INT NOT NULL AUTO_INCREMENT, nome VARCHAR(25), sobrenome VARCHAR(25), usuario VARCHAR(25), telefone VARCHAR(30), PRIMARY KEY(id))");
+                try (Connection current = conexao();
+                     Statement executar = current.createStatement()) {
+                    executar.execute("CREATE TABLE cliente(id INT NOT NULL AUTO_INCREMENT, nome VARCHAR(25), sobrenome VARCHAR(25), usuario VARCHAR(25), telefone VARCHAR(30), PRIMARY KEY(id))");
+                }
             }else{
                 System.out.println();
             }
@@ -217,7 +211,10 @@ public class Banco {
     public void tabelafuncionario(){
         try {
             if(!tabelaExiste("funcionarios")) {
-                executar.execute("CREATE TABLE funcionarios(id INT NOT NULL AUTO_INCREMENT, nome VARCHAR(25), sobrenome VARCHAR(25), usuario VARCHAR(25), cargo VARCHAR(25), cpf VARCHAR(25), salario FLOAT, senha VARCHAR(25), PRIMARY KEY(id))");
+                try (Connection current = conexao();
+                     Statement executar = current.createStatement()) {
+                    executar.execute("CREATE TABLE funcionarios(id INT NOT NULL AUTO_INCREMENT, nome VARCHAR(25), sobrenome VARCHAR(25), usuario VARCHAR(25), cargo VARCHAR(25), cpf VARCHAR(25), salario FLOAT, senha VARCHAR(25), PRIMARY KEY(id))");
+                }
             }else{
                 System.out.println();
             }
@@ -289,7 +286,10 @@ public class Banco {
     public void registro(){
         try {
             if(!tabelaExiste("registros")) {
-                executar.execute("CREATE TABLE registros(id INT NOT NULL AUTO_INCREMENT, usuario VARCHAR(25), medicamento VARCHAR(25), quantidade INT, valor FLOAT, data VARCHAR(50), PRIMARY KEY(id))");
+                try (Connection current = conexao();
+                     Statement executar = current.createStatement()) {
+                    executar.execute("CREATE TABLE registros(id INT NOT NULL AUTO_INCREMENT, usuario VARCHAR(25), medicamento VARCHAR(25), quantidade INT, valor FLOAT, data VARCHAR(50), PRIMARY KEY(id))");
+                }
             }else{
                 System.out.println();
             }
@@ -312,7 +312,10 @@ public class Banco {
     public void carrinho(){
         try {
             if(!tabelaExiste("carrinho")) {
-                executar.execute("CREATE TABLE carrinho(id INT NOT NULL AUTO_INCREMENT, usuario VARCHAR(25), medicamento VARCHAR(25), quantidade INT, valor FLOAT, PRIMARY KEY(id))");
+                try (Connection current = conexao();
+                     Statement executar = current.createStatement()) {
+                    executar.execute("CREATE TABLE carrinho(id INT NOT NULL AUTO_INCREMENT, usuario VARCHAR(25), medicamento VARCHAR(25), quantidade INT, valor FLOAT, PRIMARY KEY(id))");
+                }
             }else{
                 System.out.println();
             }
@@ -333,7 +336,10 @@ public class Banco {
     public void encomendas(){
         try {
             if(!tabelaExiste("encomendas")) {
-                executar.execute("CREATE TABLE encomendas(id INT NOT NULL AUTO_INCREMENT, usuario VARCHAR(25), medicamento VARCHAR(25), quantidade INT, valor INT, data VARCHAR(50), telefone VARCHAR(50), status VARCHAR(50), PRIMARY KEY(id))");
+                try (Connection current = conexao();
+                     Statement executar = current.createStatement()) {
+                    executar.execute("CREATE TABLE encomendas(id INT NOT NULL AUTO_INCREMENT, usuario VARCHAR(25), medicamento VARCHAR(25), quantidade INT, valor INT, data VARCHAR(50), telefone VARCHAR(50), status VARCHAR(50), PRIMARY KEY(id))");
+                }
             }else{
                 System.out.println();
             }
